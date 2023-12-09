@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Copy of Page-1" id="_IRGn7qEjiSoWe7VJrxL">
-        <mxGraphModel dx="1501" dy="1706" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1863" dy="2036" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="2OkuZF6dqTFCMNim8TMD-0"/>
                 <mxCell id="2OkuZF6dqTFCMNim8TMD-1" parent="2OkuZF6dqTFCMNim8TMD-0"/>
@@ -14,13 +14,13 @@
                     <mxGeometry x="1550" y="140" width="180" height="180" as="geometry"/>
                 </mxCell>
                 <mxCell id="2OkuZF6dqTFCMNim8TMD-5" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;TestModel&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- testID: string&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- name: string&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- description: string&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- lastUpdated: string&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- creatorID: string&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- questionList: List&amp;lt;QuestionModel&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- scoringScheme: SchemeModel&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" parent="2OkuZF6dqTFCMNim8TMD-1" vertex="1">
-                    <mxGeometry x="180" y="182.5" width="270" height="137.5" as="geometry"/>
+                    <mxGeometry x="560" y="161.25" width="270" height="137.5" as="geometry"/>
                 </mxCell>
                 <mxCell id="2OkuZF6dqTFCMNim8TMD-6" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Label&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- name: string&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- description: string&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" parent="2OkuZF6dqTFCMNim8TMD-1" vertex="1">
                     <mxGeometry x="1105" y="470" width="160" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="2OkuZF6dqTFCMNim8TMD-7" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;OptionModel&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- optionID: string&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- description: string&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- isCorrect: bool&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" parent="2OkuZF6dqTFCMNim8TMD-1" vertex="1">
-                    <mxGeometry x="1490" y="435" width="160" height="80" as="geometry"/>
+                    <mxGeometry x="1590" y="500" width="160" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="2OkuZF6dqTFCMNim8TMD-8" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;RoleModel&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- roleID: string&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- name: string&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" parent="2OkuZF6dqTFCMNim8TMD-1" vertex="1">
                     <mxGeometry x="290" y="540" width="160" height="70" as="geometry"/>
@@ -29,13 +29,13 @@
                     <mxGeometry x="590" y="540" width="160" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="2OkuZF6dqTFCMNim8TMD-10" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;QuestionGroupModel&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- questionGroupID: string&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- name: string&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- difficulty: string&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- questionList: List&amp;lt;Question&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ addQuestion(Question): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ updateQuestion(questionID): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" parent="2OkuZF6dqTFCMNim8TMD-1" vertex="1">
-                    <mxGeometry x="1790" y="161.25" width="200" height="137.5" as="geometry"/>
+                    <mxGeometry x="2750" y="50" width="200" height="137.5" as="geometry"/>
                 </mxCell>
-                <mxCell id="d9vbCOxTA3XUxBiBrLn6-0" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;UserController&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- service: UserService&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ register(request: Request): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ login(request: Request&lt;span style=&quot;background-color: initial;&quot;&gt;): void&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+ search(request: Request): void&lt;/span&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" parent="2OkuZF6dqTFCMNim8TMD-1" vertex="1">
-                    <mxGeometry x="-440" y="-850" width="400" height="110" as="geometry"/>
+                <mxCell id="d9vbCOxTA3XUxBiBrLn6-0" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;UserController&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- service: UserService&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ indexUserList(): Response&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ createUserWithRole(): Response&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ storeUserWithRole(request: Request): Response&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ editUserWithRole(QB: QuestionBankModel): Response&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ updateUserWithRole(request: Request, QB: QuestionBankModel): Response&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ showUserWithRole(QB: QuestionBankModel): Response&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ destroyUserWithRole(QB: QuestionBankModel): Response&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" parent="2OkuZF6dqTFCMNim8TMD-1" vertex="1">
+                    <mxGeometry x="-455" y="-850" width="430" height="180" as="geometry"/>
                 </mxCell>
-                <mxCell id="d9vbCOxTA3XUxBiBrLn6-1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;UserService&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ register(username: string, password: string, email: string): UserModel&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ login(username: string, password: string): UserModel&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ search(username: string, email: string): UserModel&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" parent="2OkuZF6dqTFCMNim8TMD-1" vertex="1">
-                    <mxGeometry x="-440" y="-410" width="400" height="110" as="geometry"/>
+                <mxCell id="d9vbCOxTA3XUxBiBrLn6-1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;UserService&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getAll(quesBankKeyOrModel,searchCriteria: Array): List&amp;lt;UserModel&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getPaginateData(quesBankKeyOrModel, limit: int, searchCriteria: Array): List&amp;lt;UserModel&amp;gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getUserWithRole(userKeyOrModel): UserModel&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ createUserWithRole(quesBankKeyOrModel,validatedData: Array&amp;lt;Key,Val&amp;gt;): UserModel&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ updateUserWithRole(userKeyOrModel,validatedData: Array&amp;lt;Key,Val&amp;gt;): void&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ deleteUserWithRole(userKeyOrModel): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" parent="2OkuZF6dqTFCMNim8TMD-1" vertex="1">
+                    <mxGeometry x="-490" y="-410" width="500" height="140" as="geometry"/>
                 </mxCell>
                 <mxCell id="d9vbCOxTA3XUxBiBrLn6-2" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;QuestionBankController&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- QBservice:&amp;nbsp;&lt;span style=&quot;text-align: center;&quot;&gt;QuestionBank&lt;/span&gt;Service&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- userService: UserService&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ indexQBList(): Response&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ createQB(): Response&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ storeQB(request: Request): Response&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ editQB(QB: QuestionBankModel): Response&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ updateQB(request: Request, QB: QuestionBankModel): Response&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ showQB(QB: QuestionBankModel): Response&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ destroyQB(QB: QuestionBankModel): Response&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ indexLabelList(QB: QuestionBankModel): Response&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ storeLabel(request: Request,QB: QuestionBankModel): Response&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ updateLabel(request: Request,QB: QuestionBankModel,label: LabelModel): Response&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ destroyLabel(QB: QuestionBankModel,label: LabelModel): Response&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ inviteCollaborators(request: Request): Response&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ updateCollaborators(request: Request): Response&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;gradientColor=none;fillColor=default;fillStyle=auto;shadow=0;" parent="2OkuZF6dqTFCMNim8TMD-1" vertex="1">
                     <mxGeometry x="1150" y="-870" width="480" height="300" as="geometry"/>
@@ -44,10 +44,10 @@
                     <mxGeometry x="1125" y="-470" width="530" height="280" as="geometry"/>
                 </mxCell>
                 <mxCell id="n3z_orEbSFZSWoOInEBg-8" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;TestController&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- testService: TestService&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- questionService: QuestionService&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+ indexTestList(QB: QuestionBankModel):&amp;nbsp;Response&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ createTest(QB: QuestionBankModel): Response&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ storeTest(request: Request, QB: QuestionBankModel): Response&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ editTest(QB: QuestionBankModel, Test:&lt;span style=&quot;background-color: initial;&quot;&gt;TestModel): Response&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ updateTest(request: Request, QB: QuestionBankModel, Test:&lt;span style=&quot;background-color: initial;&quot;&gt;TestModel): Response&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ showTest(QB: QuestionBankModel,&amp;nbsp;Test:TestModel): Response&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ destroyTest(QB: QuestionBankModel,Test:&lt;span style=&quot;background-color: initial;&quot;&gt;TestModel&lt;/span&gt;): Response&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" parent="2OkuZF6dqTFCMNim8TMD-1" vertex="1">
-                    <mxGeometry x="50" y="-810" width="530" height="190" as="geometry"/>
+                    <mxGeometry x="430" y="-810" width="530" height="190" as="geometry"/>
                 </mxCell>
                 <mxCell id="n3z_orEbSFZSWoOInEBg-9" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;TestService&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getAll(quesBankKeyOrModel,searchCriteria: Array): List&amp;lt;TestModel&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getPaginateData(quesBankKeyOrModel, limit: int, searchCriteria: Array): List&amp;lt;TestModel&amp;gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getTest(testKeyOrModel): TestModel&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ createTest(quesBankKeyOrModel,validatedData: Array&amp;lt;Key,Val&amp;gt;): TestModel&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ updateTest(testKeyOrModel,validatedData: Array&amp;lt;Key,Val&amp;gt;): void&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ deleteTest(testKeyOrModel): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" parent="2OkuZF6dqTFCMNim8TMD-1" vertex="1">
-                    <mxGeometry x="30" y="-390" width="570" height="160" as="geometry"/>
+                    <mxGeometry x="410" y="-390" width="570" height="160" as="geometry"/>
                 </mxCell>
                 <mxCell id="zOvdfVjMWSjVdS2UzzNI-3" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="2OkuZF6dqTFCMNim8TMD-1" source="d9vbCOxTA3XUxBiBrLn6-0" target="d9vbCOxTA3XUxBiBrLn6-1" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
@@ -63,8 +63,8 @@
                 </mxCell>
                 <mxCell id="zOvdfVjMWSjVdS2UzzNI-5" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="2OkuZF6dqTFCMNim8TMD-1" source="n3z_orEbSFZSWoOInEBg-8" target="n3z_orEbSFZSWoOInEBg-9" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="250" y="-460" as="sourcePoint"/>
-                        <mxPoint x="410" y="-460" as="targetPoint"/>
+                        <mxPoint x="630" y="-460" as="sourcePoint"/>
+                        <mxPoint x="790" y="-460" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="zOvdfVjMWSjVdS2UzzNI-6" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="2OkuZF6dqTFCMNim8TMD-1" source="n3z_orEbSFZSWoOInEBg-9" target="2OkuZF6dqTFCMNim8TMD-5" edge="1">
@@ -86,34 +86,10 @@
                         <mxPoint x="1160" y="-10" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="zOvdfVjMWSjVdS2UzzNI-12" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="2OkuZF6dqTFCMNim8TMD-1" source="n3z_orEbSFZSWoOInEBg-9" target="2OkuZF6dqTFCMNim8TMD-2" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="-90" y="-120" as="sourcePoint"/>
-                        <mxPoint x="70" y="-120" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="zOvdfVjMWSjVdS2UzzNI-13" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="2OkuZF6dqTFCMNim8TMD-1" source="d9vbCOxTA3XUxBiBrLn6-3" target="2OkuZF6dqTFCMNim8TMD-2" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="430" y="120" as="sourcePoint"/>
-                        <mxPoint x="-250" y="190" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
                 <mxCell id="zOvdfVjMWSjVdS2UzzNI-15" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="2OkuZF6dqTFCMNim8TMD-1" source="d9vbCOxTA3XUxBiBrLn6-3" target="2OkuZF6dqTFCMNim8TMD-4" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
                         <mxPoint x="620" y="40" as="sourcePoint"/>
                         <mxPoint x="540" y="570" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="zOvdfVjMWSjVdS2UzzNI-17" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="2OkuZF6dqTFCMNim8TMD-1" source="2OkuZF6dqTFCMNim8TMD-7" target="2OkuZF6dqTFCMNim8TMD-4" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="1280" y="390" as="sourcePoint"/>
-                        <mxPoint x="1440" y="390" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="V_6a4nZ7BC3NfpDAhWcV-0" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="2OkuZF6dqTFCMNim8TMD-1" source="2OkuZF6dqTFCMNim8TMD-6" target="2OkuZF6dqTFCMNim8TMD-3" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="1190" y="390" as="sourcePoint"/>
-                        <mxPoint x="1350" y="390" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="V_6a4nZ7BC3NfpDAhWcV-6" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="2OkuZF6dqTFCMNim8TMD-1" source="2OkuZF6dqTFCMNim8TMD-9" target="2OkuZF6dqTFCMNim8TMD-8" edge="1">
@@ -126,27 +102,6 @@
                     <mxGeometry width="160" relative="1" as="geometry">
                         <mxPoint x="760" y="-560" as="sourcePoint"/>
                         <mxPoint x="920" y="-560" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="V_6a4nZ7BC3NfpDAhWcV-15" value="" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="2OkuZF6dqTFCMNim8TMD-1" source="2OkuZF6dqTFCMNim8TMD-6" target="2OkuZF6dqTFCMNim8TMD-4" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="1190" y="440" as="sourcePoint"/>
-                        <mxPoint x="1460" y="400" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="V_6a4nZ7BC3NfpDAhWcV-16" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;SchemeModel&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- test: TestModel&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- question: QuestionModel&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- questionScore: double&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" parent="2OkuZF6dqTFCMNim8TMD-1" vertex="1">
-                    <mxGeometry x="760" y="250" width="150" height="77.5" as="geometry"/>
-                </mxCell>
-                <mxCell id="V_6a4nZ7BC3NfpDAhWcV-18" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="2OkuZF6dqTFCMNim8TMD-1" source="V_6a4nZ7BC3NfpDAhWcV-16" target="2OkuZF6dqTFCMNim8TMD-5" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="380" y="360" as="sourcePoint"/>
-                        <mxPoint x="540" y="360" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="V_6a4nZ7BC3NfpDAhWcV-19" value="" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="2OkuZF6dqTFCMNim8TMD-1" source="V_6a4nZ7BC3NfpDAhWcV-16" target="2OkuZF6dqTFCMNim8TMD-4" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="780" y="210" as="sourcePoint"/>
-                        <mxPoint x="940" y="210" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="IQVSVcBC1YNNi2Ne7M7Z-0" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;QuestionGroupService&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+ getAll(quesBankKeyOrModel,searchCriteria: Array): List&amp;lt;QuestionGroupModel&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getPaginateData(quesBankKeyOrModel, limit: int, searchCriteria: Array): List&amp;lt;QuestionGroupModel&amp;gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getQuestionGroup(quesKeyOrModel): QuestionGroupModel&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ createQuestion(quesBankKeyOrModel,validatedData: Array&amp;lt;Key,Val&amp;gt;): QuestionModel&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ updateQuestion(quesGroupKeyOrModel,validatedData: Array&amp;lt;Key,Val&amp;gt;): void&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ deleteQuestion(quesGroupKeyOrModel): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" parent="2OkuZF6dqTFCMNim8TMD-1" vertex="1">
@@ -174,7 +129,7 @@
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="4" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="2OkuZF6dqTFCMNim8TMD-1" source="n3z_orEbSFZSWoOInEBg-8" target="IQVSVcBC1YNNi2Ne7M7Z-1">
+                <mxCell id="4" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" parent="2OkuZF6dqTFCMNim8TMD-1" source="n3z_orEbSFZSWoOInEBg-8" target="IQVSVcBC1YNNi2Ne7M7Z-1" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
                         <mxPoint x="350" y="-570" as="sourcePoint"/>
                         <mxPoint x="970" y="-410" as="targetPoint"/>
