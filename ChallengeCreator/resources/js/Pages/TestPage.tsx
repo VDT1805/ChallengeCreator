@@ -1,20 +1,51 @@
+import { Payment, columns } from "./Test/TestColumn"
+import { DataTable } from "./Test/TestTable"
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import { PageProps } from '@/types';
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-  } from "@/shadcn/ui/card"
-import { Button } from '@/shadcn/ui/button';
 import { Menubar } from '@radix-ui/react-menubar';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs"
 
 
-export default function Dashboard({ auth }: PageProps) {
+
+// export default function DemoPage() {
+//   const data1: Array<Payment> = [
+//   {id: "728ed52f",
+//   amount: 100,
+//   status: "pending",
+//   email: "m@example.com",},
+//   {id: "728ed52f",
+//   amount: 100,
+//   status: "pending",
+//   email: "m@example.com",},
+// ]
+// console.log(typeof(data1))
+//   return (
+    
+//     <div className="container mx-auto py-10">
+//       <h3> Test Table </h3>
+
+//       <DataTable columns={columns} data={data1} />
+//     </div>
+//   )
+// }
+
+
+
+
+export default function TestTable({ auth }: PageProps) {
+  const data: Payment[] = [{id: "728ed52f",
+  amount: 100,
+  status: "pending",
+  email: "m@example.com",},
+  {id: "728erd52f",
+  amount: 100,
+  status: "pending",
+  email: "k@example.com",},
+  {id: "72r8ed52f",
+  amount: 100,
+  status: "pending",
+  email: "t@example.com",}
+]
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -54,6 +85,10 @@ export default function Dashboard({ auth }: PageProps) {
                                     Community
                                 </Link>
                     </Menubar>
+                </div>
+                <div className="container mx-auto py-10">
+                <h3> Test Table </h3>
+                    <DataTable columns={columns} data={data} />
                 </div>
             </div>
         </AuthenticatedLayout>

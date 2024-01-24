@@ -39,4 +39,8 @@ Route::get('/questionbank', function () {
     return Inertia::render('QuestionBank');
 })->middleware(['auth', 'verified'])->name('questionbank');
 
+Route::get('/testlist', function () {
+    return Inertia::render('TestPage');
+})->middleware(['auth', 'verified'])->name('testlist');
+
 require __DIR__.'/auth.php';
