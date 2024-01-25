@@ -23,6 +23,7 @@ import {
 import { Button } from "@/shadcn/ui/button"
 import React from "react"
 import { Input } from "@/shadcn/ui/input"
+import { Link } from "@inertiajs/react"
 
 
 interface DataTableProps<TData, TValue> {
@@ -55,7 +56,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4">
+      <div className="flex items-center justify-between py-4">
         <Input
           placeholder="Filter emails..."
           value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}

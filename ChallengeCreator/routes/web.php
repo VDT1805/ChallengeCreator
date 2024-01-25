@@ -43,4 +43,16 @@ Route::get('/testlist', function () {
     return Inertia::render('TestPage');
 })->middleware(['auth', 'verified'])->name('testlist');
 
+Route::get('/addtest', function () {
+    return Inertia::render('Test/AddTest');
+})->middleware(['auth', 'verified'])->name('addtest');
+
+Route::get('/testdetail', function () {
+    return Inertia::render('Test/TestDetail');
+})->middleware(['auth', 'verified'])->name('testdetail');
+
+Route::get('/addquestion', function () {
+    return Inertia::render('Test/AddQuestion');
+})->middleware(['auth', 'verified'])->name('addquestion');
+
 require __DIR__.'/auth.php';

@@ -4,6 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import { Menubar } from '@radix-ui/react-menubar';
+import { Button } from "@/shadcn/ui/button";
 
 
 
@@ -38,11 +39,11 @@ export default function TestTable({ auth }: PageProps) {
   status: "pending",
   email: "m@example.com",},
   {id: "728erd52f",
-  amount: 100,
+  amount: 110,
   status: "pending",
   email: "k@example.com",},
   {id: "72r8ed52f",
-  amount: 100,
+  amount: 120,
   status: "pending",
   email: "t@example.com",}
 ]
@@ -86,8 +87,15 @@ export default function TestTable({ auth }: PageProps) {
                                 </Link>
                     </Menubar>
                 </div>
-                <div className="container mx-auto py-10">
-                <h3> Test Table </h3>
+                <div className="container mx-auto py-10 ">
+                    <div className="flex justify-between">
+                        <h3> Test Table </h3>
+                        <Button>
+                            <Link href={route('addtest')}>
+                                Add test
+                            </Link>
+                        </Button>
+                    </div>
                     <DataTable columns={columns} data={data} />
                 </div>
             </div>
