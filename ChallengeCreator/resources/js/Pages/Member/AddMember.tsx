@@ -54,11 +54,11 @@ export default function Dashboard({ auth }: PageProps) {
                                             </Select>
                                         </div>
                                     </div>
-                                    <Button type='submit'>
-                                        <Link href={route('cooperator')}>
+                                    <Link href={route('cooperator')}>
+                                        <Button type='submit'>
                                             Invite cooperator
-                                        </Link>
-                                    </Button>
+                                        </Button>
+                                    </Link>
                                 </form>
                             </CardContent>
                         </Card>

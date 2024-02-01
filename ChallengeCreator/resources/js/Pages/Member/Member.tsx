@@ -1,5 +1,5 @@
-import { Payment, columns } from "./LabelColumn"
-import { DataTable } from "./LabelTable"
+import { Payment, columns } from "./MemberColumn"
+import { DataTable } from "./MemberTable"
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import { PageProps } from '@/types';
@@ -57,7 +57,7 @@ export default function TestTable({ auth }: PageProps) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">ALL LABELS & QUESTION GROUPS</h2>}>
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">ALL COOPERATORS</h2>}>
             <Head title="Dashboard" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -97,26 +97,19 @@ export default function TestTable({ auth }: PageProps) {
                 </div>
                 <div className="container mx-auto py-10 ">
                     <div className="flex justify-between">
-                        <h3>All labels</h3>
-                        <Button>
-                            <Link href={route('addlabel')}>
-                                Add label/question group
+                        <h3>All members</h3>
+                        <div className="flex justify-evenly">
+                            <Link href={route('settings')}>
+                                <Button>
+                                    Member settings
+                                </Button>
                             </Link>
-                        </Button>
-                    </div>
-                    <DataTable columns={columns} data={data} />
-                </div>
-
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                </div>
-                <div className="container mx-auto py-10 ">
-                    <div className="flex justify-between">
-                        <h3>All question groups</h3>
-                        <Button>
-                            <Link href={route('addlabel')}>
-                                Add label/question group
+                            <Link href={route('addmember')}>
+                                <Button>
+                                    Invite member
+                                </Button>
                             </Link>
-                        </Button>
+                        </div>
                     </div>
                     <DataTable columns={columns} data={data} />
                 </div>

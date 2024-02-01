@@ -117,7 +117,7 @@ export default function Dashboard({ auth }: PageProps) {
               <Textarea placeholder="Content of your answer" />
 
               <div className="mt-5">
-                <div className="text-xl font-bold"><p>Label settings</p></div>
+                <div className="text-xl font-bold"><p>Category settings</p></div>
                 <Select>
                   <SelectTrigger><SelectValue placeholder="Choose your label" /></SelectTrigger>
                   <SelectContent>

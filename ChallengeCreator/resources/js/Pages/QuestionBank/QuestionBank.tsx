@@ -118,7 +118,7 @@ export default function TestTable({ auth }: PageProps) {
                                     Add random question</DropdownMenuItem>
                                 <DropdownMenuItem>
                                 <FilePlusIcon className="mr-2" />
-                                    Import file
+                                <Link href={route('import')}>Import file</Link>
                                     </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
