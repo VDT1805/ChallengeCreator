@@ -38,29 +38,7 @@ import { Menu } from "../Menu";
 //   )
 // }
 
-
-
-
 export default function TestTable({ auth }: PageProps) {
-    const data: Payment[] = [{
-        id: "728ed52f",
-        amount: 100,
-        status: "pending",
-        email: "m@example.com",
-    },
-    {
-        id: "728erd52f",
-        amount: 110,
-        status: "pending",
-        email: "k@example.com",
-    },
-    {
-        id: "72r8ed52f",
-        amount: 120,
-        status: "pending",
-        email: "t@example.com",
-    }
-    ]
     return (
         <AuthenticatedLayout
             user={auth.user}

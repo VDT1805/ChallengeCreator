@@ -23,7 +23,22 @@ import {
 import { Button } from "@/shadcn/ui/button"
 import React from "react"
 import { Input } from "@/shadcn/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shadcn/ui/select"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/shadcn/ui/dropdown-menu"
+import { ArrowUpDown } from "lucide-react"
 import { Link } from "@inertiajs/react"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/shadcn/ui/collapsible"
+
 
 
 interface DataTableProps<TData, TValue> {
@@ -39,6 +54,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
+  const [sortState, setSortState] = React.useState("Alphabetical")
   const table = useReactTable({
     data,
     columns,
@@ -56,63 +72,86 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center justify-between py-4">
-        <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-      </div>
-        <div className="rounded-md border">
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </TableHead>
-                    )
-                  })}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={columns.length} className="h-24 text-center">
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+      <div className="flex items-center justify-between gap-4 py-4">
+        <div className="grid grid-cols-3 gap-4">
+          <Input
+            placeholder="Search test..."
+            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("name")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm col-span-2 border-2 border-blue-500 border-solid"
+          />
+          <div className="flex items-center"><DropdownMenu>
+            <DropdownMenuTrigger className="flex gap-2">
+              <ArrowUpDown className="ml-2 h-4 w-4 mt-1" />
+              Sort By: {
+                sortState
+              }
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem onClick={() => { table.getColumn("name")?.toggleSorting(table.getColumn("name")?.getIsSorted() === "asc"); setSortState("Alphabetical") }}>Alphabetical</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => { table.getColumn("lastUpdated")?.toggleSorting(table.getColumn("lastUpdated")?.getIsSorted() === "asc"); setSortState("Last Updated") }}>Last Updated</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
-        
+        </div>
 
-        <div className="flex items-center justify-end space-x-2 py-4">
+        <div>
+          <Button>
+            <Link href={route('addtest')}>
+              Add test
+            </Link>
+          </Button>
+        </div>
+      </div>
+      <div className="rounded-md border bg-white">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                    </TableHead>
+                  )
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody className="text-center">
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="h-24 text-center">
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+
+
+      <div className="flex items-center justify-end space-x-2 py-4">
         <Button
           variant="outline"
           size="sm"
