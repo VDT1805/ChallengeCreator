@@ -1,5 +1,6 @@
-import { Payment, columns } from "./TestColumn"
-import { DataTable } from "./TestTable"
+import { columns } from "./TestTable/TestColumn"
+import { DataTable } from "./TestTable/TestDetailTable"
+import { data } from "./TestTable/TestData"
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import { PageProps } from '@/types';
@@ -60,32 +61,10 @@ export default function TestTable({ auth }: PageProps) {
                         </Tabs> */}
                         <Menu></Menu>
                 </div>
-                <div className="container mx-auto py-10 ">
-                    <div className="flex justify-between">
-                        <h3> Question Table </h3>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button>Add question</Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <DropdownMenuItem>
-                                    <PlusIcon className="mr-2"/>
-                                    <Link href={route('addquestion')}>Add a new question</Link>
-                                    </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <UpdateIcon className="mr-2"/>
-                                    Reuse from question banks
-                                    </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <ShuffleIcon className="mr-2" />
-                                    Add random question</DropdownMenuItem>
-                                <DropdownMenuItem>
-                                <FilePlusIcon className="mr-2" />
-                                    Import file
-                                    </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
+                <div className="container mx-auto">
+                    {/* <div className="flex justify-between">
+                        <h3> Test questions </h3>
+                    </div> */}
                     <DataTable columns={columns} data={data} />
                 </div>
             </div>

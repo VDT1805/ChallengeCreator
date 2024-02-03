@@ -1,5 +1,6 @@
-import { Payment, columns } from "./QuestionBankColumn"
-import { DataTable } from "./QuestionBankTable"
+import { columns } from "./QuestionBankTable/QuestionBankColumn"
+import { DataTable } from "./QuestionBankTable/QuestionBankTable"
+import { data } from "./QuestionBankTable/QuestionBankData"
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import { PageProps } from '@/types';
@@ -33,29 +34,7 @@ import { UpdateIcon, PlusIcon, ShuffleIcon, FilePlusIcon } from "@radix-ui/react
 //   )
 // }
 
-
-
-
-export default function TestTable({ auth }: PageProps) {
-    const data: Payment[] = [{
-        id: "728ed52f",
-        amount: 100,
-        status: "pending",
-        email: "m@example.com",
-    },
-    {
-        id: "728erd52f",
-        amount: 110,
-        status: "pending",
-        email: "k@example.com",
-    },
-    {
-        id: "72r8ed52f",
-        amount: 120,
-        status: "pending",
-        email: "t@example.com",
-    }
-    ]
+export default function QuestionBankTable({ auth }: PageProps) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -97,32 +76,10 @@ export default function TestTable({ auth }: PageProps) {
                     </Menubar> */}
                     <Menu></Menu>
                 </div>
-                <div className="container mx-auto py-10 ">
-                    <div className="flex justify-between">
+                <div className="container mx-auto">
+                    {/* <div className="flex justify-between">
                         <h3>All questions</h3>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button>Add question</Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <DropdownMenuItem>
-                                    <PlusIcon className="mr-2"/>
-                                    <Link href={route('addquestion')}>Add a new question</Link>
-                                    </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <UpdateIcon className="mr-2"/>
-                                    Reuse from question banks
-                                    </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <ShuffleIcon className="mr-2" />
-                                    Add random question</DropdownMenuItem>
-                                <DropdownMenuItem>
-                                <FilePlusIcon className="mr-2" />
-                                <Link href={route('import')}>Import file</Link>
-                                    </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
+                    </div> */}
                     <DataTable columns={columns} data={data} />
                 </div>
             </div>

@@ -1,5 +1,6 @@
-import { Payment, columns } from "./MemberColumn"
-import { DataTable } from "./MemberTable"
+import { columns } from "./MemberTable/MemberColumn"
+import { DataTable } from "./MemberTable/MemberTable"
+import { data } from "./MemberTable/MemberData"
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import { PageProps } from '@/types';
@@ -34,30 +35,11 @@ import { Menu } from "../Menu";
 
 
 
-export default function TestTable({ auth }: PageProps) {
-    const data: Payment[] = [{
-        id: "728ed52f",
-        amount: 100,
-        status: "pending",
-        email: "m@example.com",
-    },
-    {
-        id: "728erd52f",
-        amount: 110,
-        status: "pending",
-        email: "k@example.com",
-    },
-    {
-        id: "72r8ed52f",
-        amount: 120,
-        status: "pending",
-        email: "t@example.com",
-    }
-    ]
+export default function MemberTable({ auth }: PageProps) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">ALL COOPERATORS</h2>}>
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">ALL MEMBERS</h2>}>
             <Head title="Dashboard" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -95,22 +77,10 @@ export default function TestTable({ auth }: PageProps) {
                     </Menubar> */}
                     <Menu></Menu>
                 </div>
-                <div className="container mx-auto py-10 ">
-                    <div className="flex justify-between">
+                <div className="container mx-auto">
+                    {/* <div className="flex justify-between">
                         <h3>All members</h3>
-                        <div className="flex justify-evenly">
-                            <Link href={route('settings')}>
-                                <Button>
-                                    Member settings
-                                </Button>
-                            </Link>
-                            <Link href={route('addmember')}>
-                                <Button>
-                                    Invite member
-                                </Button>
-                            </Link>
-                        </div>
-                    </div>
+                    </div> */}
                     <DataTable columns={columns} data={data} />
                 </div>
             </div>

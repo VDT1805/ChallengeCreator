@@ -1,5 +1,10 @@
-import { Payment, columns } from "./CategoryColumn"
-import { DataTable } from "./CategoryTable"
+import { columns } from "./CategoryTable/CategoryColumn"
+import { DataTable } from "./CategoryTable/CategoryTable"
+import { data } from "./CategoryTable/CategoryData"
+
+import { subcolumns } from "./CategoryTable/SubCategoryColumn"
+import { SubDataTable } from "./CategoryTable/SubCategoryTable"
+import { subdata } from "./CategoryTable/SubCategoryData"
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import { PageProps } from '@/types';
@@ -34,26 +39,7 @@ import { Menu } from "../Menu";
 
 
 
-export default function TestTable({ auth }: PageProps) {
-    const data: Payment[] = [{
-        id: "728ed52f",
-        amount: 100,
-        status: "pending",
-        email: "m@example.com",
-    },
-    {
-        id: "728erd52f",
-        amount: 110,
-        status: "pending",
-        email: "k@example.com",
-    },
-    {
-        id: "72r8ed52f",
-        amount: 120,
-        status: "pending",
-        email: "t@example.com",
-    }
-    ]
+export default function CategoryTable({ auth }: PageProps) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -95,30 +81,18 @@ export default function TestTable({ auth }: PageProps) {
                     </Menubar> */}
                     <Menu></Menu>
                 </div>
-                <div className="container mx-auto py-10 ">
-                    <div className="flex justify-between">
+                <div className="container mx-auto">
+                    {/* <div className="flex justify-between">
                         <h3>All categories</h3>
-                        <Link href={route('addcategory')}>
-                            <Button>
-                                Add category
-                            </Button>
-                        </Link>
-                    </div>
+                    </div> */}
                     <DataTable columns={columns} data={data} />
                 </div>
-
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                </div>
-                <div className="container mx-auto py-10 ">
-                    <div className="flex justify-between">
+                <div className="border-y"></div>
+                <div className="container mx-auto py-5">
+                    {/* <div className="flex justify-between">
                         <h3>All subcategories</h3>
-                        <Link href={route('addcategory')}>
-                            <Button>
-                                Add subcategory
-                            </Button>
-                        </Link>
-                    </div>
-                    <DataTable columns={columns} data={data} />
+                    </div> */}
+                    <SubDataTable columns={subcolumns} data={subdata} />
                 </div>
             </div>
         </AuthenticatedLayout>

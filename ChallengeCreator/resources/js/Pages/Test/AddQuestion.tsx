@@ -44,7 +44,7 @@ export default function Dashboard({ auth }: PageProps) {
       header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">NEW QUESTION</h2>}>
       <Head title="Dashboard" />
       <div className="mt-10 mb-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
-      <Menu></Menu>
+        <Menu></Menu>
         <Card>
           <CardHeader>
             <CardTitle className="text-3xl font-bold">Add Question</CardTitle>
@@ -133,12 +133,11 @@ export default function Dashboard({ auth }: PageProps) {
                   <Input id="score" placeholder="Question score" className='w-1/6' />
                 </div>
               </div>
-
-              <Button className='mt-5'>
-                <Link href={route('testdetail')}>
+              <Link href={route('testdetail')}>
+                <Button className='mt-5'>
                   Add question
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </form>
           </CardContent>
         </Card>

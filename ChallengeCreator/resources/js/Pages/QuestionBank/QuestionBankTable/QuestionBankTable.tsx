@@ -38,6 +38,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/shadcn/ui/collapsible"
+import { FilePlusIcon, PlusIcon, ShuffleIcon, UpdateIcon } from "@radix-ui/react-icons"
 
 
 
@@ -75,7 +76,7 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center justify-between gap-4 py-4">
         <div className="grid grid-cols-3 gap-4">
           <Input
-            placeholder="Search test..."
+            placeholder="Search question..."
             value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
               table.getColumn("name")?.setFilterValue(event.target.value)
@@ -94,16 +95,31 @@ export function DataTable<TData, TValue>({
               <DropdownMenuItem onClick={() => { table.getColumn("lastUpdated")?.toggleSorting(table.getColumn("lastUpdated")?.getIsSorted() === "asc"); setSortState("Last Updated") }}>Last Updated</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
+          </div>
         </div>
 
-        <div>
-          <Button>
-            <Link href={route('addtest')}>
-              Add test
-            </Link>
-          </Button>
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button>Add question</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem>
+              <PlusIcon className="mr-2" />
+              <Link href={route('addquestion')}>Add a new question</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <UpdateIcon className="mr-2" />
+              Reuse from question banks
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <ShuffleIcon className="mr-2" />
+              Add random question</DropdownMenuItem>
+            <DropdownMenuItem>
+              <FilePlusIcon className="mr-2" />
+              <Link href={route('import')}>Import file</Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       <div className="rounded-md border bg-white">
         <Table>
