@@ -56,7 +56,7 @@ export default function Dashboard({ auth }: PageProps) {
                   <Label htmlFor="name" className="text-xl font-bold">Category name</Label>
                   <Input id="name" placeholder="Name of your category" />
                 </div>
-                <div className="flex flex-col space-y-1.5 mb-5">
+                <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="name" className="text-xl font-bold">Description of category</Label>
                   <Textarea placeholder="Description of your category" />
                 </div>
@@ -79,9 +79,17 @@ export default function Dashboard({ auth }: PageProps) {
           <CardContent>
             <form>
               <div className="grid w-full items-center gap-4">
+              <div className="flex flex-col space-y-1.5">
+                  <Label htmlFor="name" className="text-xl font-bold">Parent category</Label>
+                  <Input id="name" placeholder="Name of the parent category" />
+                </div>
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="name" className="text-xl font-bold">Subcategory name</Label>
                   <Input id="name" placeholder="Name of your subcategory" />
+                </div>
+                <div className="flex flex-col space-y-1.5">
+                  <Label htmlFor="name" className="text-xl font-bold">Description of subcategory</Label>
+                  <Textarea placeholder="Description of your subcategory" />
                 </div>
               </div>
               <Link href={route('category')}>

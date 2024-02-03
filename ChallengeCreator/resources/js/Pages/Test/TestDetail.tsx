@@ -14,8 +14,12 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/shadcn/ui/dropdown-menu"
-import { FilePlusIcon, PlusIcon, UpdateIcon, ShuffleIcon } from '@radix-ui/react-icons'
+import { FilePlusIcon, PlusIcon, UpdateIcon, ShuffleIcon, CopyIcon, TrashIcon } from '@radix-ui/react-icons'
 import { Menu } from "../Menu";
+import { Card, CardContent, CardHeader, CardTitle } from "@/shadcn/ui/card";
+import { PrinterIcon, Trash2Icon } from "lucide-react";
+import { Separator } from "@/shadcn/ui/separator"
+
 
 // export default function DemoPage() {
 //   const data1: Array<Payment> = [
@@ -59,7 +63,39 @@ export default function TestTable({ auth }: PageProps) {
                         <TabsContent value="tests">Make changes to your account here.</TabsContent>
                         <TabsContent value="qb">Change your password here.</TabsContent>
                         </Tabs> */}
-                        <Menu></Menu>
+                    <Menu></Menu>
+                </div>
+                <div className="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-3xl font-bold">Test 1</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="flex justify-between">
+                            <div className="flex flex-row">
+                                <Button variant="ghost" className="flex gap-3">
+                                    <CopyIcon className="ml-2 h-4 w-4 mt-1" />
+                                    Duplicate
+                                </Button>
+                                <Separator orientation="vertical" className="border-2 border-sky-300" />
+                                <Button variant="ghost" className="flex gap-3">
+                                    <PrinterIcon className="ml-2 h-4 w-4 mt-1" />
+                                    Print
+                                </Button>
+                                <Separator orientation="vertical" className="border-2 border-sky-300" />
+                                <Button variant="ghost" className="flex gap-3">
+                                    <Trash2Icon className="ml-2 h-4 w-4 mt-1" />
+                                    Print
+                                </Button>
+                            </div>
+                            <div className="flex">
+                                <Button className="bg-sky-500 flex gap-3 hover:bg-sky-300">
+                                    Preview
+                                </Button>
+                            </div>
+                            </div>
+                        </CardContent>
+                    </Card>
                 </div>
                 <div className="container mx-auto">
                     {/* <div className="flex justify-between">

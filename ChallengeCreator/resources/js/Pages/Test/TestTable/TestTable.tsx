@@ -132,6 +132,20 @@ export function DataTable<TData, TValue>({
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
+                  {/* {
+                    row.getVisibleCells().map((cell) => (
+                      <DropdownMenu key={row.id}>
+                        <CollapsibleTrigger key={row.id} className="container">
+                          <TableCell key={cell.id}>
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                            <CollapsibleContent>
+                              {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                            </CollapsibleContent>
+                          </TableCell>
+                        </CollapsibleTrigger>
+                      </Collapsible>
+                    ))
+                  } */}
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -170,6 +184,6 @@ export function DataTable<TData, TValue>({
         </Button>
       </div>
 
-    </div>
+    </div >
   )
 }
