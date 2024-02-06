@@ -32,7 +32,7 @@ class LaratrustSetupTables extends Migration
         });
 
         // Create table for storing teams
-        Schema::create('question_bank', function (Blueprint $table) {
+        Schema::create('question_banks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
@@ -49,7 +49,7 @@ class LaratrustSetupTables extends Migration
 
             $table->foreign('role_id')->references('id')->on('roles')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('team_id')->references('id')->on('question_bank')
+            $table->foreign('team_id')->references('id')->on('question_banks')
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->unique(['user_id', 'role_id', 'user_type', 'team_id']);
@@ -64,7 +64,7 @@ class LaratrustSetupTables extends Migration
 
             $table->foreign('permission_id')->references('id')->on('permissions')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('team_id')->references('id')->on('question_bank')
+            $table->foreign('team_id')->references('id')->on('question_banks')
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->unique(['user_id', 'permission_id', 'user_type', 'team_id']);
@@ -96,6 +96,6 @@ class LaratrustSetupTables extends Migration
         Schema::dropIfExists('permissions');
         Schema::dropIfExists('role_user');
         Schema::dropIfExists('roles');
-        Schema::dropIfExists('question_bank');
+        Schema::dropIfExists('question_banks');
     }
 }
