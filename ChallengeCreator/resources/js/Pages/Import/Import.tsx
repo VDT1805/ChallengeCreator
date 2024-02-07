@@ -41,13 +41,13 @@ export default function Dashboard({ auth }: PageProps) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">NEW QUESTION</h2>}>
-            <Head title="Dashboard" />
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Import Question from File</h2>}>
+            <Head title="Import Question" />
             <div className="mt-10 mb-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <Menu></Menu>
                 <Card>
                     <CardHeader>
-                        <CardTitle className="text-3xl font-bold">Import Question</CardTitle>
+                        <CardTitle className="text-3xl font-bold">Import Question from File</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="grid w-full items-center gap-4">

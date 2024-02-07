@@ -110,14 +110,14 @@ export function DataTable<TData, TValue>({
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <UpdateIcon className="mr-2" />
-                Reuse from question banks
+                <Link href={route('reusequestion')}>Reuse from question banks</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <ShuffleIcon className="mr-2" />
                 Add random question</DropdownMenuItem>
               <DropdownMenuItem>
                 <FilePlusIcon className="mr-2" />
-                Import file
+                <Link href={route('importinstruction')}>Import file</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
