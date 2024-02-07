@@ -39,8 +39,8 @@ export default function MemberTable({ auth }: PageProps) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">All members</h2>}>
-            <Head title="Members" />
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">ALL MEMBERS</h2>}>
+            <Head title="Dashboard" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     {/* <Tabs defaultValue="account" className="w-[400px]">

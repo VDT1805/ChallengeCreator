@@ -141,7 +141,7 @@ return [
         /**
          * Will be used only if the teams functionality is enabled.
          */
-        'teams' => 'question_bank',
+        'teams' => 'question_banks',
 
         'role_user' => 'role_user',
 

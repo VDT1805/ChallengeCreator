@@ -11,8 +11,8 @@ export default function TestTable({ auth }: PageProps) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">All tests</h2>}>
-            <Head title="Tests" />
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">ALL TESTS</h2>}>
+            <Head title="Dashboard" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <Menu></Menu>
