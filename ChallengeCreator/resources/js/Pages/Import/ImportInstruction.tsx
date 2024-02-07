@@ -25,23 +25,57 @@ import {
     CollapsibleTrigger,
 } from "@/shadcn/ui/collapsible"
 import { ChevronDownIcon } from '@radix-ui/react-icons'
+import { Payment, columns } from "./ImportColumn"
+
+
+import { Textarea } from '@/shadcn/ui/textarea';
+import { Checkbox } from '@/shadcn/ui/checkbox';
+// import {
+//   Dialog,
+//   DialogContent,
+//   DialogDescription,
+//   DialogHeader,
+//   DialogTitle,
+//   DialogTrigger,
+// } from "@/shadcn/ui/dialog"
+
+
+
+import React from 'react';
 import { Menu } from '../Menu';
-import { columns } from "./ImportInstructionTable/ImportInstructionColumn"
-import { DataTable } from './ImportInstructionTable/ImportInstructionTable';
-import { data } from './ImportInstructionTable/ImportInstructionData';
+import { DataTable } from './ImportTable';
 
 
 export default function Dashboard({ auth }: PageProps) {
+    const data: Payment[] = [{
+        id: "728ed52f",
+        amount: 100,
+        status: "pending",
+        email: "m@example.com",
+    },
+    {
+        id: "728erd52f",
+        amount: 110,
+        status: "pending",
+        email: "k@example.com",
+    },
+    {
+        id: "72r8ed52f",
+        amount: 120,
+        status: "pending",
+        email: "t@example.com",
+    }
+    ]
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">How to import questions</h2>}>
-            <Head title="How to import questions" />
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">IMPORT QUESTION</h2>}>
+            <Head title="Dashboard" />
             <div className="mt-10 mb-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <Menu></Menu>
                 <Card>
                     <CardHeader>
-                        <CardTitle className="text-3xl font-bold">Download .CSV Question Template</CardTitle>
+                        <CardTitle className="text-3xl font-bold">1. Download .CSV Question Template</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="grid w-full items-center gap-4">
@@ -74,7 +108,7 @@ export default function Dashboard({ auth }: PageProps) {
                         <CardTitle className="text-3xl font-bold">Download Question Import Templates</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <DataTable columns={columns} data={data} />
+                    <DataTable columns={columns} data={data} />
                     </CardContent>
                 </Card>
             </div>

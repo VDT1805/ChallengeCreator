@@ -25,21 +25,21 @@ export default function Dashboard({ auth }: PageProps) {
             <div className="py-12">
                 <div className="flex justify-between max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <Input
-                        placeholder="Search for a question bank..."
+                        placeholder="Search question bank..."
                         className="max-w-sm col-span-2 border-2 border-blue-500 border-solid" />
                     <div className="flex items-center">
                         <DropdownMenu>
-                            <DropdownMenuTrigger className="flex gap-2">
-                                <ArrowUpDown className="ml-2 h-4 w-4 mt-1" />
-                                Sort By: {
-                                    sortState
-                                }
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <DropdownMenuItem onClick={() => { setSortState("Alphabetical") }}>Alphabetical</DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => { setSortState("Last Updated") }}>Last Updated</DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        <DropdownMenuTrigger className="flex gap-2">
+                            <ArrowUpDown className="ml-2 h-4 w-4 mt-1" />
+                            Sort By: {
+                                sortState
+                            }
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuItem onClick={() => { setSortState("Alphabetical") }}>Alphabetical</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => { setSortState("Last Updated") }}>Last Updated</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                     </div>
                     <Link href={route('addquestionbank')}>
                         <Button>
@@ -60,38 +60,32 @@ export default function Dashboard({ auth }: PageProps) {
                             </Card>
                         </Link>
 
-                        <Link href={route('questionbank')}>
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle>Question Bank 2</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <p>Calculus 2</p>
-                                </CardContent>
-                            </Card>
-                        </Link>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Question Bank 2</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p>Calculus 2</p>
+                            </CardContent>
+                        </Card>
 
-                        <Link href={route('questionbank')}>
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle>Question Bank 3</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <p>Principles of Marketing</p>
-                                </CardContent>
-                            </Card>
-                        </Link>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Question Bank 3</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p>Principles of Marketing</p>
+                            </CardContent>
+                        </Card>
 
-                        <Link href={route('questionbank')}>
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle>Question Bank 4</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <p>Physical Education 2</p>
-                                </CardContent>
-                            </Card>
-                        </Link>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Question Bank 4</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p>Physical Education 2</p>
+                            </CardContent>
+                        </Card>
                     </div>
                 </div>
             </div>
