@@ -91,8 +91,7 @@ export function DataTable<TData, TValue>({
               }
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem onClick={() => { table.getColumn("name")?.toggleSorting(table.getColumn("name")?.getIsSorted() === "asc"); setSortState("Alphabetical") }}>Alphabetical</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => { table.getColumn("lastUpdated")?.toggleSorting(table.getColumn("lastUpdated")?.getIsSorted() === "asc"); setSortState("Last Updated") }}>Last Updated</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => { table.getColumn("questiontype")?.toggleSorting(table.getColumn("questiontype")?.getIsSorted() === "asc"); setSortState("Alphabetical") }}>Alphabetical</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           </div> */}
@@ -168,7 +167,12 @@ export function DataTable<TData, TValue>({
 
 
       <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
+        <Link href={route('import')}>
+          <Button>
+            Next step
+          </Button>
+        </Link>
+        {/* <Button
           variant="outline"
           size="sm"
           onClick={() => table.previousPage()}
@@ -183,7 +187,7 @@ export function DataTable<TData, TValue>({
           disabled={!table.getCanNextPage()}
         >
           Next
-        </Button>
+        </Button> */}
       </div>
 
     </div>
