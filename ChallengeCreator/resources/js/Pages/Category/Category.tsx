@@ -43,8 +43,8 @@ export default function CategoryTable({ auth }: PageProps) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">All categories</h2>}>
-            <Head title="Categories/Subcategories" />
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">ALL CATEGORIES</h2>}>
+            <Head title="Dashboard" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     {/* <Tabs defaultValue="account" className="w-[400px]">

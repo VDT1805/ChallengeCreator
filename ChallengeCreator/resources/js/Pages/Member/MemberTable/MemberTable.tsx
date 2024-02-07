@@ -99,11 +99,11 @@ export function DataTable<TData, TValue>({
         </div>
 
         <div className="flex justify-evenly gap-4">
-          {/* <Link href={route('settings')}>
+          <Link href={route('settings')}>
             <Button>
               Member settings
             </Button>
-          </Link> */}
+          </Link>
           <Link href={route('addmember')}>
             <Button>
               Invite member

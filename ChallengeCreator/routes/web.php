@@ -51,10 +51,6 @@ Route::get('/questionbank', function () {
     return Inertia::render('QuestionBank/QuestionBank');
 })->middleware(['auth', 'verified'])->name('questionbank');
 
-Route::get('/reusequestion', function () {
-    return Inertia::render('QuestionBank/ReuseQuestion');
-})->middleware(['auth', 'verified'])->name('reusequestion');
-
 Route::get('/category', function () {
     return Inertia::render('Category/Category');
 })->middleware(['auth', 'verified'])->name('category');
