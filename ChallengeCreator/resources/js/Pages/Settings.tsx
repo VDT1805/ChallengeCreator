@@ -41,8 +41,8 @@ export default function Dashboard({ auth }: PageProps) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">SETTINGS</h2>}>
-            <Head title="Dashboard" />
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Settings</h2>}>
+            <Head title="Settings" />
             <div className="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <Menu></Menu>
                 <Card>
@@ -69,7 +69,7 @@ export default function Dashboard({ auth }: PageProps) {
                                     <Label htmlFor="name" className="text-xl font-bold">Question bank name</Label>
                                     <Input id="name" placeholder="Name of your question bank" />
                                 </div>
-                                <div className="flex flex-col space-y-1.5 mb-5">
+                                <div className="flex flex-col space-y-1.5">
                                     <Label htmlFor="name" className="text-xl font-bold">Description of question bank</Label>
                                     <Textarea placeholder="Description of your question bank" />
                                 </div>
@@ -105,7 +105,7 @@ export default function Dashboard({ auth }: PageProps) {
                         <div className="flex justify-between justify-center items-center content-center space-y-1.5 mb-5">
                             <div className="">
                                 <Label className="text-xl font-bold">Transfer ownership</Label><br></br>
-                                <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"> Transfer this question bank to another user where they have the ability to edit question banks.</Label>
+                                <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"> Transfer this question bank to another user who has the ability to edit question banks.</Label>
                             </div>
                             <div className=""><Link href={route('questionbank')}>
                                 <Button className='bg-red-500 text-white font-bold rounded-t px-4 py-2'>

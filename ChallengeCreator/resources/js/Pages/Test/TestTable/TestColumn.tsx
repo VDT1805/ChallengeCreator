@@ -73,6 +73,7 @@ export const columns: ColumnDef<Test>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             {/* <DropdownMenuItem><Link href={route(`testdetail/${payment.id}`)}>Edit test</Link></DropdownMenuItem> */}
             <DropdownMenuItem><Link href={route('testdetail')}>Edit test</Link></DropdownMenuItem>
+            {/* <DropdownMenuItem>View test</DropdownMenuItem> */}
             <DropdownMenuItem className="text-red-500 font-bold">Delete test</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

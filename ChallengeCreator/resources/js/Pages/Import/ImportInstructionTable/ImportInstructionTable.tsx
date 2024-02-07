@@ -38,6 +38,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/shadcn/ui/collapsible"
+import { FilePlusIcon, PlusIcon, ShuffleIcon, UpdateIcon } from "@radix-ui/react-icons"
 
 
 
@@ -75,14 +76,14 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center justify-between gap-4 py-4">
         <div className="grid grid-cols-3 gap-4">
           <Input
-            placeholder="Search test name..."
-            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            placeholder="Search question type..."
+            value={(table.getColumn("questiontype")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn("name")?.setFilterValue(event.target.value)
+              table.getColumn("questiontype")?.setFilterValue(event.target.value)
             }
             className="max-w-sm col-span-2 border-2 border-blue-500 border-solid"
           />
-          <div className="flex items-center"><DropdownMenu>
+          {/* <div className="flex items-center"><DropdownMenu>
             <DropdownMenuTrigger className="flex gap-2">
               <ArrowUpDown className="ml-2 h-4 w-4 mt-1" />
               Sort By: {
@@ -94,16 +95,31 @@ export function DataTable<TData, TValue>({
               <DropdownMenuItem onClick={() => { table.getColumn("lastUpdated")?.toggleSorting(table.getColumn("lastUpdated")?.getIsSorted() === "asc"); setSortState("Last Updated") }}>Last Updated</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          </div>
+          </div> */}
         </div>
 
-        <div>
-          <Link href={route('addtest')}>
-            <Button>
-              Add test
-            </Button>
-          </Link>
-        </div>
+        {/* <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button>Add question</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem>
+              <PlusIcon className="mr-2" />
+              <Link href={route('addquestion')}>Add a new question</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <UpdateIcon className="mr-2" />
+              <Link href={route('reusequestion')}>Reuse from question banks</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <ShuffleIcon className="mr-2" />
+              Add random question</DropdownMenuItem>
+            <DropdownMenuItem>
+              <FilePlusIcon className="mr-2" />
+              <Link href={route('importinstruction')}>Import file</Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu> */}
       </div>
       <div className="rounded-md border bg-white">
         <Table>
@@ -132,20 +148,6 @@ export function DataTable<TData, TValue>({
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
-                  {/* {
-                    row.getVisibleCells().map((cell) => (
-                      <DropdownMenu key={row.id}>
-                        <CollapsibleTrigger key={row.id} className="container">
-                          <TableCell key={cell.id}>
-                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                            <CollapsibleContent>
-                              {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                            </CollapsibleContent>
-                          </TableCell>
-                        </CollapsibleTrigger>
-                      </Collapsible>
-                    ))
-                  } */}
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -184,6 +186,6 @@ export function DataTable<TData, TValue>({
         </Button>
       </div>
 
-    </div >
+    </div>
   )
 }
