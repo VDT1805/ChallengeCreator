@@ -12,17 +12,21 @@ return [
     'truncate_tables' => true,
 
     'roles_structure' => [
-        'superadministrator' => [
-            'users' => 'c,r,u,d',
-            'payments' => 'c,r,u,d',
-            'profile' => 'r,u',
+        'owner' => [
+            'questionbank' => 'c,r,u,d',
+            'test' => 'c,r,u,d',
+            'label' => 'c,r,u,d',
+            'question' => 'c,r,u,d',
         ],
-        'administrator' => [
-            'users' => 'c,r,u,d',
-            'profile' => 'r,u',
+        'editor' => [
+            'question' => 'c,r,u,d',
+            'test' => 'c,r,u,d',
+            'label' => 'c,r,u,d',
         ],
-        'user' => [
-            'profile' => 'r,u',
+        'viewer' => [
+            'question' => 'r',
+            'test' => 'r',
+            'label' => 'r',
         ],
     ],
 

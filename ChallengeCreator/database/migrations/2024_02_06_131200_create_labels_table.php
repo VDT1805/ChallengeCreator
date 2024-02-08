@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignIdFor(Label::class)->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
 
         });
+
     }
 
     /**
