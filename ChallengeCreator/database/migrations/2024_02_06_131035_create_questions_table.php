@@ -15,9 +15,13 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('question');
-            $table->unsignedBigInteger('question_bank_id');
-            $table->foreign('question_bank_id')->references('id')->on('roles')
-                ->onUpdate('cascade')->onDelete('cascade');
+            $table->string('ans1');
+            $table->string('ans2');
+            $table->string('ans3');
+            $table->string('ans4');
+            $table->string('ans5');
+            $table->string('ans6');
+            $table->foreignId('question_bank_id')->constrained('question_banks')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
