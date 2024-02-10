@@ -67,6 +67,10 @@ Route::get('/importinstruction', function () {
     return Inertia::render('Import/ImportInstruction');
 })->middleware(['auth', 'verified'])->name('importinstruction');
 
+Route::get('/reusequestion', function () {
+    return Inertia::render('QuestionBank/ReuseQuestion');
+})->middleware(['auth', 'verified'])->name('reusequestion');
+
 ##################################################################
 
 Route::get('/addquestionbank', function () {
