@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuestionBankController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,9 +26,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [QuestionBankController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/settings', function () {
     return Inertia::render('Settings');
@@ -69,10 +68,8 @@ Route::get('/importinstruction', function () {
 
 ##################################################################
 
-Route::get('/addquestionbank', function () {
-    return Inertia::render('QuestionBank/AddQuestionBank');
-})->middleware(['auth', 'verified'])->name('addquestionbank');
-
+Route::get('/addquestionbank', [QuestionBankController::class,'create'])->middleware(['auth', 'verified'])->name('addquestionbank');
+Route::post('/addquestionbank', [QuestionBankController::class,'store'])->middleware(['auth', 'verified']);
 Route::get('/addcategory', function () {
     return Inertia::render('Category/AddCategory');
 })->middleware(['auth', 'verified'])->name('addcategory');

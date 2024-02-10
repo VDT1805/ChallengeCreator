@@ -17,16 +17,19 @@ return [
             'test' => 'c,r,u,d',
             'label' => 'c,r,u,d',
             'question' => 'c,r,u,d',
+            'member' => 'c,r,u,d'
         ],
         'editor' => [
             'question' => 'c,r,u,d',
             'test' => 'c,r,u,d',
             'label' => 'c,r,u,d',
+            'member' => 'r'
         ],
         'viewer' => [
             'question' => 'r',
             'test' => 'r',
             'label' => 'r',
+            'member' => 'r'
         ],
     ],
 

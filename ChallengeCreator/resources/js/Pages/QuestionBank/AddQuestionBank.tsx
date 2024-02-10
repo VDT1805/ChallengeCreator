@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import {
     Card,
@@ -13,8 +13,25 @@ import { Input } from "@/shadcn/ui/input"
 import { Label } from "@/shadcn/ui/label"
 import { Button } from '@/shadcn/ui/button';
 import { Menu } from '../Menu';
+import { FormEventHandler, useEffect } from 'react';
 
 export default function Dashboard({ auth }: PageProps) {
+    const { data, setData, post, processing, errors, reset } = useForm({
+        name: ''
+    });
+
+    // useEffect(() => {
+    //     return () => {
+    //         reset('password');
+    //     };
+    // }, []);
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+
+        post(route('addquestionbank'));
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -27,19 +44,24 @@ export default function Dashboard({ auth }: PageProps) {
                             <CardTitle className="text-3xl font-bold">Add Question Bank</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <form>
+                                <form onSubmit={submit}>
                                     <div className="grid w-full items-center gap-4">
                                         <div className="flex flex-col space-y-1.5">
                                         <Label htmlFor="name" className="text-xl font-bold">Question bank name</Label>
-                                            <Input id="name" placeholder="Name of your question bank" />
+                                            <Input id="name"
+                                            type="name"
+                                            name="name"
+                                            value={data.name}
+                                            onChange={(e) => setData('name', e.target.value)}
+                                            placeholder="Name of your question bank" />
                                         </div>
                                         <div className="flex flex-col space-y-1.5">
                                         </div>
                                     </div>
                                     <Button type='submit'>
-                                        <Link href={route('testlist')}>
+                                        {/* <Link href={route('testlist')}> */}
                                             Add question bank
-                                        </Link>
+                                        {/* </Link> */}
                                     </Button>
                                 </form>
                             </CardContent>

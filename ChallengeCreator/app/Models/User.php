@@ -45,4 +45,16 @@ class User extends Authenticatable implements LaratrustUser
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function questionbanks() {
+        return $this->belongsToMany(
+            QuestionBank::class, 'role_user', 'user_id', 'team_id'
+        );
+    }
+
+    // public function roles() {
+    //     return $this->belongsToMany(
+    //         Role::class, 'role_user'
+    //     );
+    // }
 }
