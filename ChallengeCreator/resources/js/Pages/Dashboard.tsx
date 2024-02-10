@@ -15,7 +15,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { ArrowUpDown } from "lucide-react"
 import React from 'react';
 
-export default function Dashboard({ auth }: PageProps) {
+export default function Dashboard({ auth, QBS }: PageProps<{QBS:any}>) {
     const [sortState, setSortState] = React.useState("Alphabetical")
     return (
         <AuthenticatedLayout

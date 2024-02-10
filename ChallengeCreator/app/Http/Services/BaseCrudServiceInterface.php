@@ -72,7 +72,7 @@ interface BaseCrudServiceInterface
      * @param array $search
      * @return LazyCollection
      */
-    public function getAllAsCursor(array $search = []): LazyCollection;
+    // public function getAllAsCursor(array $search = []): LazyCollection;
 
     /**
      * Get results count
@@ -157,19 +157,19 @@ interface BaseCrudServiceInterface
      */
     public function deleteMany(array $keysOrModels): void;
 
-    /**
-     * Soft delete model
-     *
-     * @param $keyOrModel
-     * @return void
-     */
-    public function softDelete($keyOrModel): void;
+    // /**
+    //  * Soft delete model
+    //  *
+    //  * @param $keyOrModel
+    //  * @return void
+    //  */
+    // public function softDelete($keyOrModel): void;
 
-    /**
-     * Restore model
-     *
-     * @param $keyOrModel
-     * @return void
-     */
-    public function restore($keyOrModel): void;
+    // /**
+    //  * Restore model
+    //  *
+    //  * @param $keyOrModel
+    //  * @return void
+    //  */
+    // public function restore($keyOrModel): void;
 }
