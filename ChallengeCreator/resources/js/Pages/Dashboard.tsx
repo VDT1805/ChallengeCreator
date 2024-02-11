@@ -41,7 +41,7 @@ export default function Dashboard({ auth, QBS }: PageProps<{QBS:any}>) {
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>
-                    <Link href={route('addquestionbank')}>
+                    <Link href={route('questionbanks.create')}>
                         <Button>
                             Add question bank
                         </Button>
@@ -49,7 +49,7 @@ export default function Dashboard({ auth, QBS }: PageProps<{QBS:any}>) {
                 </div>
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="grid grid-cols-4 gap-4 mt-5">
-                        <Link href={route('questionbank')}>
+                        <Link href={route('questionbanks.show',"1")}>
                             <Card>
                                 <CardHeader>
                                     <CardTitle>Question Bank 1</CardTitle>
@@ -60,7 +60,7 @@ export default function Dashboard({ auth, QBS }: PageProps<{QBS:any}>) {
                             </Card>
                         </Link>
 
-                        <Link href={route('questionbank')}>
+                        <Link href={route('questionbanks.show',"2")}>
                             <Card>
                                 <CardHeader>
                                     <CardTitle>Question Bank 2</CardTitle>
@@ -71,7 +71,7 @@ export default function Dashboard({ auth, QBS }: PageProps<{QBS:any}>) {
                             </Card>
                         </Link>
 
-                        <Link href={route('questionbank')}>
+                        <Link href={route('questionbanks.show',"3")}>
                             <Card>
                                 <CardHeader>
                                     <CardTitle>Question Bank 3</CardTitle>
@@ -82,7 +82,7 @@ export default function Dashboard({ auth, QBS }: PageProps<{QBS:any}>) {
                             </Card>
                         </Link>
 
-                        <Link href={route('questionbank')}>
+                        <Link href={route('questionbanks.show',"4")}>
                             <Card>
                                 <CardHeader>
                                     <CardTitle>Question Bank 4</CardTitle>

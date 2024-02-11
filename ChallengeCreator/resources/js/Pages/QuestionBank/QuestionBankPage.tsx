@@ -34,7 +34,7 @@ import { UpdateIcon, PlusIcon, ShuffleIcon, FilePlusIcon } from "@radix-ui/react
 //   )
 // }
 
-export default function QuestionBankTable({ auth }: PageProps) {
+export default function QuestionBankPage({ auth,QB }: PageProps<{QB:any}>) {
     return (
         <AuthenticatedLayout
             user={auth.user}

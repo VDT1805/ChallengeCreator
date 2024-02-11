@@ -17,7 +17,7 @@ class DynamicTeamPermission extends LaratrustMiddleware
         string|array $permissions,
         ?string $options = ''
     ) {
-        $team_id = $request->route('id'); //Team id
+        $team_id = $request->route('qbID'); //Team id
         if (! $this->authorization('permissions', $permissions, $team_id, $options)) {
             return $this->unauthorized();
         }

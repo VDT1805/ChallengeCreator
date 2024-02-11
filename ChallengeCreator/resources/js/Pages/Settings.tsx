@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import {
     Card,
@@ -74,7 +74,7 @@ export default function Dashboard({ auth }: PageProps) {
                                     <Textarea placeholder="Description of your question bank" />
                                 </div>
                             </div>
-                            <Link href={route('questionbank')}>
+                            <Link href={route('questionbanks.index')}>
                                 <Button className='mt-5'>
                                     Save
                                 </Button>
@@ -95,7 +95,7 @@ export default function Dashboard({ auth }: PageProps) {
                                 <Label className="text-xl font-bold">Delete this question bank</Label><br></br>
                                 <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Once you delete a question bank, there's no going back.</Label>
                             </div>
-                            <div className=""><Link href={route('questionbank')}>
+                            <div className=""><Link href={route('questionbanks.destroy',"2")} method='delete'>
                                 <Button className='bg-red-500 text-white font-bold rounded-t px-4 py-2'>
                                     Delete question bank
                                 </Button>
@@ -107,7 +107,7 @@ export default function Dashboard({ auth }: PageProps) {
                                 <Label className="text-xl font-bold">Transfer ownership</Label><br></br>
                                 <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"> Transfer this question bank to another user who has the ability to edit question banks.</Label>
                             </div>
-                            <div className=""><Link href={route('questionbank')}>
+                            <div className=""><Link href={route('questionbanks.index')}>
                                 <Button className='bg-red-500 text-white font-bold rounded-t px-4 py-2'>
                                     Transfer
                                 </Button>

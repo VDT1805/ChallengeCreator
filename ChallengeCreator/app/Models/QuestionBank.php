@@ -11,6 +11,7 @@ class QuestionBank extends LaratrustTeam
     use HasFactory, Filterable;
     public $guarded = [];
 
+
     public function users() {
         return $this->belongsToMany(
             User::class, 'role_user'

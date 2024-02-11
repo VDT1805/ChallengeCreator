@@ -54,7 +54,7 @@ export default function Dashboard({ auth }: PageProps) {
                                             </Select>
                                         </div>
                                     </div>
-                                    <Link href={route('questionbank')}>
+                                    <Link href={route('questionbanks.show')}>
                                         <Button type='submit'>
                                             Add question
                                         </Button>

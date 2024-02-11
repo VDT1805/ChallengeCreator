@@ -29,7 +29,7 @@ export default function Dashboard({ auth }: PageProps) {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('addquestionbank'));
+        post(route('questionbanks.store'));
     };
 
     return (

@@ -22,7 +22,7 @@ class DynamicTeamRole extends LaratrustMiddleware
     string|array $roles,
     ?string $options = ''): Response
     {
-        $team_id = $request->route('id'); //Team id
+        $team_id = $request->route('qbID'); //Team id
         if (! $this->authorization('roles', $roles, $team_id, $options)) {
             return $this->unauthorized();
         }

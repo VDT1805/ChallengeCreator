@@ -142,7 +142,7 @@ class QuestionBankService implements BaseCrudServiceInterface
         $search = [
             $column => $key
         ];
-        return QuestionBank::filter($search)->get();
+        return QuestionBank::filter($search)->first();
     }
 
     /**
@@ -166,9 +166,12 @@ class QuestionBankService implements BaseCrudServiceInterface
     public function create(array $data): ?Model
     {
         $model = resolve(QuestionBank::class);
-
+        $owner = Role::where("name","owner")->first();
         if (!$model->fill($data)->save()) {
             return null;
+        }
+        else {
+            Auth::user()->addRole($owner, $model);
         }
 
         if (!is_array($model->getKey())) {
@@ -186,12 +189,13 @@ class QuestionBankService implements BaseCrudServiceInterface
      */
     public function insert(array $data): bool
     {
-        // return $this->repository->insert($data);
         $qb = new QuestionBank();
         $qb -> name = $data["name"];
         $owner = Role::where("name","owner")->first();
         $saved = $qb->save();
-        Auth::user()->addRole($owner, $qb);
+        if ($saved) {
+            Auth::user()->addRole($owner, $qb);
+        }
         return $saved;
     }
 
@@ -260,8 +264,7 @@ class QuestionBankService implements BaseCrudServiceInterface
      */
     public function delete($keyOrModel): bool
     {
-
-        return QuestionBank::destroy($keyOrModel);
+        return QuestionBank::where("id",$keyOrModel)->delete();
     }
 
     /**
