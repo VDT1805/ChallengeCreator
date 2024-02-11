@@ -72,7 +72,7 @@ Route::get('/reusequestion', function () {
 Route::get('/qbs', [QuestionBankController::class,'index'])->middleware(['auth', 'verified'])->name('questionbanks.index');
 Route::get('/qbs/create', [QuestionBankController::class,'create'])->middleware(['auth', 'verified'])->name('questionbanks.create');
 Route::post('/qbs/create', [QuestionBankController::class,'store'])->middleware(['auth', 'verified'])->name('questionbanks.store');
-Route::get('/qbs/{qbID}', [QuestionBankController::class,'show'])->middleware(['auth', 'verified','dynamicrole:owner'])->name('questionbanks.show');
+Route::get('/qbs/{qbID}', [QuestionBankController::class,'show'])->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('questionbanks.show');
 Route::get('/qbs/{qbID}/settings', [QuestionBankController::class,'edit'])->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questionbanks.edit');
 Route::put('/qbs/{qbID}/settings', [QuestionBankController::class,'update'])->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questionbanks.update');
 Route::delete('/qbs/{qbID}/settings', [QuestionBankController::class,'destroy'])->middleware(['auth', 'verified','dynamicrole:owner'])->name('questionbanks.destroy');
