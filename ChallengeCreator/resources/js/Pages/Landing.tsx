@@ -63,7 +63,7 @@ export default function IndexPage({ auth }: PageProps) {
               ChallengeCreator's secure, professional web-based Quiz maker is an easy-to-use, customizable online testing solution for business, training & educational assessments with Tests & Quizzes graded instantly, saving hours of paperwork!
             </p>
             <Button asChild>
-              <Link href={route('questionbank.index')} className="font-semibold text-white-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+              <Link href={route('questionbanks.index')} className="font-semibold text-white-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                 Get Started
               </Link>
             </Button>

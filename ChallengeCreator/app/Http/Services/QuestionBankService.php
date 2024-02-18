@@ -90,7 +90,7 @@ class QuestionBankService implements BaseCrudServiceInterface
      */
     public function getAllPaginated(array $search = [], int $pageSize = 15): LengthAwarePaginator
     {
-
+        $search["users"] = Auth::user()->id;
         return QuestionBank::filter($search)->paginateFilter($pageSize);
     }
 
