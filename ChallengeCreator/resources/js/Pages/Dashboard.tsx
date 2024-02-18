@@ -15,7 +15,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { ArrowUpDown } from "lucide-react"
 import React from 'react';
 
-export default function Dashboard({ auth, QBS }: PageProps<{QBS:any}>) {
+export default function Dashboard({ auth, QBS }: PageProps<{ QBS: any }>) {
     const [sortState, setSortState] = React.useState("Alphabetical")
     return (
         <AuthenticatedLayout
@@ -23,10 +23,10 @@ export default function Dashboard({ auth, QBS }: PageProps<{QBS:any}>) {
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}>
             <Head title="Dashboard" />
             <div className="py-12">
-                <div className="flex justify-between max-w-7xl mx-auto sm:px-6 lg:px-8">
+                {/* <div className="flex justify-between max-w-7xl mx-auto px-8">
                     <Input
                         placeholder="Search for a question bank..."
-                        className="max-w-sm col-span-2 border-2 border-blue-500 border-solid" />
+                        className="max-w-sm border-2 border-blue-500 border-solid" />
                     <div className="flex items-center">
                         <DropdownMenu>
                             <DropdownMenuTrigger className="flex gap-2">
@@ -46,53 +46,79 @@ export default function Dashboard({ auth, QBS }: PageProps<{QBS:any}>) {
                             Add question bank
                         </Button>
                     </Link>
-                </div>
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-4 gap-4 mt-5">
-                        <Link href={route('questionbanks.show',"1")}>
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle>Question Bank 1</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <p>Principles of Programming Languages</p>
-                                </CardContent>
-                            </Card>
-                        </Link>
+                </div> */}
 
-                        <Link href={route('questionbanks.show',"2")}>
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle>Question Bank 2</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <p>Calculus 2</p>
-                                </CardContent>
-                            </Card>
-                        </Link>
-
-                        <Link href={route('questionbanks.show',"3")}>
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle>Question Bank 3</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <p>Principles of Marketing</p>
-                                </CardContent>
-                            </Card>
-                        </Link>
-
-                        <Link href={route('questionbanks.show',"4")}>
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle>Question Bank 4</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <p>Physical Education 2</p>
-                                </CardContent>
-                            </Card>
+                <div className="grid md:grid-cols-5 md:grid-rows-none px-8 mx-auto max-w-7xl grid-rows-3 grid-flow-col">
+                    <Input
+                        placeholder="Search for a question bank..."
+                        className="border-2 border-blue-500 border-solid row-span-1 md:col-span-2" />
+                    <div className="flex items-center row-span-1 md:col-span-2">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger className="flex gap-2">
+                                <ArrowUpDown className="ml-2 h-4 w-4 mt-1" />
+                                Sort By: {
+                                    sortState
+                                }
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                                <DropdownMenuItem onClick={() => { setSortState("Alphabetical") }}>Alphabetical</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => { setSortState("Last Updated") }}>Last Updated</DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
+                    <div className="md:col-start-10 col-span-1">
+                        <Link href={route('questionbanks.create')}>
+                            <Button>
+                                Add question bank
+                            </Button>
                         </Link>
                     </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-5 max-w-7xl mx-auto px-8">
+                    <Link href={route('questionbanks.show', "1")}>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Question Bank 1</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p>Principles of Programming Languages</p>
+                            </CardContent>
+                        </Card>
+                    </Link>
+
+                    <Link href={route('questionbanks.show', "2")}>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Question Bank 2</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p>Calculus 2</p>
+                            </CardContent>
+                        </Card>
+                    </Link>
+
+                    <Link href={route('questionbanks.show', "3")}>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Question Bank 3</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p>Principles of Marketing</p>
+                            </CardContent>
+                        </Card>
+                    </Link>
+
+                    <Link href={route('questionbanks.show', "4")}>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Question Bank 4</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p>Physical Education 2</p>
+                            </CardContent>
+                        </Card>
+                    </Link>
                 </div>
             </div>
         </AuthenticatedLayout>
