@@ -72,7 +72,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center justify-between gap-4 py-4">
+      {/* <div className="flex items-center justify-between gap-4 py-4">
         <div className="grid grid-cols-3 gap-4">
           <Input
             placeholder="Search test name..."
@@ -98,6 +98,32 @@ export function DataTable<TData, TValue>({
         </div>
 
         <div>
+          <Link href={route('addtest')}>
+            <Button>
+              Add test
+            </Button>
+          </Link>
+        </div>
+      </div> */}
+      <div className="grid md:grid-cols-5 md:grid-rows-none py-4 mx-auto max-w-7xl grid-rows-3 grid-flow-col">
+        <Input
+          placeholder="Search for a test..."
+          className="border-2 border-blue-500 border-solid row-span-1 md:col-span-2" />
+        <div className="flex items-center row-span-1 md:col-span-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger className="flex gap-2">
+              <ArrowUpDown className="ml-2 h-4 w-4 mt-1" />
+              Sort By: {
+                sortState
+              }
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+            <DropdownMenuItem onClick={() => { table.getColumn("name")?.toggleSorting(table.getColumn("name")?.getIsSorted() === "asc"); setSortState("Alphabetical") }}>Alphabetical</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => { table.getColumn("lastUpdated")?.toggleSorting(table.getColumn("lastUpdated")?.getIsSorted() === "asc"); setSortState("Last Updated") }}>Last Updated</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+        <div className="md:col-start-10 col-span-1">
           <Link href={route('addtest')}>
             <Button>
               Add test
