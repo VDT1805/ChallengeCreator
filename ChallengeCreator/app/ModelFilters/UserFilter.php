@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\ModelFilters;
 
@@ -12,5 +12,5 @@ class UserFilter extends ModelFilter
     *
     * @var array
     */
-    public $relations = [];
+    public $relations = ["questionbanks"=>"users"];
 }

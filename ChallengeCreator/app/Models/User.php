@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,7 +14,7 @@ use Laratrust\Contracts\LaratrustUser;
 
 class User extends Authenticatable implements LaratrustUser
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRolesAndPermissions;
+    use HasApiTokens, HasFactory, Filterable, Notifiable, HasRolesAndPermissions;
 
 
     /**
@@ -48,7 +50,7 @@ class User extends Authenticatable implements LaratrustUser
 
     public function questionbanks() {
         return $this->belongsToMany(
-            QuestionBank::class, 'role_user', 'user_id', 'team_id'
+            QuestionBank::class, 'role_user', 'team_id', 'user_id'
         );
     }
 

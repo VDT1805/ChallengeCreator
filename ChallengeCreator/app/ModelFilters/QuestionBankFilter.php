@@ -13,4 +13,8 @@ class QuestionBankFilter extends ModelFilter
     * @var array
     */
     public $relations = [];
+    public function users($id)
+    {
+        return $this->related('users','user_id','=', $id);
+    }
 }

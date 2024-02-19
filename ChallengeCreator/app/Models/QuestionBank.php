@@ -14,7 +14,7 @@ class QuestionBank extends LaratrustTeam
 
     public function users() {
         return $this->belongsToMany(
-            User::class, 'role_user'
+            User::class, 'role_user', 'team_id', 'user_id'
         );
     }
 
