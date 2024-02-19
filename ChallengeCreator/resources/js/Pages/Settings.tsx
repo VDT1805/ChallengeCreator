@@ -30,8 +30,8 @@ export default function Settings({ auth, QBank, CanEdit }: PageProps<{ QBank: QB
     const [position, setPosition] = React.useState("bottom")
 
     const { data, setData, post, processing, errors, reset, put } = useForm({
-        name: '',
-        description: ''
+        name: QBank.name,
+        description: QBank.description
     });
 
     const submit: FormEventHandler = (e) => {
