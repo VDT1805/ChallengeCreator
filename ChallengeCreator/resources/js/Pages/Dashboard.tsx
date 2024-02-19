@@ -14,8 +14,9 @@ import { Input } from '@/shadcn/ui/input';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/shadcn/ui/dropdown-menu"
 import { ArrowUpDown } from "lucide-react"
 import React from 'react';
+import { QBPage } from './QuestionBank/QuestionBankTable/QuestionBankType';
 
-export default function Dashboard({ auth, QBS }: PageProps<{ QBS: any }>) {
+export default function Dashboard({ auth, QBS }: PageProps<{ QBS: QBPage }>) {
     const [sortState, setSortState] = React.useState("Alphabetical")
     return (
         <AuthenticatedLayout
