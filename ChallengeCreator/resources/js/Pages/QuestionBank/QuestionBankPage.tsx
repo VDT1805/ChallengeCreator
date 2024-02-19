@@ -13,7 +13,7 @@ import { Separator } from "@/shadcn/ui/separator";
 import { QB } from "./QuestionBankTable/QuestionBankType";
 
 export default function QuestionBankPage({ auth, QBank, CanEdit }: PageProps<{ QBank: QB, CanEdit: Boolean }>) {
-    console.log(CanEdit)
+    console.log(QBank)
     return (
         <AuthenticatedLayout
             user={auth.user}

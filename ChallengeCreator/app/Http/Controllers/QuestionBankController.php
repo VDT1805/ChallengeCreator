@@ -61,7 +61,9 @@ class QuestionBankController extends Controller
     public function show($qbID)
     {
         //
+        // dd($qbID);
         $QB = $this->qbService->findOrFail($qbID,"id");
+
         return Inertia::render(
             "QuestionBank/QuestionBankPage",
             ["QBank" => $QB, "CanEdit" => Auth::user()->hasPermission('questionbank-update',$qbID)]
