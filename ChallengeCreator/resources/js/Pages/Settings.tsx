@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, Link, router, useForm } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import {
     Card,
@@ -21,30 +21,30 @@ import {
 import { Button } from '@/shadcn/ui/button';
 import { Textarea } from '@/shadcn/ui/textarea';
 import { Checkbox } from '@/shadcn/ui/checkbox';
-// import {
-//   Dialog,
-//   DialogContent,
-//   DialogDescription,
-//   DialogHeader,
-//   DialogTitle,
-//   DialogTrigger,
-// } from "@/shadcn/ui/dialog"
-
-
-
-import React from 'react';
+import React, { FormEventHandler } from 'react';
 import { Menu } from './Menu';
+import { QB } from './QuestionBank/QuestionBankTable/QuestionBankType';
 
 
-export default function Dashboard({ auth }: PageProps) {
+export default function Settings({ auth, QBank, CanEdit }: PageProps<{ QBank: QB, CanEdit: Boolean }>) {
     const [position, setPosition] = React.useState("bottom")
+
+    const { data, setData, post, processing, errors, reset, put } = useForm({
+        name: '',
+        description: ''
+    });
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+        put(route('questionbanks.update', QBank.id));
+    };
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Settings</h2>}>
             <Head title="Settings" />
             <div className="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <Menu></Menu>
+            <Menu QBank={QBank} CanEdit={CanEdit}></Menu>
                 <Card>
                     <CardHeader>
                         <CardTitle className="text-3xl font-bold">Owner</CardTitle>
@@ -63,22 +63,22 @@ export default function Dashboard({ auth }: PageProps) {
                         <CardTitle className="text-3xl font-bold">Question Bank</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <form>
+                        <form onSubmit={submit}>
                             <div className="grid w-full items-center gap-4">
                                 <div className="flex flex-col space-y-1.5">
                                     <Label htmlFor="name" className="text-xl font-bold">Question bank name</Label>
-                                    <Input id="name" placeholder="Name of your question bank" />
+                                    <Input id="name" placeholder={QBank.name ? QBank.name : "Name of your question bank"} onChange={(e) => setData('name', e.target.value)} />
                                 </div>
                                 <div className="flex flex-col space-y-1.5">
                                     <Label htmlFor="name" className="text-xl font-bold">Description of question bank</Label>
-                                    <Textarea placeholder="Description of your question bank" />
+                                    <Textarea placeholder={QBank.description ? QBank.description : "Description of your question bank"} onChange={(e) => setData('description', e.target.value)} />
                                 </div>
                             </div>
-                            <Link href={route('questionbanks.index')}>
-                                <Button className='mt-5'>
+                            {/* <Link href={route('questionbanks.update', QBank.id)} method='put'> */}
+                                <Button className='mt-5' type='submit'>
                                     Save
                                 </Button>
-                            </Link>
+                            {/* </Link> */}
                         </form>
                     </CardContent>
                 </Card>
@@ -95,7 +95,7 @@ export default function Dashboard({ auth }: PageProps) {
                                 <Label className="text-xl font-bold">Delete this question bank</Label><br></br>
                                 <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Once you delete a question bank, there's no going back.</Label>
                             </div>
-                            <div className=""><Link href={route('questionbanks.destroy',"2")} method='delete'>
+                            <div><Link href={route('questionbanks.destroy', QBank.id)} method='delete'>
                                 <Button className='bg-red-500 text-white font-bold rounded-t px-4 py-2'>
                                     Delete question bank
                                 </Button>

@@ -19,6 +19,7 @@ import { Menu } from "../Menu";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shadcn/ui/card";
 import { PrinterIcon, Trash2Icon } from "lucide-react";
 import { Separator } from "@/shadcn/ui/separator"
+import { QB } from "../QuestionBank/QuestionBankTable/QuestionBankType";
 
 
 // export default function DemoPage() {
@@ -43,7 +44,7 @@ import { Separator } from "@/shadcn/ui/separator"
 //   )
 // }
 
-export default function TestTable({ auth }: PageProps) {
+export default function TestTable({ auth, QBank }: PageProps<{ QBank: QB }>) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -63,7 +64,7 @@ export default function TestTable({ auth }: PageProps) {
                         <TabsContent value="tests">Make changes to your account here.</TabsContent>
                         <TabsContent value="qb">Change your password here.</TabsContent>
                         </Tabs> */}
-                    <Menu></Menu>
+                    <Menu QBank={QBank}></Menu>
                 </div>
                 <div className="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <Card>

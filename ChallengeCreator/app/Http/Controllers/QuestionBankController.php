@@ -7,6 +7,7 @@ use App\Models\QuestionBank;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 
 class QuestionBankController extends Controller
@@ -24,6 +25,7 @@ class QuestionBankController extends Controller
     {
         //
         $QBS =  $this->qbService->getAllPaginated();
+        // dd($QBS);
         return Inertia::render(
             "Dashboard",
             ["QBS" => $QBS]
@@ -62,7 +64,7 @@ class QuestionBankController extends Controller
         $QB = $this->qbService->findOrFail($qbID,"id");
         return Inertia::render(
             "QuestionBank/QuestionBankPage",
-            ["QB" => $QB]
+            ["QBank" => $QB, "CanEdit" => Auth::user()->hasPermission('questionbank-update',$qbID)]
         );
     }
 
@@ -74,7 +76,7 @@ class QuestionBankController extends Controller
         //
         $QB = $this->qbService->findOrFail($qbID,"id");
         return Inertia::render(
-            "Settings",["QB" => $QB]
+            "Settings",["QBank" => $QB, "CanEdit" => Auth::user()->hasPermission('questionbank-update',$qbID)]
         );
     }
 

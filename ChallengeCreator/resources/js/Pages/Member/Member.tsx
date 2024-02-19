@@ -7,6 +7,7 @@ import { PageProps } from '@/types';
 import { Menubar } from '@radix-ui/react-menubar';
 import { Button } from "@/shadcn/ui/button";
 import { Menu } from "../Menu";
+import { QB } from "../QuestionBank/QuestionBankTable/QuestionBankType";
 
 
 
@@ -35,7 +36,7 @@ import { Menu } from "../Menu";
 
 
 
-export default function MemberTable({ auth }: PageProps) {
+export default function MemberTable({ auth, QBank }: PageProps<{ QBank: QB }>) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -75,7 +76,7 @@ export default function MemberTable({ auth }: PageProps) {
                                     Community
                                 </Link>
                     </Menubar> */}
-                    <Menu></Menu>
+                    <Menu QBank={QBank}></Menu>
                 </div>
                 <div className="container mx-auto">
                     {/* <div className="flex justify-between">

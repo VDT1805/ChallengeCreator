@@ -34,9 +34,10 @@ import { Checkbox } from '@/shadcn/ui/checkbox';
 
 import React from 'react';
 import { Menu } from '../Menu';
+import { QB } from '../QuestionBank/QuestionBankTable/QuestionBankType';
 
 
-export default function Dashboard({ auth }: PageProps) {
+export default function AddTest({ auth, QBank }: PageProps<{ QBank: QB }>) {
   const [position, setPosition] = React.useState("bottom")
   return (
     <AuthenticatedLayout
@@ -44,7 +45,7 @@ export default function Dashboard({ auth }: PageProps) {
       header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">New Test</h2>}>
       <Head title="New Test" />
       <div className="mt-10 mb-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <Menu></Menu>
+      <Menu QBank={QBank}></Menu>
         <Card>
           <CardHeader>
             <CardTitle className="text-3xl font-bold">Add Test</CardTitle>

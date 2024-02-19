@@ -9,78 +9,31 @@ import { Button } from "@/shadcn/ui/button";
 import { Menu } from "../Menu";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/shadcn/ui/dropdown-menu";
 import { UpdateIcon, PlusIcon, ShuffleIcon, FilePlusIcon } from "@radix-ui/react-icons";
+import { Separator } from "@/shadcn/ui/separator";
+import { QB } from "./QuestionBankTable/QuestionBankType";
 
-
-
-// export default function DemoPage() {
-//   const data1: Array<Payment> = [
-//   {id: "728ed52f",
-//   amount: 100,
-//   status: "pending",
-//   email: "m@example.com",},
-//   {id: "728ed52f",
-//   amount: 100,
-//   status: "pending",
-//   email: "m@example.com",},
-// ]
-// console.log(typeof(data1))
-//   return (
-
-//     <div className="container mx-auto py-10">
-//       <h3> Test Table </h3>
-
-//       <DataTable columns={columns} data={data1} />
-//     </div>
-//   )
-// }
-
-export default function QuestionBankPage({ auth,QB }: PageProps<{QB:any}>) {
+export default function QuestionBankPage({ auth, QBank, CanEdit }: PageProps<{ QBank: QB, CanEdit: Boolean }>) {
+    console.log(CanEdit)
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">All questions</h2>}>
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Question bank</h2>}>
             <Head title="Question Bank" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    {/* <Tabs defaultValue="account" className="w-[400px]">
-                        <TabsList className='grid w-full grid-cols-6'>
-                            <div><TabsTrigger value="tests">All tests</TabsTrigger></div>
-                            <div><TabsTrigger value="qb">Question bank</TabsTrigger></div>
-                            <div><TabsTrigger value="categories">Categories</TabsTrigger></div>
-                            <div><TabsTrigger value="files">Files</TabsTrigger></div>
-                            <div><TabsTrigger value="certificates">Certificates</TabsTrigger></div>
-                            <div><TabsTrigger value="community">Community</TabsTrigger></div>
-                        </TabsList>
-                        <TabsContent value="tests">Make changes to your account here.</TabsContent>
-                        <TabsContent value="qb">Change your password here.</TabsContent>
-                        </Tabs> */}
-                    {/* <Menubar className="flex justify-evenly w-full mb-4">
-                                <Link href={route('testlist')} className="text-white-1 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm">
-                                    All Tests
-                                </Link>
-                                <Link href={route('register')} className="text-white-1 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                    Question Bank
-                                </Link>
-                                <Link href={route('register')} className="text-white-1 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                    Categories
-                                </Link> */}
-                    {/* <Link href={route('register')} className="text-white-1 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                    Files
-                                </Link>
-                                <Link href={route('register')} className="text-white-1 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                    Certificates
-                                </Link> */}
-                    {/* <Link href={route('register')} className="text-white-1 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                    Community
-                                </Link>
-                    </Menubar> */}
-                    <Menu></Menu>
-                </div>
-                <div className="container mx-auto">
-                    {/* <div className="flex justify-between">
-                        <h3>All questions</h3>
-                    </div> */}
-                    <DataTable columns={columns} data={data} />
+                    <Menu QBank={QBank} CanEdit={CanEdit}></Menu>
+                    <h1
+                        className="inline-block text-5xl uppercase font-black !bg-clip-text text-transparent !bg-cover !bg-center"
+                        style={{ background: "linear-gradient(to top right,#24C6DC,#514A9D)" }}
+                    >
+                        Welcome to your question bank
+                    </h1>
+                    <Separator className="mt-5 mb-5"/>
+                    <p className="text-xl font-bold mb-2">Tests</p> - see all your tests from this Bank
+                    <p className="text-xl font-bold mt-2 mb-2">Questions</p> - see all your questions in this Bank
+                    <p className="text-xl font-bold mt-2 mb-2">Categories</p> - see all the categories & subcategories for this Bank
+                    <p className="text-xl font-bold mt-2 mb-2">Members</p> - see who are collaborating with you in this Bank
+                    <p className="text-xl font-bold mt-2 mb-2">Settings</p> - change information about this Bank
                 </div>
             </div>
         </AuthenticatedLayout>

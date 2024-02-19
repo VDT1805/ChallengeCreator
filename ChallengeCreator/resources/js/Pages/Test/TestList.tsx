@@ -6,8 +6,9 @@ import { Head, Link } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import { Button } from "@/shadcn/ui/button";
 import { Menu } from "../Menu";
+import { QB } from "../QuestionBank/QuestionBankTable/QuestionBankType";
 
-export default function TestTable({ auth }: PageProps) {
+export default function TestList({ auth, QBank }: PageProps<{ QBank: QB }>) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -15,7 +16,7 @@ export default function TestTable({ auth }: PageProps) {
             <Head title="Tests" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <Menu></Menu>
+                <Menu QBank={QBank}></Menu>
                 </div>
                 <div className="container mx-auto">
                     {/* <div className="flex justify-between">

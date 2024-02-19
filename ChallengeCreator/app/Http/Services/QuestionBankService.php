@@ -91,6 +91,7 @@ class QuestionBankService implements BaseCrudServiceInterface
     public function getAllPaginated(array $search = [], int $pageSize = 15): LengthAwarePaginator
     {
         $search["users"] = Auth::user()->id;
+        // dd(QuestionBank::filter($search)->toSql());
         return QuestionBank::filter($search)->paginateFilter($pageSize);
     }
 
@@ -250,6 +251,7 @@ class QuestionBankService implements BaseCrudServiceInterface
     public function update($keyOrModel, array $data): ?Model
     {
         $qb = QuestionBank::find($keyOrModel);
+        // dd($data);
         $qb -> name = $data["name"];
         $qb -> save();
         return $qb;

@@ -15,40 +15,25 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { ArrowUpDown } from "lucide-react"
 import React from 'react';
 import { QBPage } from './QuestionBank/QuestionBankTable/QuestionBankType';
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/shadcn/ui/pagination"
 
 export default function Dashboard({ auth, QBS }: PageProps<{ QBS: QBPage }>) {
     const [sortState, setSortState] = React.useState("Alphabetical")
+    // console.log(JSON.stringify(QBS));
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}>
             <Head title="Dashboard" />
             <div className="py-12">
-                {/* <div className="flex justify-between max-w-7xl mx-auto px-8">
-                    <Input
-                        placeholder="Search for a question bank..."
-                        className="max-w-sm border-2 border-blue-500 border-solid" />
-                    <div className="flex items-center">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger className="flex gap-2">
-                                <ArrowUpDown className="ml-2 h-4 w-4 mt-1" />
-                                Sort By: {
-                                    sortState
-                                }
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <DropdownMenuItem onClick={() => { setSortState("Alphabetical") }}>Alphabetical</DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => { setSortState("Last Updated") }}>Last Updated</DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
-                    <Link href={route('questionbanks.create')}>
-                        <Button>
-                            Add question bank
-                        </Button>
-                    </Link>
-                </div> */}
-
                 <div className="grid md:grid-cols-5 md:grid-rows-none px-8 mx-auto max-w-7xl grid-rows-3 grid-flow-col">
                     <Input
                         placeholder="Search for a question bank..."
@@ -77,50 +62,32 @@ export default function Dashboard({ auth, QBS }: PageProps<{ QBS: QBPage }>) {
                 </div>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-5 max-w-7xl mx-auto px-8">
-                    <Link href={route('questionbanks.show', "1")}>
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Question Bank 1</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <p>Principles of Programming Languages</p>
-                            </CardContent>
-                        </Card>
-                    </Link>
-
-                    <Link href={route('questionbanks.show', "2")}>
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Question Bank 2</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <p>Calculus 2</p>
-                            </CardContent>
-                        </Card>
-                    </Link>
-
-                    <Link href={route('questionbanks.show', "3")}>
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Question Bank 3</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <p>Principles of Marketing</p>
-                            </CardContent>
-                        </Card>
-                    </Link>
-
-                    <Link href={route('questionbanks.show', "4")}>
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Question Bank 4</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <p>Physical Education 2</p>
-                            </CardContent>
-                        </Card>
-                    </Link>
+                    {QBS.data.map(item => (
+                        <Link href={route('questionbanks.show', item.id)}>
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Question Bank {item.id}</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <p>{item.name}</p>
+                                </CardContent>
+                            </Card>
+                        </Link>
+                    ))}
                 </div>
+                <Pagination>
+                    <PaginationContent>
+                        <PaginationItem>
+                            <PaginationPrevious href={QBS.prev_page_url} />
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationLink href={QBS.first_page_url}>1</PaginationLink>
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationNext href={QBS.next_page_url} />
+                        </PaginationItem>
+                    </PaginationContent>
+                </Pagination>
             </div>
         </AuthenticatedLayout>
     );
