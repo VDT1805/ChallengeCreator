@@ -29,4 +29,10 @@ class QuestionBank extends LaratrustTeam
             Test::class
         );
     }
+
+    public function questions() {
+        return $this->hasMany(
+            Question::class, "question_bank_id"
+        );
+    }
 }

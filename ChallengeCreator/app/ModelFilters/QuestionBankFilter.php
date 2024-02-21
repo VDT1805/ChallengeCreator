@@ -17,6 +17,12 @@ class QuestionBankFilter extends ModelFilter
     {
         return $this->related('users','user_id','=', $id);
     }
+
+    // public function questions($id)
+    // {
+    //     return $this->related('questions', "question_id", "=", $id);
+    // }
+
     public function id($id)
     {
         return $this->where('id','=', $id);

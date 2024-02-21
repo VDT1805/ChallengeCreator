@@ -34,7 +34,7 @@ import { Checkbox } from '@/shadcn/ui/checkbox';
 
 import React from 'react';
 import { Menu } from '../Menu';
-import { QB } from '../QuestionBank/QuestionBankTable/QuestionBankType';
+import { QB } from '../QuestionBank/QuestionBankType';
 
 
 export default function AddTest({ auth, QBank }: PageProps<{ QBank: QB }>) {

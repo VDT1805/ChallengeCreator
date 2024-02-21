@@ -19,7 +19,7 @@ import { Menu } from "../Menu";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shadcn/ui/card";
 import { PrinterIcon, Trash2Icon } from "lucide-react";
 import { Separator } from "@/shadcn/ui/separator"
-import { QB } from "../QuestionBank/QuestionBankTable/QuestionBankType";
+import { QB } from "../QuestionBank/QuestionBankType";
 
 
 // export default function DemoPage() {

@@ -103,6 +103,6 @@ class QuestionBankController extends Controller
         if($deleted) {
             return redirect()->route("questionbanks.index");
         }
-        else{dd("GL");}
+        else{dd("Error");}
     }
 }

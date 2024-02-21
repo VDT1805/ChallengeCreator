@@ -1,6 +1,6 @@
-import { columns } from "./QuestionBankTable/QuestionBankColumn"
-import { DataTable } from "./QuestionBankTable/QuestionBankTable"
-import { data } from "./QuestionBankTable/QuestionBankData"
+import { columns } from "../Questions/QuestionTable/QuestionColumn"
+import { DataTable } from "../Questions/QuestionTable/QuestionTable"
+import { data } from "../Questions/QuestionTable/QuestionData"
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import { PageProps } from '@/types';
@@ -10,10 +10,10 @@ import { Menu } from "../Menu";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/shadcn/ui/dropdown-menu";
 import { UpdateIcon, PlusIcon, ShuffleIcon, FilePlusIcon } from "@radix-ui/react-icons";
 import { Separator } from "@/shadcn/ui/separator";
-import { QB } from "./QuestionBankTable/QuestionBankType";
+import { QB } from "./QuestionBankType";
 
 export default function QuestionBankPage({ auth, QBank, CanEdit }: PageProps<{ QBank: QB, CanEdit: Boolean }>) {
-    console.log(QBank)
+    // console.log(QBank)
     return (
         <AuthenticatedLayout
             user={auth.user}

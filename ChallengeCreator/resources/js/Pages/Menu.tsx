@@ -1,7 +1,7 @@
 import { Menubar } from "@/shadcn/ui/menubar";
 import { PageProps } from "@/types";
 import { Link } from "@inertiajs/react";
-import { QB } from "./QuestionBank/QuestionBankTable/QuestionBankType";
+import { QB } from "./QuestionBank/QuestionBankType";
 
 export function Menu({ QBank, CanEdit }: { QBank: QB, CanEdit: Boolean }) {
     return (
@@ -9,7 +9,7 @@ export function Menu({ QBank, CanEdit }: { QBank: QB, CanEdit: Boolean }) {
             <Link href={route('testlist')} className="text-white-1 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                 Tests
             </Link>
-            <Link href={route('questions')} className="text-white-1 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+            <Link href={route('questions.index', QBank.id)} className="text-white-1 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                 Questions
             </Link>
             <Link href={route('category')} className="text-white-1 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">

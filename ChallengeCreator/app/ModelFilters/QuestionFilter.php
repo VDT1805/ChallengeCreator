@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\ModelFilters;
 
@@ -13,4 +13,8 @@ class QuestionFilter extends ModelFilter
     * @var array
     */
     public $relations = [];
+    public function questionbanks($id)
+    {
+        return $this->where('question_bank_id','=', $id);
+    }
 }

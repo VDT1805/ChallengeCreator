@@ -1,9 +1,4 @@
-export type QuestionBank = {
-    id: string
-    name: string
-    author: string
-    lastUpdated: string
-  }
+
 
   export interface QBPage {
     current_page: number

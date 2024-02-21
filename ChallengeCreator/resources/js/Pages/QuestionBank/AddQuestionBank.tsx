@@ -14,7 +14,7 @@ import { Label } from "@/shadcn/ui/label"
 import { Button } from '@/shadcn/ui/button';
 import { Menu } from '../Menu';
 import { FormEventHandler, useEffect } from 'react';
-import { QB } from './QuestionBankTable/QuestionBankType';
+import { QB } from './QuestionBankType';
 
 export default function AddQuestionBank({auth}: PageProps) {
     const { data, setData, post, processing, errors, reset } = useForm({

@@ -23,7 +23,7 @@ import { Textarea } from '@/shadcn/ui/textarea';
 import { Checkbox } from '@/shadcn/ui/checkbox';
 import React, { FormEventHandler } from 'react';
 import { Menu } from './Menu';
-import { QB } from './QuestionBank/QuestionBankTable/QuestionBankType';
+import { QB } from './QuestionBank/QuestionBankType';
 
 
 export default function Settings({ auth, QBank, CanEdit }: PageProps<{ QBank: QB, CanEdit: Boolean }>) {

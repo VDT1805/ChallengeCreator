@@ -11,11 +11,11 @@ use Illuminate\Support\LazyCollection;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\QuestionBank;
+use App\Models\Question;
 use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 
-class QuestionBankService implements BaseCrudServiceInterface
+class QuestionService implements BaseCrudServiceInterface
 {
 
     /**
@@ -29,9 +29,9 @@ class QuestionBankService implements BaseCrudServiceInterface
      */
     public function getAllPaginated(array $search = [], int $pageSize = 15): LengthAwarePaginator
     {
-        $search["users"] = Auth::user()->id;
         // dd(QuestionBank::filter($search)->toSql());
-        return QuestionBank::filter($search)->paginateFilter($pageSize);
+        // dd(Question::filter($search)->toSql());
+        return Question::filter($search)->paginateFilter($pageSize);
     }
 
     /**
@@ -42,22 +42,9 @@ class QuestionBankService implements BaseCrudServiceInterface
      */
     public function getAll(array $search = []): EloquentCollection
     {
-        $search["users"] = Auth::user()->id;
-        return QuestionBank::filter($search)->get();
+        return Question::filter($search)->get();
         // return $this->repository->getAll($search);
     }
-
-    /**
-     * Get all records as lazy collection (cursor)
-     *
-     * @param array $search
-     * @return LazyCollection
-     */
-    // public function getAllAsCursor(array $search = []): LazyCollection
-    // {
-    //     return QuestionBank::filter($search)->cursor();
-    //     // return $this->repository->getAllCursor($search);
-    // }
 
     /**
      * Get results count
@@ -66,7 +53,7 @@ class QuestionBankService implements BaseCrudServiceInterface
      */
     public function count(array $search = []): int
     {
-        return QuestionBank::filter($search)->count();
+        return Question::filter($search)->count();
         // return $this->repository->count($search);
     }
 
@@ -82,7 +69,7 @@ class QuestionBankService implements BaseCrudServiceInterface
         $search = [
             $column => $key
         ];
-        return QuestionBank::filter($search)->first();
+        return Question::filter($search)->first();
     }
 
     /**
@@ -93,7 +80,7 @@ class QuestionBankService implements BaseCrudServiceInterface
      */
     public function find(array $attributes): Collection
     {
-        return QuestionBank::filter($attributes)->get();
+        return Question::filter($attributes)->get();
     }
 
     /**
@@ -105,15 +92,10 @@ class QuestionBankService implements BaseCrudServiceInterface
      */
     public function create(array $data): ?Model
     {
-        $model = resolve(QuestionBank::class);
-        $owner = Role::where("name","owner")->first();
+        $model = resolve(Question::class);
         if (!$model->fill($data)->save()) {
             return null;
         }
-        else {
-            Auth::user()->addRole($owner, $model);
-        }
-
         if (!is_array($model->getKey())) {
             return $model->refresh();
         }
@@ -129,13 +111,16 @@ class QuestionBankService implements BaseCrudServiceInterface
      */
     public function insert(array $data): bool
     {
-        $qb = new QuestionBank();
-        $qb -> name = $data["name"];
-        $owner = Role::where("name","owner")->first();
+        $qb = new Question();
+        $qb -> question = $data["question"];
+        $qb -> ans1 = $data["ans1"];
+        $qb -> ans2 = $data["ans2"];
+        $qb -> ans3 = $data["ans3"];
+        $qb -> ans4 = $data["ans4"];
+        $qb -> ans5 = $data["ans5"];
+        $qb -> ans6 = $data["ans6"];
+        $qb -> question_bank_id = $data["question_bank_id"];
         $saved = $qb->save();
-        if ($saved) {
-            Auth::user()->addRole($owner, $qb);
-        }
         return $saved;
     }
 
@@ -173,7 +158,7 @@ class QuestionBankService implements BaseCrudServiceInterface
      */
     public function updateOrCreate(array $attributes, array $data): ?Model
     {
-        if (is_null($model = QuestionBank::updateOrCreate($attributes, $data))) {
+        if (is_null($model = Question::updateOrCreate($attributes, $data))) {
             throw new Exception('Error while creating or updating the model');
         }
 
@@ -189,9 +174,8 @@ class QuestionBankService implements BaseCrudServiceInterface
      */
     public function update($keyOrModel, array $data): ?Model
     {
-        $qb = QuestionBank::find($keyOrModel);
-        // dd($data);
-        $qb -> name = $data["name"];
+        $qb = Question::find($keyOrModel);
+        $qb -> question = $data["question"];
         $qb -> save();
         return $qb;
     }
@@ -205,7 +189,7 @@ class QuestionBankService implements BaseCrudServiceInterface
      */
     public function delete($keyOrModel): bool
     {
-        return QuestionBank::where("id",$keyOrModel)->delete();
+        return Question::where("id",$keyOrModel)->delete();
     }
 
     /**

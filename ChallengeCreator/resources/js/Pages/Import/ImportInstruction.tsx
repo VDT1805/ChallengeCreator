@@ -29,7 +29,7 @@ import { Menu } from '../Menu';
 import { columns } from "./ImportInstructionTable/ImportInstructionColumn"
 import { DataTable } from './ImportInstructionTable/ImportInstructionTable';
 import { data } from './ImportInstructionTable/ImportInstructionData';
-import { QB } from '../QuestionBank/QuestionBankTable/QuestionBankType';
+import { QB } from '../QuestionBank/QuestionBankType';
 
 
 export default function ImportInstruction({ auth, QBank }: PageProps<{ QBank: QB }>) {

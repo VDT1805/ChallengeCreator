@@ -7,7 +7,7 @@ import { PageProps } from '@/types';
 import { Menubar } from '@radix-ui/react-menubar';
 import { Button } from "@/shadcn/ui/button";
 import { Menu } from "../Menu";
-import { QB } from "../QuestionBank/QuestionBankTable/QuestionBankType";
+import { QB } from "../QuestionBank/QuestionBankType";
 
 
 

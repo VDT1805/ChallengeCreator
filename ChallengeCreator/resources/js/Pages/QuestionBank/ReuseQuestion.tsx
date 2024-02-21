@@ -20,7 +20,7 @@ import {
     SelectValue,
 } from "@/shadcn/ui/select"
 import { Menu } from '../Menu';
-import { QB } from './QuestionBankTable/QuestionBankType';
+import { QB } from './QuestionBankType';
 
 
 export default function ReuseQuestion({ auth, QBank }: PageProps<{ QBank: QB }>) {

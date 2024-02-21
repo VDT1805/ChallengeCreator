@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionBankController;
+use App\Http\Controllers\QuestionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -45,9 +46,7 @@ Route::get('/testdetail', function () {
     return Inertia::render('Test/TestDetail');
 })->middleware(['auth', 'verified'])->name('testdetail');
 
-Route::get('/questions', function () {
-    return Inertia::render('QuestionBank/QuestionBankPage');
-})->middleware(['auth', 'verified'])->name('questions');
+
 
 Route::get('/category', function () {
     return Inertia::render('Category/Category');
@@ -94,6 +93,31 @@ Route::delete('/qbs/{qbID}/settings', [QuestionBankController::class,'destroy'])
 
 ##################################################################
 
+Route::get('/qbs/{qbID}/questions',[QuestionController::class,'index'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('questions.index');
+
+Route::get('/qbs/{qbID}/questions/create', [QuestionController::class,'create'])
+->middleware(['auth', 'verified'])->name('questions.create');
+
+Route::post('/qbs/{qbID}/questions/create', [QuestionController::class,'store'])
+->middleware(['auth', 'verified'])->name('questions.store');
+
+Route::get('/qbs/{qbID}/questions/{qID}', [QuestionController::class,'show'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('questions.show');
+
+Route::get('/qbs/{qbID}/questions/{qID}/edit', [QuestionController::class,'edit'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.edit');
+
+Route::put('/qbs/{qbID}/questions/{qID}/edit', [QuestionController::class,'update'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.update');
+
+Route::delete('/qbs/{qbID}/questions/{qID}/edit', [QuestionController::class,'destroy'])
+->middleware(['auth', 'verified','dynamicrole:owner'])->name('questions.destroy');
+
+Route::get('/addquestion', function () {
+    return Inertia::render('Test/AddQuestion');
+})->middleware(['auth', 'verified'])->name('addquestion');
+
 Route::get('/addcategory', function () {
     return Inertia::render('Category/AddCategory');
 })->middleware(['auth', 'verified'])->name('addcategory');
@@ -102,9 +126,7 @@ Route::get('/addtest', function () {
     return Inertia::render('Test/AddTest');
 })->middleware(['auth', 'verified'])->name('addtest');
 
-Route::get('/addquestion', function () {
-    return Inertia::render('Test/AddQuestion');
-})->middleware(['auth', 'verified'])->name('addquestion');
+
 
 Route::get('/addmember', function () {
     return Inertia::render('Member/AddMember');

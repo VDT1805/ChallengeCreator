@@ -20,7 +20,7 @@ import {
     SelectValue,
 } from "@/shadcn/ui/select"
 import { Menu } from '../Menu';
-import { QB } from '../QuestionBank/QuestionBankTable/QuestionBankType';
+import { QB } from '../QuestionBank/QuestionBankType';
 
 
 export default function AddMember({ auth, QBank }: PageProps<{ QBank: QB }>) {
