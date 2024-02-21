@@ -98,28 +98,7 @@ export function DataTable<TData, TValue>({
           </div>
         </div>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button>Add question</Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>
-              <PlusIcon className="mr-2" />
-              <Link href={route('addquestion')}>Add a new question</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <UpdateIcon className="mr-2" />
-              <Link href={route('reusequestion')}>Reuse from question banks</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <ShuffleIcon className="mr-2" />
-              Add random question</DropdownMenuItem>
-            <DropdownMenuItem>
-              <FilePlusIcon className="mr-2" />
-              <Link href={route('importinstruction')}>Import file</Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+
       </div>
       <div className="rounded-md border bg-white">
         <Table>

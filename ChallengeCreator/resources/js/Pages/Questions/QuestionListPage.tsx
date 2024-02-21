@@ -8,6 +8,9 @@ import { Button } from "@/shadcn/ui/button";
 import { Menu } from "../Menu";
 import { QB } from "../QuestionBank/QuestionBankType";
 import { QPage } from "./QuestionType";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
+import { UpdateIcon } from "@radix-ui/react-icons";
+import { PlusIcon, ShuffleIcon, FilePlusIcon } from "lucide-react";
 
 export default function QuestionList({ auth, QBank, questions }: PageProps<{ QBank: QB, questions: QPage }>) {
     // console.log(JSON.stringify(questions));
@@ -19,6 +22,28 @@ export default function QuestionList({ auth, QBank, questions }: PageProps<{ QBa
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 {/* <Menu QBank={QBank}></Menu> */}
+                <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button>Add question</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem>
+              <PlusIcon className="mr-2" />
+              <Link href={route('questions.create',QBank.id)}>Add a new question</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <UpdateIcon className="mr-2" />
+              <Link href={route('reusequestion')}>Reuse from question banks</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <ShuffleIcon className="mr-2" />
+              Add random question</DropdownMenuItem>
+            <DropdownMenuItem>
+              <FilePlusIcon className="mr-2" />
+              <Link href={route('importinstruction')}>Import file</Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
                 </div>
                 <div className="container mx-auto">
                     {/* <div className="flex justify-between">
