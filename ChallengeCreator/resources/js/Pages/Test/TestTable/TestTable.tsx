@@ -123,15 +123,9 @@ export function DataTable<TData, TValue>({
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <div className="md:col-start-10 col-span-1">
-          <Link href={route('addtest')}>
-            <Button>
-              Add test
-            </Button>
-          </Link>
-        </div>
+
       </div>
-      
+
       <div className="rounded-md border bg-white">
         <Table>
           <TableHeader>

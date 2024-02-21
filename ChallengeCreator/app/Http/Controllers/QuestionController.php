@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\QuestionRequest;
 use App\Http\Services\QuestionBankService;
 use App\Http\Services\QuestionService;
 use App\Models\Question;
@@ -28,14 +29,17 @@ class QuestionController extends Controller
             "QBank" => $QB,
             "questions" => $questions
         ]);
+
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create($qbID, $testID=null)
+    public function create($qbID, QuestionRequest $request, $testID=null)
     {
         //
+
+        // dd($request);
         $QB = $this->qbService->findOrFail($qbID,"id");
         return Inertia::render("Questions/AddQuestion",["QBank" => $QB]);
     }
@@ -43,7 +47,7 @@ class QuestionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($qbID,$testID=null,Request $request)
+    public function store($qbID,Request $request,$testID=null)
     {
         //
         $inserted = $this->qService->create($request->all()+["question_bank_id" => $qbID]);

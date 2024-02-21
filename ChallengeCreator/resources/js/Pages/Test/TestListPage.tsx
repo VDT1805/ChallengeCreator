@@ -8,7 +8,7 @@ import { Button } from "@/shadcn/ui/button";
 import { Menu } from "../Menu";
 import { QB } from "../QuestionBank/QuestionBankType";
 
-export default function TestList({ auth, QBank }: PageProps<{ QBank: QB }>) {
+export default function TestListPage({ auth, QBank }: PageProps<{ QBank: QB }>) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -16,7 +16,14 @@ export default function TestList({ auth, QBank }: PageProps<{ QBank: QB }>) {
             <Head title="Tests" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <Menu QBank={QBank}></Menu>
+                <Menu QBank={QBank} CanEdit={true}></Menu>
+                    <div className="md:col-start-10 col-span-1">
+                        <Link href={route('tests.create',QBank.id)}>
+                            <Button>
+                            Add test
+                            </Button>
+                        </Link>
+                    </div>
                 </div>
                 <div className="container mx-auto">
                     {/* <div className="flex justify-between">

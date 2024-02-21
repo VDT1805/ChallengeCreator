@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionBankController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\TestController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -96,7 +97,7 @@ Route::delete('/qbs/{qbID}/settings', [QuestionBankController::class,'destroy'])
 Route::get('/qbs/{qbID}/questions',[QuestionController::class,'index'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('questions.index');
 
-Route::get('/qbs/{qbID}/questions/create', [QuestionController::class,'create'])
+Route::get('/qbs/{qbID}/questions/create/', [QuestionController::class,'create'])
 ->middleware(['auth', 'verified'])->name('questions.create');
 
 Route::post('/qbs/{qbID}/questions/create', [QuestionController::class,'store'])
@@ -114,17 +115,35 @@ Route::put('/qbs/{qbID}/questions/{qID}/edit', [QuestionController::class,'updat
 Route::delete('/qbs/{qbID}/questions/{qID}/edit', [QuestionController::class,'destroy'])
 ->middleware(['auth', 'verified','dynamicrole:owner'])->name('questions.destroy');
 
-Route::get('/addquestion', function () {
-    return Inertia::render('Test/AddQuestion');
-})->middleware(['auth', 'verified'])->name('addquestion');
+##################################################################
+
+Route::get('/qbs/{qbID}/tests',[TestController::class,'index'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('tests.index');
+
+Route::get('/qbs/{qbID}/tests/create/', [TestController::class,'create'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('tests.create');
+
+Route::post('/qbs/{qbID}/tests/create', [TestController::class,'store'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('tests.store');
+
+Route::get('/qbs/{qbID}/tests/{qID}', [TestController::class,'show'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('tests.show');
+
+Route::get('/qbs/{qbID}/tests/{qID}/edit', [TestController::class,'edit'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('tests.edit');
+
+Route::put('/qbs/{qbID}/tests/{qID}/edit', [TestController::class,'update'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('tests.update');
+
+Route::delete('/qbs/{qbID}/tests/{qID}/edit', [TestController::class,'destroy'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('tests.destroy');
+
+##################################################################
 
 Route::get('/addcategory', function () {
     return Inertia::render('Category/AddCategory');
 })->middleware(['auth', 'verified'])->name('addcategory');
 
-Route::get('/addtest', function () {
-    return Inertia::render('Test/AddTest');
-})->middleware(['auth', 'verified'])->name('addtest');
 
 
 

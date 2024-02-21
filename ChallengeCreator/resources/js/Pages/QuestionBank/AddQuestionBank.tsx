@@ -21,12 +21,6 @@ export default function AddQuestionBank({auth}: PageProps) {
         name: ''
     });
 
-    // useEffect(() => {
-    //     return () => {
-    //         reset('password');
-    //     };
-    // }, []);
-
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
