@@ -49,7 +49,7 @@ class QuestionController extends Controller
      */
     public function store($qbID,Request $request,$testID=null)
     {
-        //
+        //Test ID can be here!!!
         $inserted = $this->qService->create($request->all()+["question_bank_id" => $qbID]);
         if ($inserted) {
             return redirect()->route("questions.index", ["qbID" => $qbID]);

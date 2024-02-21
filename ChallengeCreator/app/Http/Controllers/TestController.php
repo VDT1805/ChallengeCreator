@@ -57,9 +57,10 @@ class TestController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Test $test)
+    public function show($qbID,Test $test)
     {
         //
+        dd($test);
     }
 
     /**
