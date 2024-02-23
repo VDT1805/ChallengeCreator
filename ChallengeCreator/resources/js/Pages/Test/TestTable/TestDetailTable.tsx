@@ -77,9 +77,9 @@ export function DataTable<TData, TValue>({
         <div className="grid grid-cols-3 gap-4">
           <Input
             placeholder="Search question..."
-            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            value={(table.getColumn("question")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn("name")?.setFilterValue(event.target.value)
+              table.getColumn("question")?.setFilterValue(event.target.value)
             }
             className="max-w-sm col-span-2 border-2 border-blue-500 border-solid"
           />
@@ -91,37 +91,14 @@ export function DataTable<TData, TValue>({
               }
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem onClick={() => { table.getColumn("name")?.toggleSorting(table.getColumn("name")?.getIsSorted() === "asc"); setSortState("Alphabetical") }}>Alphabetical</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => { table.getColumn("question")?.toggleSorting(table.getColumn("name")?.getIsSorted() === "asc"); setSortState("Alphabetical") }}>Alphabetical</DropdownMenuItem>
               <DropdownMenuItem onClick={() => { table.getColumn("lastUpdated")?.toggleSorting(table.getColumn("lastUpdated")?.getIsSorted() === "asc"); setSortState("Last Updated") }}>Last Updated</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           </div>
         </div>
 
-        <div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button>Add question</Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem>
-                <PlusIcon className="mr-2" />
-                <Link href={route('addquestion')}>Add a new question</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <UpdateIcon className="mr-2" />
-                <Link href={route('reusequestion')}>Reuse from question banks</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <ShuffleIcon className="mr-2" />
-                Add random question</DropdownMenuItem>
-              <DropdownMenuItem>
-                <FilePlusIcon className="mr-2" />
-                <Link href={route('importinstruction')}>Import file</Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+
       </div>
       <div className="rounded-md border bg-white">
         <Table>

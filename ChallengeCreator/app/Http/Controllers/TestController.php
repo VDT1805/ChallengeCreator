@@ -6,15 +6,19 @@ use App\Models\Test;
 use Illuminate\Http\Request;
 use App\Http\Services\QuestionBankService;
 use App\Http\Services\TestService;
+use App\Http\Services\QuestionService;
+use Exception;
 use Inertia\Inertia;
 
 class TestController extends Controller
 {
     private TestService $tService;
     private QuestionBankService $qbService;
-    public function __construct(TestService $tService, QuestionBankService $qbService)
+    private QuestionService $qService;
+    public function __construct(TestService $tService, QuestionService $qService, QuestionBankService $qbService)
     {
         $this->tService = $tService;
+        $this->qService = $qService;
         $this->qbService = $qbService;
     }
     /**
@@ -57,10 +61,17 @@ class TestController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($qbID,Test $test)
+    public function show($qbID, $testID)
     {
         //
-        dd($test);
+        $QB = $this->qbService->findOrFail($qbID,"id");
+        $test = $this->tService->find(["questionbanks" => $qbID, "id" => $testID])->first();
+        $questions = $test->questions()->get();
+        if(!$test) {
+            abort(404);
+        }
+
+        return Inertia::render("Test/TestDetail",["QBank" => $QB, "test" => $test, "questions" => $questions]);
     }
 
     /**
@@ -85,5 +96,31 @@ class TestController extends Controller
     public function destroy(Test $test)
     {
         //
+    }
+
+    public function createQuestion($qbID, $testID)
+    {
+        //
+        $QB = $this->qbService->findOrFail($qbID,"id");
+        $test = $this->tService->find(["questionbanks" => $qbID, "id" => $testID])->first();
+        if(!$test) {
+            abort(404);
+        }
+        return Inertia::render("Test/AddTestQuestion",["QBank" => $QB, "test" => $test]);
+    }
+
+    public function storeQuestion($qbID, $testID, Request $request)
+    {
+        //
+        $QB = $this->qbService->findOrFail($qbID,"id");
+        $test = $this->tService->find(["questionbanks" => $qbID, "id" => $testID])->first();
+        if(!$test) {
+            abort(404);
+        }
+        $inserted = $this->qService->create($request->all()+["question_bank_id" => $qbID]);
+        if ($inserted) {
+            $attachmentResult = $test->questions()->attach($inserted, ["score" => 1]);
+            return redirect()->route("tests.show", ["qbID" => $qbID, "testID" => $testID]);
+        }
     }
 }

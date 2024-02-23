@@ -1,6 +1,5 @@
-import { columns } from "./TestTable/TestColumn"
+import { Test, columns } from "./TestTable/TestColumn"
 import { DataTable } from "./TestTable/TestDetailTable"
-import { data } from "./TestTable/TestData"
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import { PageProps } from '@/types';
@@ -20,31 +19,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/shadcn/ui/card";
 import { PrinterIcon, Trash2Icon } from "lucide-react";
 import { Separator } from "@/shadcn/ui/separator"
 import { QB } from "../QuestionBank/QuestionBankType";
+import { TestPage } from "./TestTable/TestType";
+import { Question } from "../Questions/QuestionType";
 
 
-// export default function DemoPage() {
-//   const data1: Array<Payment> = [
-//   {id: "728ed52f",
-//   amount: 100,
-//   status: "pending",
-//   email: "m@example.com",},
-//   {id: "728ed52f",
-//   amount: 100,
-//   status: "pending",
-//   email: "m@example.com",},
-// ]
-// console.log(typeof(data1))
-//   return (
 
-//     <div className="container mx-auto py-10">
-//       <h3> Test Table </h3>
-
-//       <DataTable columns={columns} data={data1} />
-//     </div>
-//   )
-// }
-
-export default function TestTable({ auth, QBank }: PageProps<{ QBank: QB }>) {
+export default function TestTable({ auth, QBank, test, questions }: PageProps<{ QBank: QB, test: Test, questions: Array<Question> }>) {
+    console.log(JSON.stringify(questions));
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -52,24 +33,12 @@ export default function TestTable({ auth, QBank }: PageProps<{ QBank: QB }>) {
             <Head title="Test Details" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    {/* <Tabs defaultValue="account" className="w-[400px]">
-                        <TabsList className='grid w-full grid-cols-6'>
-                            <div><TabsTrigger value="tests">All tests</TabsTrigger></div>
-                            <div><TabsTrigger value="qb">Question bank</TabsTrigger></div>
-                            <div><TabsTrigger value="categories">Categories</TabsTrigger></div>
-                            <div><TabsTrigger value="files">Files</TabsTrigger></div>
-                            <div><TabsTrigger value="certificates">Certificates</TabsTrigger></div>
-                            <div><TabsTrigger value="community">Community</TabsTrigger></div>
-                        </TabsList>
-                        <TabsContent value="tests">Make changes to your account here.</TabsContent>
-                        <TabsContent value="qb">Change your password here.</TabsContent>
-                        </Tabs> */}
-                    <Menu QBank={QBank}></Menu>
+                    {/* <Menu QBank={QBank}></Menu> */}
                 </div>
                 <div className="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <Card>
                         <CardHeader>
-                            <CardTitle className="text-3xl font-bold">Test 1</CardTitle>
+                            <CardTitle className="text-3xl font-bold">{test.name}</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="flex justify-between">
@@ -99,10 +68,34 @@ export default function TestTable({ auth, QBank }: PageProps<{ QBank: QB }>) {
                     </Card>
                 </div>
                 <div className="container mx-auto">
+                <div>
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                    <Button>Add question</Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                    <DropdownMenuItem>
+                        <PlusIcon className="mr-2" />
+                        <Link href={route('tests.createQuestion',[QBank.id,test.id])}>Add a new question</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <UpdateIcon className="mr-2" />
+                        <Link href={route('reusequestion')}>Reuse from question banks</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <ShuffleIcon className="mr-2" />
+                        Add random question</DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <FilePlusIcon className="mr-2" />
+                        <Link href={route('importinstruction')}>Import file</Link>
+                    </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+                </div>
                     {/* <div className="flex justify-between">
                         <h3> Test questions </h3>
                     </div> */}
-                    <DataTable columns={columns} data={data} />
+                    <DataTable columns={columns} data={questions} />
                 </div>
             </div>
         </AuthenticatedLayout>

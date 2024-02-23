@@ -6,10 +6,11 @@ import { Button } from "@/shadcn/ui/button"
 import { Test } from "./TestType"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/shadcn/ui/dropdown-menu"
 import { Link } from "@inertiajs/react"
+import { Question } from "@/Pages/Questions/QuestionType"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export const columns: ColumnDef<Test>[] = [
+export const columns: ColumnDef<Question>[] = [
   {
     accessorKey: "id",
     header: () => (
@@ -20,13 +21,13 @@ export const columns: ColumnDef<Test>[] = [
       >ID</div>)
   },
   {
-    accessorKey: "name",
+    accessorKey: "question",
     header: () => (
       <div
         style={{
           textAlign: "center"
         }}
-      >Name</div>),
+      >question</div>),
     // cell: ({ row }) => {
     //   return (
     //     <div className="flex">
@@ -49,18 +50,18 @@ export const columns: ColumnDef<Test>[] = [
       >Author</div>)
   },
   {
-    accessorKey: "lastUpdated",
+    accessorKey: "created_at",
     header: () => (
       <div
         style={{
           textAlign: "center"
         }}
-      >Last Updated</div>)
+      >Create At</div>)
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original
+      const test = row.original
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -71,9 +72,7 @@ export const columns: ColumnDef<Test>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            {/* <DropdownMenuItem><Link href={route(`testdetail/${payment.id}`)}>Edit test</Link></DropdownMenuItem> */}
-            <DropdownMenuItem><Link href={route('testdetail')}>Edit test</Link></DropdownMenuItem>
-            {/* <DropdownMenuItem>View test</DropdownMenuItem> */}
+            <DropdownMenuItem><Link href={route('tests.show',[test.question_bank_id,test.id])}>Edit test</Link></DropdownMenuItem>
             <DropdownMenuItem className="text-red-500 font-bold">Delete test</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

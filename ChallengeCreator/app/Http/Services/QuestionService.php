@@ -93,7 +93,9 @@ class QuestionService implements BaseCrudServiceInterface
     public function create(array $data): ?Model
     {
         $model = resolve(Question::class);
-        if (!$model->fill($data)->save()) {
+        $saved = $model->fill($data)->save();
+
+        if (!$saved) {
             return null;
         }
         if (!is_array($model->getKey())) {

@@ -10,4 +10,10 @@ class Question extends Model
 {
     use HasFactory, Filterable;
     public $guarded = [];
+
+    public function tests() {
+        return $this->belongsToMany(
+            User::class, 'question_test', 'question_id', 'test_id'
+        );
+    }
 }

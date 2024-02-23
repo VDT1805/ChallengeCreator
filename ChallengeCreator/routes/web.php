@@ -138,6 +138,12 @@ Route::put('/qbs/{qbID}/tests/{tID}/edit', [TestController::class,'update'])
 Route::delete('/qbs/{qbID}/tests/{tID}/edit', [TestController::class,'destroy'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('tests.destroy');
 
+Route::get('/qbs/{qbID}/tests/{testID}/createques', [TestController::class,'createQuestion'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('tests.createQuestion');
+
+Route::post('/qbs/{qbID}/tests/{testID}/createques', [TestController::class,'storeQuestion'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('tests.storeQuestion');
+
 ##################################################################
 
 Route::get('/addcategory', function () {

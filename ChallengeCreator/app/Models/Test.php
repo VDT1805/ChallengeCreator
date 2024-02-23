@@ -15,4 +15,9 @@ class Test extends Model
     //         QuestionBank::class
     //     );
     // }
+    public function questions() {
+        return $this->belongsToMany(
+            Question::class
+        );
+    }
 }

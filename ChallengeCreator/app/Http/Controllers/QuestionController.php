@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\QuestionRequest;
 use App\Http\Services\QuestionBankService;
 use App\Http\Services\QuestionService;
+use App\Http\Services\TestService;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -13,9 +14,11 @@ class QuestionController extends Controller
 {
     private QuestionService $qService;
     private QuestionBankService $qbService;
-    public function __construct(QuestionService $qService, QuestionBankService $qbService)
+    private TestService $tService;
+    public function __construct(QuestionService $qService,TestService $tService, QuestionBankService $qbService)
     {
         $this->qService = $qService;
+        $this->tService = $tService;
         $this->qbService = $qbService;
     }
     /**
@@ -47,7 +50,7 @@ class QuestionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($qbID,Request $request,$testID=null)
+    public function store($qbID,Request $request)
     {
         //Test ID can be here!!!
         $inserted = $this->qService->create($request->all()+["question_bank_id" => $qbID]);

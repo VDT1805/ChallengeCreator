@@ -1,5 +1,4 @@
 import { columns } from "./TestTable/TestColumn"
-import { data } from "./TestTable/TestData"
 import { DataTable } from "./TestTable/TestTable"
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
@@ -8,7 +7,8 @@ import { Button } from "@/shadcn/ui/button";
 import { Menu } from "../Menu";
 import { QB } from "../QuestionBank/QuestionBankType";
 
-export default function TestListPage({ auth, QBank }: PageProps<{ QBank: QB }>) {
+export default function TestListPage({ auth, QBank,tests }: PageProps<{ QBank: QB, tests:any }>) {
+    // console.log(JSON.stringify(tests));
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -29,7 +29,8 @@ export default function TestListPage({ auth, QBank }: PageProps<{ QBank: QB }>) 
                     {/* <div className="flex justify-between">
                         <h3>All tests</h3>
                     </div> */}
-                    <DataTable columns={columns} data={data} />
+                    <DataTable columns={columns} data={tests.data} />
+
                 </div>
             </div>
         </AuthenticatedLayout>
