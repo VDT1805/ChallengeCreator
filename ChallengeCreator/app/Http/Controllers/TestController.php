@@ -9,6 +9,8 @@ use App\Http\Services\TestService;
 use App\Http\Services\QuestionService;
 use Exception;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
+
 
 class TestController extends Controller
 {
@@ -123,4 +125,26 @@ class TestController extends Controller
             return redirect()->route("tests.show", ["qbID" => $qbID, "testID" => $testID]);
         }
     }
+
+    public function indexQuestion($qbID, $testID) {
+        $QB = $this->qbService->findOrFail($qbID,"id");
+        $test = $this->tService->find(["questionbanks" => $qbID, "id" => $testID])->first();
+        if(!$test) {
+            abort(404);
+        }
+        $questions = $this->qService->getAllPaginated(["questionbanks" => $qbID, "tests"=>["qb" => $qbID, "test"=>$testID]]);
+        return Inertia::render("Test/TestQuestionListPage", [
+            "QBank" => $QB,
+            "questions" => $questions
+        ]);
+    }
+
+    public function attachQuestion() {
+
+    }
+
+    public function detachQuestion() {
+
+    }
+
 }

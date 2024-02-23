@@ -144,6 +144,9 @@ Route::get('/qbs/{qbID}/tests/{testID}/createques', [TestController::class,'crea
 Route::post('/qbs/{qbID}/tests/{testID}/createques', [TestController::class,'storeQuestion'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('tests.storeQuestion');
 
+Route::get('/qbs/{qbID}/tests/{testID}/addques', [TestController::class,'indexQuestion'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('tests.indexQuestion');
+
 ##################################################################
 
 Route::get('/addcategory', function () {

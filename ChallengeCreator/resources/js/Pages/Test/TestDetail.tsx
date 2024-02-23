@@ -80,7 +80,7 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                         <UpdateIcon className="mr-2" />
-                        <Link href={route('reusequestion')}>Reuse from question banks</Link>
+                        <Link href={route('tests.indexQuestion',[QBank.id,test.id])}>Reuse from question banks</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                         <ShuffleIcon className="mr-2" />

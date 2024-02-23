@@ -1,9 +1,8 @@
 <?php
 
 namespace App\ModelFilters;
-
 use EloquentFilter\ModelFilter;
-
+use Illuminate\Database\Eloquent\Builder;
 class QuestionFilter extends ModelFilter
 {
     /**
@@ -16,5 +15,21 @@ class QuestionFilter extends ModelFilter
     public function questionbanks($id)
     {
         return $this->where('question_bank_id','=', $id);
+    }
+    public function tests($ids)
+    {
+        // return $this->where('tests', function (Builder $query) use ($id) {
+        //     // Add your custom SQL condition for the full outer join here
+        //     $query->where("test_id","=",$id)
+        //     ;
+        // });
+        return $this->select('questions.*')
+        ->leftJoin('question_test as qt', function ($join) use ($ids) {
+            $join->on('questions.id', '=', 'qt.question_id')
+                ->where('qt.test_id', '=', $ids["test"]);
+        })
+        ->where('questions.question_bank_id', '=', $ids["qb"])
+        ->selectRaw('IF(qt.test_id IS NOT NULL, 1, 0) AS inTest')->orderBy("inTest","desc")
+        ->get();
     }
 }
