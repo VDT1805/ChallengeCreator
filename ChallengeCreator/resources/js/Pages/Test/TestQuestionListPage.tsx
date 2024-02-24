@@ -12,7 +12,7 @@ import { UpdateIcon } from "@radix-ui/react-icons";
 import { PlusIcon, ShuffleIcon, FilePlusIcon } from "lucide-react";
 
 export default function QuestionList({ auth, QBank, questions }: PageProps<{ QBank: QB, questions: QPage }>) {
-    console.log(JSON.stringify(questions));
+    console.log(JSON.stringify(questions.data[2].inTest));
     return (
         <AuthenticatedLayout
             user={auth.user}

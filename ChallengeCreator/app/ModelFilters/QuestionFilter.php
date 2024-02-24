@@ -18,11 +18,6 @@ class QuestionFilter extends ModelFilter
     }
     public function tests($ids)
     {
-        // return $this->where('tests', function (Builder $query) use ($id) {
-        //     // Add your custom SQL condition for the full outer join here
-        //     $query->where("test_id","=",$id)
-        //     ;
-        // });
         return $this->select('questions.*')
         ->leftJoin('question_test as qt', function ($join) use ($ids) {
             $join->on('questions.id', '=', 'qt.question_id')

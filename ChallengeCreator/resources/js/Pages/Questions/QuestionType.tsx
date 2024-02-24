@@ -26,6 +26,7 @@ export interface QPage {
     ans5: string
     ans6: string
     question_bank_id: number
+    inTest?: boolean
   }
 
   export interface Link {

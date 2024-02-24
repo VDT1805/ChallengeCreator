@@ -126,7 +126,7 @@ class TestController extends Controller
         }
     }
 
-    public function indexQuestion($qbID, $testID) {
+    public function indexQuestion($qbID, $testID, Request $request) {
         $QB = $this->qbService->findOrFail($qbID,"id");
         $test = $this->tService->find(["questionbanks" => $qbID, "id" => $testID])->first();
         if(!$test) {
@@ -139,8 +139,13 @@ class TestController extends Controller
         ]);
     }
 
-    public function attachQuestion() {
-
+    public function attachQuestion($qbID,$testID,$qID) {
+        $question = $this->qService->findOrFail($qID,"id");
+        $test = $this->tService->find(["questionbanks" => $qbID, "id" => $testID])->first();
+        if(!$test) {
+            abort(404);
+        }
+        $attachmentResult = $test->questions()->attach($question, ["score" => 1]);
     }
 
     public function detachQuestion() {
