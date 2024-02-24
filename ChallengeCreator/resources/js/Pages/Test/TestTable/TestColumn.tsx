@@ -27,7 +27,7 @@ export const columns: ColumnDef<Question>[] = [
         style={{
           textAlign: "center"
         }}
-      >question</div>),
+      >Question</div>),
     // cell: ({ row }) => {
     //   return (
     //     <div className="flex">
@@ -40,15 +40,15 @@ export const columns: ColumnDef<Question>[] = [
       // Use the row.canExpand and row.getToggleRowExpandedProps prop getter
       // to build the toggle for expanding a row
   },
-  {
-    accessorKey: "author",
-    header: () => (
-      <div
-        style={{
-          textAlign: "center"
-        }}
-      >Author</div>)
-  },
+  // {
+  //   accessorKey: "author",
+  //   header: () => (
+  //     <div
+  //       style={{
+  //         textAlign: "center"
+  //       }}
+  //     >Author</div>)
+  // },
   {
     accessorKey: "created_at",
     header: () => (
@@ -56,8 +56,17 @@ export const columns: ColumnDef<Question>[] = [
         style={{
           textAlign: "center"
         }}
-      >Create At</div>)
+      >Created At</div>)
   },
+  // {
+  //   accessorKey: "updated_at",
+  //   header: () => (
+  //     <div
+  //       style={{
+  //         textAlign: "center"
+  //       }}
+  //     >Updated At</div>)
+  // },
   {
     id: "actions",
     cell: ({ row }) => {

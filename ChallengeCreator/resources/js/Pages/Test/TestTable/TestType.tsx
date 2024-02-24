@@ -28,7 +28,6 @@
     name: string
     question_bank_id: number
     user_id: number
-
   }
 
   export interface Link {

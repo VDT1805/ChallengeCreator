@@ -135,12 +135,13 @@ class TestController extends Controller
         $questions = $this->qService->getAllPaginated(["questionbanks" => $qbID, "tests"=>["qb" => $qbID, "test"=>$testID]]);
         return Inertia::render("Test/TestQuestionListPage", [
             "QBank" => $QB,
+            "test" => $test,
             "questions" => $questions
         ]);
     }
 
-    public function attachQuestion($qbID,$testID,$qID) {
-        $question = $this->qService->findOrFail($qID,"id");
+    public function attachQuestion($qbID, $testID, Request $request) {
+        $question = $this->qService->findOrFail($request["qID"], "id");
         $test = $this->tService->find(["questionbanks" => $qbID, "id" => $testID])->first();
         if(!$test) {
             abort(404);
@@ -148,8 +149,13 @@ class TestController extends Controller
         $attachmentResult = $test->questions()->attach($question, ["score" => 1]);
     }
 
-    public function detachQuestion() {
-
+    public function detachQuestion($qbID, $testID, Request $request) {
+        $question = $this->qService->findOrFail($request["qID"], "id");
+        $test = $this->tService->find(["questionbanks" => $qbID, "id" => $testID])->first();
+        if(!$test) {
+            abort(404);
+        }
+        $attachmentResult = $test->questions()->detach($question);
     }
 
 }

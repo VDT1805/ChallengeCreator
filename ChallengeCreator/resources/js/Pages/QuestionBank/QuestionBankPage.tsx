@@ -11,13 +11,14 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { UpdateIcon, PlusIcon, ShuffleIcon, FilePlusIcon } from "@radix-ui/react-icons";
 import { Separator } from "@/shadcn/ui/separator";
 import { QB } from "./QuestionBankType";
+import QBLayout from "@/Layouts/QBLayout";
 
 export default function QuestionBankPage({ auth, QBank, CanEdit }: PageProps<{ QBank: QB, CanEdit: Boolean }>) {
     // console.log(QBank)
     return (
-        <AuthenticatedLayout
+        <QBLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Question bank</h2>}>
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Question bank</h2>} QBank={QBank} CanEdit={CanEdit}>
             <Head title="Question Bank" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -36,6 +37,6 @@ export default function QuestionBankPage({ auth, QBank, CanEdit }: PageProps<{ Q
                     <p className="text-xl font-bold mt-2 mb-2">Settings</p> - change information about this Bank
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </QBLayout>
     );
 }

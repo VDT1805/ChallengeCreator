@@ -35,6 +35,7 @@ import { Checkbox } from '@/shadcn/ui/checkbox';
 import React, { FormEventHandler } from 'react';
 import { Menu } from '../Menu';
 import { QB } from '../QuestionBank/QuestionBankType';
+import QBLayout from '@/Layouts/QBLayout';
 
 
 export default function AddTest({ auth, QBank }: PageProps<{ QBank: QB }>) {
@@ -50,9 +51,9 @@ export default function AddTest({ auth, QBank }: PageProps<{ QBank: QB }>) {
     };
 
   return (
-    <AuthenticatedLayout
+    <QBLayout
       user={auth.user}
-      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">New Test</h2>}>
+      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">New Test</h2>} QBank={QBank} CanEdit={true}>
       <Head title="New Test" />
       <div className="mt-10 mb-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
       {/* <Menu QBank={QBank}></Menu> */}
@@ -84,6 +85,6 @@ export default function AddTest({ auth, QBank }: PageProps<{ QBank: QB }>) {
           </CardContent>
         </Card>
       </div>
-    </AuthenticatedLayout>
+    </QBLayout>
   );
 }

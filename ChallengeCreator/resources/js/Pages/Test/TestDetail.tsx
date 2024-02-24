@@ -21,15 +21,16 @@ import { Separator } from "@/shadcn/ui/separator"
 import { QB } from "../QuestionBank/QuestionBankType";
 import { TestPage } from "./TestTable/TestType";
 import { Question } from "../Questions/QuestionType";
+import QBLayout from "@/Layouts/QBLayout";
 
 
 
 export default function TestTable({ auth, QBank, test, questions }: PageProps<{ QBank: QB, test: Test, questions: Array<Question> }>) {
-    console.log(JSON.stringify(questions));
+    // console.log(JSON.stringify(questions));
     return (
-        <AuthenticatedLayout
+        <QBLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Test Details</h2>}>
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Test Details - {test.name}</h2>} QBank={QBank} CanEdit={true}>
             <Head title="Test Details" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -98,6 +99,6 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                     <DataTable columns={columns} data={questions} />
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </QBLayout>
     );
 }

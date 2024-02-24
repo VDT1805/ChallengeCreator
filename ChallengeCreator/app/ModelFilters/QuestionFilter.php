@@ -27,4 +27,7 @@ class QuestionFilter extends ModelFilter
         ->selectRaw('IF(qt.test_id IS NOT NULL, 1, 0) AS inTest')->orderBy("inTest","desc")
         ->get();
     }
+    public function id($id) {
+        return $this->where("id", '=', $id);
+    }
 }

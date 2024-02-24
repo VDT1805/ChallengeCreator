@@ -36,6 +36,7 @@ import React, { FormEventHandler } from 'react';
 import { Menu } from '../Menu';
 import { QB } from '../QuestionBank/QuestionBankType';
 import { Test } from './TestTable/TestType';
+import QBLayout from '@/Layouts/QBLayout';
 
 
 export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank: QB, test:Test }>) {
@@ -55,9 +56,9 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
         post(route('tests.storeQuestion',[QBank.id,test.id]));
     };
   return (
-    <AuthenticatedLayout
+    <QBLayout
       user={auth.user}
-      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">New Question</h2>}>
+      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">New Question</h2>} QBank={QBank} CanEdit={true}>
       <Head title="New Question" />
       <div className="mt-10 mb-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
       {/* <Menu QBank={QBank} CanEdit={undefined}></Menu> */}
@@ -229,6 +230,6 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
           </CardContent>
         </Card>
       </div>
-    </AuthenticatedLayout>
+    </QBLayout>
   );
 }
