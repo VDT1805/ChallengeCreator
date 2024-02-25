@@ -73,7 +73,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center justify-between gap-4 py-4">
+      {/* <div className="flex items-center justify-between gap-4 py-4">
         <div className="grid grid-cols-3 gap-4">
           <Input
             placeholder="Search question..."
@@ -97,10 +97,9 @@ export function DataTable<TData, TValue>({
           </DropdownMenu>
           </div>
         </div>
+      </div> */}
 
-
-      </div>
-      <div className="rounded-md border bg-white">
+      <div className="rounded-md border bg-white shadow-2xl">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

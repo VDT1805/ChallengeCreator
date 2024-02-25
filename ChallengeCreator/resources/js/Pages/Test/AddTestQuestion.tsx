@@ -63,11 +63,11 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
       <div className="mt-10 mb-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
       {/* <Menu QBank={QBank} CanEdit={undefined}></Menu> */}
         <Card>
-        <CardHeader>
+        {/* <CardHeader>
             <CardTitle className="text-3xl font-bold">Test {test.name}</CardTitle>
-        </CardHeader>
+        </CardHeader> */}
           <CardHeader>
-            <CardTitle className="text-3xl font-bold">Add Question</CardTitle>
+            <CardTitle className="text-3xl font-bold">Add Question to {test.name}</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={submit}>
@@ -122,7 +122,6 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
               </div>
 
               <div className="flex flex-col space-y-1.5 mb-5 mb-3">
-                <Label htmlFor="name" className="text-xl font-bold">Add your multiple choice answer options</Label>
                 <div className="flex items-center space-x-2">
                   <Label
                     htmlFor="ans2"
@@ -138,7 +137,6 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
               </div>
 
               <div className="flex flex-col space-y-1.5 mb-5 mb-3">
-                <Label htmlFor="name" className="text-xl font-bold">Add your multiple choice answer options</Label>
                 <div className="flex items-center space-x-2">
                   <Label
                     htmlFor="ans3"
@@ -154,7 +152,6 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
               </div>
 
               <div className="flex flex-col space-y-1.5 mb-5 mb-3">
-                <Label htmlFor="name" className="text-xl font-bold">Add your multiple choice answer options</Label>
                 <div className="flex items-center space-x-2">
                   <Label
                     htmlFor="ans4"
@@ -170,7 +167,6 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
               </div>
 
               <div className="flex flex-col space-y-1.5 mb-5 mb-3">
-                <Label htmlFor="name" className="text-xl font-bold">Add your multiple choice answer options</Label>
                 <div className="flex items-center space-x-2">
                   <Label
                     htmlFor="ans5"
@@ -186,7 +182,6 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
               </div>
 
               <div className="flex flex-col space-y-1.5 mb-5 mb-3">
-                <Label htmlFor="name" className="text-xl font-bold">Add your multiple choice answer options</Label>
                 <div className="flex items-center space-x-2">
                   <Label
                     htmlFor="ans6"

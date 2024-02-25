@@ -40,17 +40,14 @@ export default function AddQuestionBank({auth}: PageProps) {
                     <CardContent>
                         <form onSubmit={submit}>
                             <div className="grid w-full items-center gap-4">
-                                <div className="flex flex-col space-y-1.5">
                                     <Label htmlFor="name" className="text-xl font-bold">Question bank name</Label>
                                     <Input id="name"
                                         type="name"
                                         name="name"
                                         value={data.name}
                                         onChange={(e) => setData('name', e.target.value)}
-                                        placeholder="Name of your question bank" />
-                                </div>
-                                <div className="flex flex-col space-y-1.5">
-                                </div>
+                                        placeholder="Name of your question bank"
+                                        className="mb-2" />
                             </div>
                             <Button type='submit'>
                                 {/* <Link href={route('testlist')}> */}

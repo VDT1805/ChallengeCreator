@@ -1,15 +1,9 @@
-import { columns } from "../Questions/QuestionTable/QuestionColumn"
-import { DataTable } from "../Questions/QuestionTable/QuestionTable"
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import { Button } from "@/shadcn/ui/button";
-import { Menu } from "../Menu";
 import { QB } from "../QuestionBank/QuestionBankType";
 import { QPage, Question } from "../Questions/QuestionType";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
-import { UpdateIcon } from "@radix-ui/react-icons";
-import { PlusIcon, ShuffleIcon, FilePlusIcon } from "lucide-react";
+// import { PlusIcon } from "lucide-react";
 import QBLayout from "@/Layouts/QBLayout";
 import {
   Select,
@@ -22,10 +16,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/shadcn/ui/card"
 import { Separator } from "@/shadcn/ui/separator";
 import {
@@ -35,8 +26,7 @@ import {
   AccordionTrigger,
 } from "@/shadcn/ui/accordion"
 import { Input } from "@/shadcn/ui/input";
-import { CheckCircledIcon, FileIcon } from "@radix-ui/react-icons";
-import test from "node:test";
+import { CheckCircledIcon, ChevronLeftIcon, FileIcon, PlusIcon } from "@radix-ui/react-icons";
 import { Test } from "./TestTable/TestType";
 
 export default function QuestionList({ auth, QBank, questions, test }: PageProps<{ QBank: QB, questions: QPage, test: Test }>) {
@@ -48,27 +38,28 @@ export default function QuestionList({ auth, QBank, questions, test }: PageProps
       <Head title="Questions" />
       <div className="py-12">
         <div className="container mx-auto">
-          <Card className="mb-5 md:col-start-10 col-span-1">
-            <CardHeader>
-            </CardHeader>
+          <Card className="mb-5 md:col-start-10 col-span-1 pt-2">
             <CardContent>
-              <Link href={route('tests.create', QBank.id)} className="flex justify-end">
+            <Link href={route('tests.show', [test.question_bank_id, test.id])} className="flex items-center gap-2">
+                  <ChevronLeftIcon/> Return to the test {test.name}
+              </Link>
+              <Link href={route('questions.create', QBank.id)} className="flex justify-end">
                 <Button>
-                  <PlusIcon className="mr-3" /> Add test
+                  <PlusIcon className="mr-3" /> Add question
                 </Button>
               </Link>
               <Separator className="mb-3 mt-2" />
               <div className="flex items-center gap-2">
                 <Input
-                  placeholder="Search for a question bank..."
+                  placeholder="Search for a question..."
                   className="border-2 border-blue-500 border-solid" />
                 <Select>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Sort by" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="light">Alphabetical</SelectItem>
-                    <SelectItem value="dark">Last Updated</SelectItem>
+                    <SelectItem value="Alphabetical">Alphabetical</SelectItem>
+                    <SelectItem value="Last Updated">Last Updated</SelectItem>
                   </SelectContent>
                 </Select>
                 <Select>
@@ -119,7 +110,7 @@ export default function QuestionList({ auth, QBank, questions, test }: PageProps
                   <div className="flex gap-4">
                     {question.inTest == true ?
                       <Link href={route('tests.detachQuestion', [QBank.id, test.id])} method="put" data={{qID: question.id}}>
-                        Remove from test
+                        <p className="text-lg font-bold underline text-indianred">Delete from test</p>
                         </Link>
                       :
                       <Link href={route('tests.attachQuestion', [QBank.id, test.id])} method="post" data={{qID: question.id}}>

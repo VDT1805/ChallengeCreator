@@ -1,10 +1,8 @@
-"use client"
-
-import { ColumnDef, expandRows } from "@tanstack/react-table"
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { ColumnDef } from "@tanstack/react-table"
+import { MoreHorizontal } from "lucide-react"
 import { Button } from "@/shadcn/ui/button"
 import { Test } from "./TestType"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/shadcn/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/shadcn/ui/dropdown-menu"
 import { Link } from "@inertiajs/react"
 import { Question } from "@/Pages/Questions/QuestionType"
 
@@ -81,8 +79,8 @@ export const columns: ColumnDef<Question>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem><Link href={route('tests.show',[test.question_bank_id,test.id])}>Edit test</Link></DropdownMenuItem>
-            <DropdownMenuItem className="text-red-500 font-bold">Delete test</DropdownMenuItem>
+            <DropdownMenuItem><Link href={route('tests.show',[test.question_bank_id,test.id])}>Edit</Link></DropdownMenuItem>
+            <DropdownMenuItem className="text-red-500 font-bold">Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

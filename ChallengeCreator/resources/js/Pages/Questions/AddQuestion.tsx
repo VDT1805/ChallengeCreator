@@ -127,7 +127,6 @@ export default function AddQuestion({ auth, QBank }: PageProps<{ QBank: QB }>) {
               </div>
 
               <div className="flex flex-col space-y-1.5 mb-5 mb-3">
-                <Label htmlFor="name" className="text-xl font-bold">Add your multiple choice answer options</Label>
                 <div className="flex items-center space-x-2">
                   <Label
                     htmlFor="ans2"
@@ -143,7 +142,6 @@ export default function AddQuestion({ auth, QBank }: PageProps<{ QBank: QB }>) {
               </div>
 
               <div className="flex flex-col space-y-1.5 mb-5 mb-3">
-                <Label htmlFor="name" className="text-xl font-bold">Add your multiple choice answer options</Label>
                 <div className="flex items-center space-x-2">
                   <Label
                     htmlFor="ans3"
@@ -159,7 +157,6 @@ export default function AddQuestion({ auth, QBank }: PageProps<{ QBank: QB }>) {
               </div>
 
               <div className="flex flex-col space-y-1.5 mb-5 mb-3">
-                <Label htmlFor="name" className="text-xl font-bold">Add your multiple choice answer options</Label>
                 <div className="flex items-center space-x-2">
                   <Label
                     htmlFor="ans4"
@@ -175,7 +172,6 @@ export default function AddQuestion({ auth, QBank }: PageProps<{ QBank: QB }>) {
               </div>
 
               <div className="flex flex-col space-y-1.5 mb-5 mb-3">
-                <Label htmlFor="name" className="text-xl font-bold">Add your multiple choice answer options</Label>
                 <div className="flex items-center space-x-2">
                   <Label
                     htmlFor="ans5"
@@ -191,7 +187,6 @@ export default function AddQuestion({ auth, QBank }: PageProps<{ QBank: QB }>) {
               </div>
 
               <div className="flex flex-col space-y-1.5 mb-5 mb-3">
-                <Label htmlFor="name" className="text-xl font-bold">Add your multiple choice answer options</Label>
                 <div className="flex items-center space-x-2">
                   <Label
                     htmlFor="ans6"
@@ -223,11 +218,6 @@ export default function AddQuestion({ auth, QBank }: PageProps<{ QBank: QB }>) {
                   <Input id="score" placeholder="Question score" className='w-1/6' />
                 </div>
               </div>
-              {/* <Link href={route('testdetail')}>
-                <Button className='mt-5'>
-                  Add question
-                </Button>
-              </Link> */}
               <Button type='submit'>
                   Add question
             </Button>

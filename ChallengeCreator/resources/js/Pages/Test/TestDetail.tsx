@@ -1,27 +1,29 @@
 import { Test, columns } from "./TestTable/TestColumn"
 import { DataTable } from "./TestTable/TestDetailTable"
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import { PageProps } from '@/types';
-import { Menubar } from '@radix-ui/react-menubar';
 import { Button } from "@/shadcn/ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/shadcn/ui/dropdown-menu"
-import { FilePlusIcon, PlusIcon, UpdateIcon, ShuffleIcon, CopyIcon, TrashIcon } from '@radix-ui/react-icons'
-import { Menu } from "../Menu";
+} from "@/shadcn/ui/dropdown-menu";
+import { FilePlusIcon, PlusIcon, UpdateIcon, ShuffleIcon, CopyIcon, TrashIcon } from '@radix-ui/react-icons';
 import { Card, CardContent, CardHeader, CardTitle } from "@/shadcn/ui/card";
 import { PrinterIcon, Trash2Icon } from "lucide-react";
 import { Separator } from "@/shadcn/ui/separator"
 import { QB } from "../QuestionBank/QuestionBankType";
-import { TestPage } from "./TestTable/TestType";
 import { Question } from "../Questions/QuestionType";
 import QBLayout from "@/Layouts/QBLayout";
+import { Input } from "@/shadcn/ui/input";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/shadcn/ui/select"
 
 
 
@@ -34,43 +36,98 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
             <Head title="Test Details" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    {/* <Menu QBank={QBank}></Menu> */}
-                </div>
-                <div className="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <Card>
                         <CardHeader>
                             <CardTitle className="text-3xl font-bold">{test.name}</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="flex justify-between">
-                            <div className="flex flex-row">
-                                <Button variant="ghost" className="flex gap-3">
-                                    <CopyIcon className="ml-2 h-4 w-4 mt-1" />
-                                    Duplicate
-                                </Button>
-                                <Separator orientation="vertical" className="border-2 border-sky-300" />
-                                <Button variant="ghost" className="flex gap-3">
-                                    <PrinterIcon className="ml-2 h-4 w-4 mt-1" />
-                                    Print
-                                </Button>
-                                <Separator orientation="vertical" className="border-2 border-sky-300" />
-                                <Button variant="ghost" className="flex gap-3">
-                                    <Trash2Icon className="ml-2 h-4 w-4 mt-1" />
-                                    Print
-                                </Button>
-                            </div>
-                            <div className="flex">
-                                <Button className="bg-sky-500 flex gap-3 hover:bg-sky-300">
-                                    Preview
-                                </Button>
-                            </div>
+                                <div className="flex flex-row">
+                                    <Button variant="ghost" className="flex gap-3">
+                                        <CopyIcon className="ml-2 h-4 w-4 mt-1" />
+                                        Duplicate
+                                    </Button>
+                                    <Separator orientation="vertical" className="border-2 border-bluegreen" />
+                                    <Button variant="ghost" className="flex gap-3">
+                                        <PrinterIcon className="ml-2 h-4 w-4 mt-1" />
+                                        Print
+                                    </Button>
+                                    <Separator orientation="vertical" className="border-2 border-bluegreen" />
+                                    <Button variant="ghost" className="flex gap-3">
+                                        <Trash2Icon className="ml-2 h-4 w-4 mt-1" />
+                                        Delete
+                                    </Button>
+                                </div>
+                                <div className="flex">
+                                    <Button className="bg-bluegreen flex gap-3 hover:bg-bluegreen-dark">
+                                        Preview
+                                    </Button>
+                                </div>
                             </div>
                         </CardContent>
                     </Card>
                 </div>
-                <div className="container mx-auto">
-                <div>
-                <DropdownMenu>
+                <div className="container">
+                    <Card className="mb-5 mt-5 py-2 md:col-start-10 col-span-1">
+                        <CardContent>
+                            <div className="flex justify-end">
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button> <PlusIcon className="mr-3" />Add question</Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent>
+                                        <DropdownMenuItem>
+                                            <PlusIcon className="mr-2" />
+                                            <Link href={route('tests.createQuestion', [QBank.id, test.id])}>Add a new question</Link>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            <UpdateIcon className="mr-2" />
+                                            <Link href={route('tests.indexQuestion', [QBank.id, test.id])}>Reuse from this question bank</Link>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            <ShuffleIcon className="mr-2" />
+                                            Add random question</DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            <FilePlusIcon className="mr-2" />
+                                            <Link href={route('importinstruction')}>Import file</Link>
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </div>
+                            <Separator className="mb-3 mt-2" />
+                            <div className="flex items-center gap-2">
+                                <Input
+                                    placeholder="Search for a question..."
+                                    className="border-2 border-blue-500 border-solid" />
+                                <Select>
+                                    <SelectTrigger className="w-[180px]">
+                                        <SelectValue placeholder="Sort by" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="Alphabetical">Alphabetical</SelectItem>
+                                        <SelectItem value="Last Updated">Last Updated</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                                <Select>
+                                    <SelectTrigger className="w-[180px]">
+                                        <SelectValue placeholder="Categories" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="all">All</SelectItem>
+                                        <SelectItem value="l01">L.0.1</SelectItem>
+                                        <SelectItem value="l02">L.0.2</SelectItem>
+                                        <SelectItem value="l03">L.0.3</SelectItem>
+                                        <SelectItem value="l04">L.0.4</SelectItem>
+                                        <SelectItem value="l05">L.0.5</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                                <Button>
+                                    Filter
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                    {/* <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                     <Button>Add question</Button>
                     </DropdownMenuTrigger>
@@ -91,11 +148,7 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                         <Link href={route('importinstruction')}>Import file</Link>
                     </DropdownMenuItem>
                     </DropdownMenuContent>
-                </DropdownMenu>
-                </div>
-                    {/* <div className="flex justify-between">
-                        <h3> Test questions </h3>
-                    </div> */}
+                </DropdownMenu> */}
                     <DataTable columns={columns} data={questions} />
                 </div>
             </div>

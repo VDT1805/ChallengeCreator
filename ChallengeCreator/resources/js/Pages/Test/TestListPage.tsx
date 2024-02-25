@@ -1,10 +1,7 @@
-import { Test, columns } from "./TestTable/TestColumn"
-import { DataTable } from "./TestTable/TestTable"
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { Test } from "./TestTable/TestColumn"
 import { Head, Link } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import { Button } from "@/shadcn/ui/button";
-import { Menu } from "../Menu";
 import { QB } from "../QuestionBank/QuestionBankType";
 import QBLayout from "@/Layouts/QBLayout";
 import {
@@ -14,14 +11,10 @@ import {
     AccordionTrigger,
 } from "@/shadcn/ui/accordion"
 import { Separator } from "@/shadcn/ui/separator";
-
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardFooter,
     CardHeader,
-    CardTitle,
 } from "@/shadcn/ui/card"
 import { Input } from "@/shadcn/ui/input";
 import { FileIcon, PlusIcon } from "@radix-ui/react-icons";
@@ -35,8 +28,6 @@ import {
 } from "@/shadcn/ui/select"
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/shadcn/ui/pagination";
 
-
-
 export default function TestListPage({ auth, QBank, tests }: PageProps<{ QBank: QB, tests: any }>) {
     // console.log(JSON.stringify(tests));
     const [sortState, setSortState] = React.useState("Alphabetical")
@@ -45,15 +36,8 @@ export default function TestListPage({ auth, QBank, tests }: PageProps<{ QBank: 
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">All tests</h2>} QBank={QBank} CanEdit={true}>
             <Head title="Tests" />
-            <div className="py-12">
-                <div className="container mx-auto">
-                    {/* <div className="flex justify-between">
-                        <h3>All tests</h3>
-                    </div> */}
-                    {/* <DataTable columns={columns} data={tests.data} /> */}
-                    <Card className="mb-5 md:col-start-10 col-span-1">
-                        <CardHeader>
-                        </CardHeader>
+            <div className="py-12 container mx-auto">
+                    <Card className="mb-5 md:col-start-10 col-span-1 pt-5">
                         <CardContent>
                             <Link href={route('tests.create', QBank.id)} className="flex justify-end">
                                 <Button>
@@ -63,15 +47,15 @@ export default function TestListPage({ auth, QBank, tests }: PageProps<{ QBank: 
                             <Separator className="mb-3 mt-2" />
                             <div className="flex items-center gap-2">
                                 <Input
-                                    placeholder="Search for a question bank..."
+                                    placeholder="Search for a test..."
                                     className="border-2 border-blue-500 border-solid" />
                                 <Select>
                                     <SelectTrigger className="w-[180px]">
                                         <SelectValue placeholder="Sort by" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem onClick={() => { setSortState("Alphabetical"); }} value="light">Alphabetical</SelectItem>
-                                        <SelectItem onClick={() => { setSortState("Last Updated") }} value="dark">Last Updated</SelectItem>
+                                        <SelectItem onClick={() => { setSortState("Alphabetical"); }} value="Alphabetical">Alphabetical</SelectItem>
+                                        <SelectItem onClick={() => { setSortState("Last Updated") }} value="Last Updated">Last Updated</SelectItem>
                                     </SelectContent>
                                 </Select>
                                 <Select>
@@ -143,7 +127,6 @@ export default function TestListPage({ auth, QBank, tests }: PageProps<{ QBank: 
                         </Pagination>
                     </Accordion>
                 </div>
-            </div>
         </QBLayout>
     );
 }
