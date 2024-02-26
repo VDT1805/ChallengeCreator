@@ -89,9 +89,10 @@ class QuestionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(QuestionBank $qbID, Question $qID, Request $request, )
+    public function update($qID,Request $request)
     {
         //
+        $this->qService->update($qID, $request->all());
     }
 
     /**
