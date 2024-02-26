@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('question_test', function (Blueprint $table) {
-            $table->unsignedBigInteger('score');
+            // $table->unsignedBigInteger('score');
             $table->unsignedBigInteger('question_id');
             $table->foreign('question_id')->references('id')->on('questions')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('test_id');
             $table->foreign('test_id')->references('id')->on('tests')
                     ->onUpdate('cascade')->onDelete('cascade');
+            $table->unique(['question_id','test_id']);
         });
     }
 

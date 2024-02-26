@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('ans4');
             $table->string('ans5');
             $table->string('ans6');
+            $table->string('correct');
             $table->foreignId('question_bank_id')->constrained('question_banks')->onUpdate('cascade')->onDelete('cascade');
         });
     }
