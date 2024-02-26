@@ -24,6 +24,7 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/shadcn/ui/pagination"
+import { PlusIcon } from '@radix-ui/react-icons';
 
 export default function Dashboard({ auth, QBS }: PageProps<{ QBS: QBPage }>) {
     const [sortState, setSortState] = React.useState("Alphabetical")
@@ -55,7 +56,7 @@ export default function Dashboard({ auth, QBS }: PageProps<{ QBS: QBPage }>) {
                     <div className="md:col-start-10 col-span-1">
                         <Link href={route('questionbanks.create')}>
                             <Button>
-                                Add question bank
+                                <PlusIcon className="mr-2" /> Add question bank
                             </Button>
                         </Link>
                     </div>

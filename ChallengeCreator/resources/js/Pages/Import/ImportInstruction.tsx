@@ -39,7 +39,7 @@ export default function ImportInstruction({ auth, QBank }: PageProps<{ QBank: QB
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">How to import questions</h2>}>
             <Head title="How to import questions" />
             <div className="mt-10 mb-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <Menu QBank={QBank}></Menu>
+            {/* <Menu QBank={QBank}></Menu> */}
                 <Card>
                     <CardHeader>
                         <CardTitle className="text-3xl font-bold">Download .CSV Question Template</CardTitle>

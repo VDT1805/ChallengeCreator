@@ -45,7 +45,7 @@ export default function ImportQuestion({ auth, QBank }: PageProps<{ QBank: QB }>
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Import Question from File</h2>}>
             <Head title="Import Question" />
             <div className="mt-10 mb-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <Menu QBank={QBank}></Menu>
+            {/* <Menu QBank={QBank}></Menu> */}
                 <Card>
                     <CardHeader>
                         <CardTitle className="text-3xl font-bold">Import Question from File</CardTitle>
