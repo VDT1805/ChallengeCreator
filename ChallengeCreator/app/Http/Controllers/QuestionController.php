@@ -7,6 +7,7 @@ use App\Http\Services\QuestionBankService;
 use App\Http\Services\QuestionService;
 use App\Http\Services\TestService;
 use App\Models\Question;
+use App\Models\QuestionBank;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -70,15 +71,25 @@ class QuestionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Question $question)
+    public function edit($qbID, $qID)
     {
-        //
+
+        $QB = $this->qbService->findOrFail($qbID,"id");
+        $question = $this->qService->findOrFail($qID,"id");
+        return Inertia::render("Questions/Test",[
+            "QBank"=>$QB,
+            "question"=>$question
+        ]);
+        // return Inertia::render("Questions/Test",[
+        //     "QBank"=>$questionbank,
+        //     "question"=>$question
+        // ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Question $question)
+    public function update(QuestionBank $qbID, Question $qID, Request $request, )
     {
         //
     }
@@ -86,8 +97,18 @@ class QuestionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Question $question)
+    public function destroy($qbID,$qID)
     {
         //
+            $deleted = $this->qService->delete($qID);
+            if($deleted) {
+                $QB = $this->qbService->findOrFail($qbID,"id");
+                $questions = $this->qService->getAllPaginated(["questionbanks" => $qbID]);
+            return Inertia::render("Questions/QuestionListPage", [
+                "QBank" => $QB,
+                "questions" => $questions
+            ]);
+
+        }
     }
 }
