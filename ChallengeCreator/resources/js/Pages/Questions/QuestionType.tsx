@@ -25,6 +25,7 @@ export interface QPage {
     ans4: string
     ans5: string
     ans6: string
+    correct: string
     question_bank_id: number
     inTest?: boolean
   }

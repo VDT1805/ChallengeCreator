@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('question');
-            $table->string('ans1');
-            $table->string('ans2');
-            $table->string('ans3');
-            $table->string('ans4');
-            $table->string('ans5');
-            $table->string('ans6');
+            $table->string('ans1')->nullable();
+            $table->string('ans2')->nullable();
+            $table->string('ans3')->nullable();
+            $table->string('ans4')->nullable();
+            $table->string('ans5')->nullable();
+            $table->string('ans6')->nullable();
             $table->string('correct');
             $table->foreignId('question_bank_id')->constrained('question_banks')->onUpdate('cascade')->onDelete('cascade');
         });

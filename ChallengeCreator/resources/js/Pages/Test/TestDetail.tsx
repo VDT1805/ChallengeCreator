@@ -24,11 +24,84 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/shadcn/ui/select"
+import { useState } from "react";
+import axios from "axios";
 
 
 
 export default function TestTable({ auth, QBank, test, questions }: PageProps<{ QBank: QB, test: Test, questions: Array<Question> }>) {
     // console.log(JSON.stringify(questions));
+    const [loading, setLoading] = useState(false);
+
+    // const handleDownloadPDF = async () => {
+    //     setLoading(true);
+    //     try {
+    //         const response = await axios.get(route("tests.pdfGen",{qbID: QBank.id, testID: test.id}));
+    //         console.log(response);
+    //             // Extract the file name from the response headers
+    //     const contentDisposition = response.headers['content-disposition'];
+    //     const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
+    //     const fileName = fileNameMatch ? fileNameMatch[1] : 'sample.pdf';
+
+    //     // Handle the PDF download
+    //     const blob = new Blob([response.data], { type: 'application/pdf' });
+    //     const url = window.URL.createObjectURL(blob);
+    //     const a = document.createElement('a');
+    //     a.href = url;
+    //     a.download = fileName;
+    //     a.click();
+    //     window.URL.revokeObjectURL(url);
+    //     } catch (error) {
+    //         // Handle error
+    //         console.log(error);
+    //     }
+    //     setLoading(false);
+    // };
+
+//     const invoice = async() => {
+//         axios({
+//             method: 'post',
+//         url: '/api/download',
+//         data: { qbID: QBank.id, testID: test.id },
+//         responseType: 'arraybuffer',
+//         onDownloadProgress: (progressEvent) => {
+//             let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+//             setPercentage(percentCompleted);
+//             if (percentCompleted === 100) {
+//             setPercentage(0);
+//             setIsDownloading(false);
+//             }
+//         },
+//     })
+//   .then((response) => {
+//     const blob = new Blob([response.data], { type: 'application/octet-stream' });
+//     const url = window.URL.createObjectURL(blob);
+//     const a = document.createElement('a');
+//     a.href = url;
+//     a.download = 'video.mp4';
+//     a.click();
+//   });
+
+//     }
+        const dl = () => {
+            setLoading(true);
+            axios({
+                url: route("tests.pdfGen",{ qbID: QBank.id, testID: test.id }),
+                method: 'GET',
+                responseType: 'blob', // important
+            }).then((response) => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', `${test.name}.pdf`);
+                document.body.appendChild(link);
+                link.click();
+            }).catch((err) => {
+                console.log(err);
+            });
+            setLoading(false);
+        }
+
     return (
         <QBLayout
             user={auth.user}
@@ -59,8 +132,11 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                     </Button>
                                 </div>
                                 <div className="flex">
-                                    <Button className="bg-bluegreen flex gap-3 hover:bg-bluegreen-dark">
-                                        Preview
+                                    {/* <Button className="bg-bluegreen flex gap-3 hover:bg-bluegreen-dark">
+                                        <Link href={route('tests.pdfGen', [QBank.id, test.id]) } method = "get">Preview</Link>
+                                    </Button> */}
+                                    <Button className="bg-bluegreen flex gap-3 hover:bg-bluegreen-dark" onClick={dl} disabled={loading}>
+                                        {loading ? 'Generating PDF...' : 'Download PDF'}
                                     </Button>
                                 </div>
                             </div>

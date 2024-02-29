@@ -74,18 +74,6 @@ export default function TestListPage({ auth, QBank, tests }: PageProps<{ QBank: 
                                 <Button>
                                     Filter
                                 </Button>
-                                {/* <DropdownMenu>
-                                    <DropdownMenuTrigger className="flex gap-2">
-                                        <ArrowUpDown className="ml-2 h-4 w-4 mt-1" />
-                                        Sort By: {
-                                            sortState
-                                        }
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent>
-                                        <DropdownMenuItem onClick={() => { setSortState("Alphabetical") }}>Alphabetical</DropdownMenuItem>
-                                        <DropdownMenuItem onClick={() => { setSortState("Last Updated") }}>Last Updated</DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                </DropdownMenu> */}
                             </div>
                         </CardContent>
                     </Card>

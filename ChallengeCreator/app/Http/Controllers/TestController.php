@@ -7,9 +7,12 @@ use Illuminate\Http\Request;
 use App\Http\Services\QuestionBankService;
 use App\Http\Services\TestService;
 use App\Http\Services\QuestionService;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 use Exception;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+
 
 
 class TestController extends Controller
@@ -121,7 +124,7 @@ class TestController extends Controller
         }
         $inserted = $this->qService->create($request->all()+["question_bank_id" => $qbID]);
         if ($inserted) {
-            $attachmentResult = $test->questions()->attach($inserted, ["score" => 1]);
+            $attachmentResult = $test->questions()->attach($inserted);
             return redirect()->route("tests.show", ["qbID" => $qbID, "testID" => $testID]);
         }
     }
@@ -156,6 +159,22 @@ class TestController extends Controller
             abort(404);
         }
         $attachmentResult = $test->questions()->detach($question);
+    }
+
+    public function pdfGenerate($qbID, $testID) {
+        $QB = $this->qbService->findOrFail($qbID,"id");
+        $test = $this->tService->find(["questionbanks" => $qbID, "id" => $testID])->first();
+        if(!$test) {
+            abort(404);
+        }
+        $questions = $this->qService->find(["questionbanks" => $qbID, "tests"=>["qb" => $qbID, "test"=>$testID]]);
+        $data = [
+            "test" => $test,
+            "questions" => $questions
+        ];
+        // dd($questions);
+        $pdf = PDF::loadView('exampdf',$data);
+        return  $pdf->download($test->name.'.pdf');
     }
 
 }

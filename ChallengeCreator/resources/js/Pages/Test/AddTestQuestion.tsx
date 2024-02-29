@@ -49,10 +49,13 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
         ans4: "",
         ans5: "",
         ans6: "",
+        correct: "1"
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
+        //Testing purpose only
+        setData('correct', "1");
         post(route('tests.storeQuestion',[QBank.id,test.id]));
     };
   return (
@@ -72,10 +75,6 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
           <CardContent>
             <form onSubmit={submit}>
               <div className="grid w-full items-center gap-4">
-                {/* <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="name" className="text-xl font-bold">Question name</Label>
-                  <Input id="name" placeholder="Name of your question" />
-                </div> */}
                 <div className="flex flex-col space-y-1.5 mb-5">
                   <Label htmlFor="question" className="text-xl font-bold">Enter your question</Label>
                   <Textarea
@@ -213,11 +212,6 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
                   <Input id="score" placeholder="Question score" className='w-1/6' />
                 </div>
               </div>
-              {/* <Link href={route('testdetail')}>
-                <Button className='mt-5'>
-                  Add question
-                </Button>
-              </Link> */}
               <Button type='submit'>
                   Add question
             </Button>
