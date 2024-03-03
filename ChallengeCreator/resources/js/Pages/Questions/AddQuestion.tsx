@@ -50,15 +50,6 @@ export default function AddQuestion({ auth, QBank }: PageProps<{ QBank: QB }>) {
         ans6: "",
     });
 
-    // const ans: Record<string, string>[] = [{
-    //     "A":"ans1",
-    //     "B":"ans2",
-    //     "C":"ans3",
-    //     "D":"ans4",
-    //     "E":"ans5",
-    //     "F":"ans6",
-    // }];
-
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         post(route('questions.store',QBank.id));

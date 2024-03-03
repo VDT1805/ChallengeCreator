@@ -43,7 +43,7 @@ class TestController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create($qbID, Request $request)
+    public function create($qbID)
     {
         //
         // dd($request);
@@ -135,7 +135,7 @@ class TestController extends Controller
         if(!$test) {
             abort(404);
         }
-        $questions = $this->qService->getAllPaginated(["questionbanks" => $qbID, "tests"=>["qb" => $qbID, "test"=>$testID]]);
+        $questions = $this->qService->getAllPaginated($request->all()+["questionbanks" => $qbID, "tests"=>["qb" => $qbID, "test"=>$testID]]);
         return Inertia::render("Test/TestQuestionListPage", [
             "QBank" => $QB,
             "test" => $test,
@@ -158,7 +158,7 @@ class TestController extends Controller
         if(!$test) {
             abort(404);
         }
-        $attachmentResult = $test->questions()->detach($question);
+        $detachmentResult = $test->questions()->detach($question);
     }
 
     public function pdfGenerate($qbID, $testID) {

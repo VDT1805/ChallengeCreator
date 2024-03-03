@@ -1,6 +1,6 @@
-export interface QPage {
+export interface LabelPage {
     current_page: number
-    data: Question[]
+    data: Label[]
     first_page_url: string
     from: number
     last_page: number
@@ -14,20 +14,14 @@ export interface QPage {
     total: number
   }
 
-  export interface Question {
+  export interface Label {
     id: number
+    name: string
     created_at: any
     updated_at: any
-    question: string
-    ans1: string
-    ans2: string
-    ans3: string
-    ans4: string
-    ans5: string
-    ans6: string
-    correct: number
+    description: string
     question_bank_id: number
-    inTest?: boolean
+    label_id: any
   }
 
   export interface Link {

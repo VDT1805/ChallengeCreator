@@ -25,10 +25,11 @@ class QuestionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($qbID)
+    public function index($qbID, Request $request)
     {
         $QB = $this->qbService->findOrFail($qbID,"id");
-        $questions = $this->qService->getAllPaginated(["questionbanks" => $qbID]);
+        $questions = $this->qService->getAllPaginated($request->all()+["questionbanks" => $qbID]);
+        // dd($questions);
         return Inertia::render("Questions/QuestionListPage", [
             "QBank" => $QB,
             "questions" => $questions
@@ -41,9 +42,6 @@ class QuestionController extends Controller
      */
     public function create($qbID, QuestionRequest $request, $testID=null)
     {
-        //
-
-        // dd($request);
         $QB = $this->qbService->findOrFail($qbID,"id");
         return Inertia::render("Questions/AddQuestion",["QBank" => $QB]);
     }
@@ -80,10 +78,6 @@ class QuestionController extends Controller
             "QBank"=>$QB,
             "question"=>$question
         ]);
-        // return Inertia::render("Questions/Test",[
-        //     "QBank"=>$questionbank,
-        //     "question"=>$question
-        // ]);
     }
 
     /**

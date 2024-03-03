@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LabelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionBankController;
 use App\Http\Controllers\QuestionController;
@@ -157,6 +158,28 @@ Route::get('/qbs/{qbID}/tests/{testID}/pdf', [TestController::class,'pdfGenerate
 ->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('tests.pdfGen');
 
 ##################################################################
+
+
+Route::get('/qbs/{qbID}/labels',[LabelController::class,'index'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('labels.index');
+
+Route::get('/qbs/{qbID}/labels/create/', [LabelController::class,'create'])
+->middleware(['auth', 'verified'])->name('labels.create');
+
+Route::post('/qbs/{qbID}/labels/create', [LabelController::class,'store'])
+->middleware(['auth', 'verified'])->name('labels.store');
+
+Route::get('/qbs/{qbID}/labels/{label}', [LabelController::class,'show'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('labels.show');
+
+Route::get('/qbs/{qbID}/labels/{label}/edit', [LabelController::class,'edit'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('labels.edit');
+
+Route::put('/qbs/{qbID}/labels/{label}/edit', [LabelController::class,'update'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('labels.update');
+
+Route::delete('/qbs/{qbID}/labels/{label}/edit', [LabelController::class,'destroy'])
+->middleware(['auth', 'verified','dynamicrole:owner'])->name('labels.destroy');
 
 Route::get('/addcategory', function () {
     return Inertia::render('Category/AddCategory');

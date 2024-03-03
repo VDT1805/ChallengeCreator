@@ -16,4 +16,10 @@ class Question extends Model
             User::class, 'question_test', 'question_id', 'test_id'
         );
     }
+
+    public function labels() {
+        return $this->belongsTo(
+            Label::class
+        );
+    }
 }

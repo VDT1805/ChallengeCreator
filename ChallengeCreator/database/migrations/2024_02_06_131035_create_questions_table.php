@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('ans5')->nullable();
             $table->string('ans6')->nullable();
             $table->string('correct');
+            $table->foreignId('label_id')->constrained('labels')->onUpdate('cascade');
             $table->foreignId('question_bank_id')->constrained('question_banks')->onUpdate('cascade')->onDelete('cascade');
         });
     }

@@ -3,6 +3,8 @@
 namespace App\ModelFilters;
 use EloquentFilter\ModelFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+
 class QuestionFilter extends ModelFilter
 {
     /**
@@ -14,8 +16,9 @@ class QuestionFilter extends ModelFilter
     public $relations = [];
     public function questionbanks($id)
     {
-        return $this->where('question_bank_id','=', $id);
+        return $this->where('questions.question_bank_id','=', $id);
     }
+
     public function tests($ids)
     {
         return $this->select('questions.*')
@@ -29,5 +32,21 @@ class QuestionFilter extends ModelFilter
     }
     public function id($id) {
         return $this->where("id", '=', $id);
+    }
+
+    public function labels($parent_id) {
+        return $this->select('questions.*')
+        ->join("labels as sublabels", function($join) use ($parent_id){
+            $join->on("questions.label_id", "=", "sublabels.id")->where("sublabels.label_id","=",$parent_id);
+        })
+        ->get();
+    }
+
+    public function sublabels($id) {
+        return $this->where("label_id", '=', $id);
+    }
+
+    public function keyword($keyword) {
+        return $this->where("question", 'LIKE', '%'.$keyword.'%');
     }
 }

@@ -30,6 +30,12 @@ class QuestionBank extends LaratrustTeam
         );
     }
 
+    public function labels() {
+        return $this->hasMany(
+            Label::class
+        );
+    }
+
     public function questions() {
         return $this->hasMany(
             Question::class, "question_bank_id"

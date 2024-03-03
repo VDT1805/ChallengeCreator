@@ -29,7 +29,7 @@ class QuestionService implements BaseCrudServiceInterface
      */
     public function getAllPaginated(array $search = [], int $pageSize = 15): LengthAwarePaginator
     {
-        // dd(QuestionBank::filter($search)->toSql());
+        // dd(Question::filter($search)->toSql());
         // dd(Question::filter($search)->toSql());
         return Question::filter($search)->paginateFilter($pageSize);
     }
