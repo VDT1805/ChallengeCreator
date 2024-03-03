@@ -137,7 +137,9 @@ export default function QuestionList({ auth, QBank, questions }: PageProps<{ QBa
                 <p className="flex gap-2 font-bold items-center text-green-500">Answer 4: {question.ans4} <CheckCircledIcon /> </p>
                 <p>Answer 5: {question.ans5}</p>
                 <p>Answer 6: {question.ans6}</p> */}
-
+                {answers.map((answer, index) => (
+                    answer && <p key={index}>Answer {index + 1}: {answer}</p>
+                ))}
                 <Separator className="mb-2 mt-2" />
                 <div className="flex gap-4">
                   <Link href={route('questions.edit', [question.question_bank_id, question.id])} method="get">
