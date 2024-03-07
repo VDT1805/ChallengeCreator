@@ -112,14 +112,14 @@
 							<tr>
 								<td class="title">
 									<img
-										src="https://sparksuite.github.io/simple-html-invoice-template/images/logo.png"
+										src="D:\Pony\dacn-cnpm\ChallengeCreator\resources\js\Pages\logo.png"
 										style="width: 100%; max-width: 300px"
 									/>
 								</td>
 
 								<td>
 									{{-- Invoice #: 123<br /> --}}
-									Exam Date: January 1, 2023<br />
+									Exam Date: {{ date('d-m-Y') }}<br />
 									Time: XX Minutes
 								</td>
 							</tr>

@@ -50,14 +50,14 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
         ans5: "",
         ans6: "",
         correct: "1",
-        label_id: "432"
+        label_id: "1"
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         //Testing purpose only
         setData('correct', "1");
-        setData('label_id', "432");
+        setData('label_id', "1");
         post(route('tests.storeQuestion',[QBank.id,test.id]));
     };
   return (
