@@ -9,11 +9,13 @@ import { Button } from "@/shadcn/ui/button";
 import { Menu } from "../Menu";
 import { QB } from "../QuestionBank/QuestionBankType";
 import QBLayout from "@/Layouts/QBLayout";
+import { MemberPage } from "./MemberType";
 
 
 
 
-export default function MemberTable({ auth, QBank }: PageProps<{ QBank: QB }>) {
+export default function MemberTable({ auth, QBank, members }: PageProps<{ QBank: QB, members: MemberPage }>) {
+    // console.log(JSON.stringify(members));
     return (
         <QBLayout
             user={auth.user}
