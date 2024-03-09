@@ -85,7 +85,6 @@ class QuestionController extends Controller
      */
     public function update($qID,Request $request)
     {
-        //
         $this->qService->update($qID, $request->all());
     }
 
@@ -94,7 +93,6 @@ class QuestionController extends Controller
      */
     public function destroy($qbID,$qID)
     {
-        //
             $deleted = $this->qService->delete($qID);
             if($deleted) {
                 $QB = $this->qbService->findOrFail($qbID,"id");

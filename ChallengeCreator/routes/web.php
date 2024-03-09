@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LabelController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionBankController;
 use App\Http\Controllers\QuestionController;
@@ -181,9 +182,31 @@ Route::put('/qbs/{qbID}/labels/{label}/edit', [LabelController::class,'update'])
 Route::delete('/qbs/{qbID}/labels/{label}/edit', [LabelController::class,'destroy'])
 ->middleware(['auth', 'verified','dynamicrole:owner'])->name('labels.destroy');
 
-Route::get('/addcategory', function () {
-    return Inertia::render('Category/AddCategory');
-})->middleware(['auth', 'verified'])->name('addcategory');
+
+##################################################################
+
+
+Route::get('/qbs/{qbID}/members',[MemberController::class,'index'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('members.index');
+
+Route::get('/qbs/{qbID}/members/create/', [MemberController::class,'create'])
+->middleware(['auth', 'verified'])->name('members.create');
+
+Route::post('/qbs/{qbID}/members/create', [MemberController::class,'store'])
+->middleware(['auth', 'verified'])->name('members.store');
+
+Route::get('/qbs/{qbID}/members/{member}', [MemberController::class,'show'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('members.show');
+
+Route::get('/qbs/{qbID}/members/{member}/edit', [MemberController::class,'edit'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('members.edit');
+
+Route::put('/qbs/{qbID}/members/{member}/edit', [MemberController::class,'update'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('members.update');
+
+Route::delete('/qbs/{qbID}/members/{member}/edit', [MemberController::class,'destroy'])
+->middleware(['auth', 'verified','dynamicrole:owner'])->name('members.destroy');
+
 
 
 

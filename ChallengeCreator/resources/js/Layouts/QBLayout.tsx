@@ -42,7 +42,7 @@ export default function QBLayout({ user, header, children, QBank, CanEdit }: Pro
                                     Categories
                                 </NavLink>
 
-                                <NavLink href={route('member')} active={route().current('member')}>
+                                <NavLink href={route('members.index', QBank.id)} active={route().current('members.index', QBank.id)}>
                                     Members
                                 </NavLink>
 
@@ -138,7 +138,7 @@ export default function QBLayout({ user, header, children, QBank, CanEdit }: Pro
                             Categories
                         </ResponsiveNavLink>
 
-                        <ResponsiveNavLink href={route('member')} active={route().current('member')}>
+                        <ResponsiveNavLink href={route('members.index', QBank.id)} active={route().current('members.index', QBank.id)}>
                             Members
                         </ResponsiveNavLink>
 
