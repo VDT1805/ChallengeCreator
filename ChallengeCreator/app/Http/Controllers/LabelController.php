@@ -38,7 +38,11 @@ class LabelController extends Controller
     {
         //
         $QB = $this->qbService->findOrFail($qbID,"id");
-        return Inertia::render("Label/AddLabel",["QBank" => $QB]);
+        $labels = $this->lService->getAll(["questionbanks" => $qbID]);
+        return Inertia::render("Label/AddLabel",[
+            "QBank" => $QB,
+            "labels" => $labels
+        ]);
     }
 
     /**

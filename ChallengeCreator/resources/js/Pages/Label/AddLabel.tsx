@@ -33,16 +33,17 @@ import { Checkbox } from '@/shadcn/ui/checkbox';
 
 
 import React, { FormEventHandler } from 'react';
-import { Menu } from '../Menu';
+import { LabelType } from './LabelTable/LabelType';
 import { QB } from '../QuestionBank/QuestionBankType';
 import QBLayout from '@/Layouts/QBLayout';
 
 
-export default function Dashboard({ auth, QBank }: PageProps<{ QBank: QB }>) {
+export default function Dashboard({ auth, QBank, labels }: PageProps<{ QBank: QB, labels: LabelType[] }>) {
   const [position, setPosition] = React.useState("bottom")
   const { data, setData, setDefaults, post, processing, errors, reset } = useForm({
     name: "",
-    description: ""
+    description: "",
+    label_id: ""
   });
   const submit: FormEventHandler = (e) => {
     e.preventDefault();
@@ -94,17 +95,33 @@ export default function Dashboard({ auth, QBank }: PageProps<{ QBank: QB }>) {
           <CardContent>
             <form onSubmit={submit}>
               <div className="grid w-full items-center gap-4">
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="name" className="text-xl font-bold">Parent category</Label>
-                  <Input id="name" placeholder="Name of the parent category" />
-                </div>
+                <Select onValueChange={(e) => setData("label_id", e)}>
+                    <SelectTrigger className="w-[180px]" >
+                    <SelectValue placeholder="Categories" />
+                    </SelectTrigger >
+                    <SelectContent>
+                        {labels.map((label) => (
+                            <SelectItem key={label.id} value={label.id.toString()}>
+                            {label.name}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="name" className="text-xl font-bold">Subcategory name</Label>
-                  <Input id="name" placeholder="Name of your subcategory" />
+                  <Input id="name"
+                  name="name"
+                  value={data.name}
+                  onChange={(e) => setData('name', e.target.value)}
+                  placeholder="Name of your subcategory" />
                 </div>
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="name" className="text-xl font-bold">Description of subcategory</Label>
-                  <Textarea placeholder="Description of your subcategory" />
+                  <Textarea
+                  name="description"
+                  value={data.description}
+                  onChange={(e) => setData('description', e.target.value)}
+                  placeholder="Description of your subcategory" />
                 </div>
               </div>
               <Button className='mt-5'>

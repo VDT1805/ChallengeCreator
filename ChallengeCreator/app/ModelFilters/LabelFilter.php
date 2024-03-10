@@ -12,7 +12,7 @@ class LabelFilter extends ModelFilter
     * @var array
     */
     public $relations = [];
-    public function parent($id){
+    public function parent($id) {
         return $this->where("label_id", '=', $id);
     }
     public function id($id) {

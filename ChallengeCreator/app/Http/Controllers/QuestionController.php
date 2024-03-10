@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\QuestionRequest;
+use App\Http\Services\LabelService;
 use App\Http\Services\QuestionBankService;
 use App\Http\Services\QuestionService;
 use App\Http\Services\TestService;
@@ -16,11 +17,13 @@ class QuestionController extends Controller
     private QuestionService $qService;
     private QuestionBankService $qbService;
     private TestService $tService;
-    public function __construct(QuestionService $qService,TestService $tService, QuestionBankService $qbService)
+    private LabelService $lService;
+    public function __construct(QuestionService $qService,TestService $tService, QuestionBankService $qbService,LabelService $lService)
     {
         $this->qService = $qService;
         $this->tService = $tService;
         $this->qbService = $qbService;
+        $this->lService = $lService;
     }
     /**
      * Display a listing of the resource.
@@ -30,9 +33,15 @@ class QuestionController extends Controller
         $QB = $this->qbService->findOrFail($qbID,"id");
         $questions = $this->qService->getAllPaginated($request->all()+["questionbanks" => $qbID]);
         // dd($questions);
+        $labels = $this->lService->getAll(["questionbanks" => $qbID]);
+        // if(isset($request["parent"])) {
+        //     dd($request->parent);
+        // }
         return Inertia::render("Questions/QuestionListPage", [
             "QBank" => $QB,
-            "questions" => $questions
+            "questions" => $questions,
+            "labels" => $labels,
+            "sublabels" => Inertia::lazy(fn() => isset($request["parent"]) ? $this->lService->getAll(["parent" => $request->parent]) : [])
         ]);
 
     }
@@ -43,7 +52,10 @@ class QuestionController extends Controller
     public function create($qbID, QuestionRequest $request, $testID=null)
     {
         $QB = $this->qbService->findOrFail($qbID,"id");
-        return Inertia::render("Questions/AddQuestion",["QBank" => $QB]);
+        $labels = $this->lService->getAll(["questionbanks" => $qbID]);
+        return Inertia::render("Questions/AddQuestion",["QBank" => $QB,
+        "labels" => $labels,
+        "sublabels" => Inertia::lazy(fn() => isset($request["parent"]) ? $this->lService->getAll(["parent" => $request->parent]) : [])]);
     }
 
     /**
@@ -74,9 +86,12 @@ class QuestionController extends Controller
 
         $QB = $this->qbService->findOrFail($qbID,"id");
         $question = $this->qService->findOrFail($qID,"id");
+        $labels = $this->lService->getAll(["questionbanks" => $qbID]);
+        dd($labels);
         return Inertia::render("Questions/Test",[
             "QBank"=>$QB,
-            "question"=>$question
+            "question"=>$question,
+            "labels" => $labels
         ]);
     }
 

@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, router, useForm } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import {
   Card,
@@ -36,9 +36,10 @@ import React, { FormEventHandler } from 'react';
 import { Menu } from '../Menu';
 import { QB } from '../QuestionBank/QuestionBankType';
 import QBLayout from '@/Layouts/QBLayout';
+import { LabelType } from '../Label/LabelTable/LabelType';
 
 
-export default function AddQuestion({ auth, QBank }: PageProps<{ QBank: QB }>) {
+export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProps<{ QBank: QB, labels: LabelType[], sublabels: LabelType[] }>) {
   const [position, setPosition] = React.useState("bottom")
   const { data, setData, setDefaults, post, processing, errors, reset } = useForm({
         question: "",
@@ -48,19 +49,25 @@ export default function AddQuestion({ auth, QBank }: PageProps<{ QBank: QB }>) {
         ans4: "",
         ans5: "",
         ans6: "",
+        correct: "",
+        label_id: ""
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
+        setData('correct',"1");
         post(route('questions.store',QBank.id));
     };
+
+    const labelValueChange = (e:string) => {
+        router.reload({only: ['sublabels'], data: {parent: e}})
+    }
   return (
     <QBLayout
       user={auth.user}
       header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">New Question</h2>} QBank={QBank} CanEdit={true}>
       <Head title="New Question" />
       <div className="mt-10 mb-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
-      {/* <Menu QBank={QBank} CanEdit={undefined}></Menu> */}
         <Card>
           <CardHeader>
             <CardTitle className="text-3xl font-bold">Add Question</CardTitle>
@@ -194,16 +201,34 @@ export default function AddQuestion({ auth, QBank }: PageProps<{ QBank: QB }>) {
 
               <div className="mt-5">
                 <div className="text-xl font-bold"><p>Category settings</p></div>
-                <Select>
-                  <SelectTrigger><SelectValue placeholder="Choose your label" /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value='L.0.1' >L.0.1</SelectItem>
-                    <SelectItem value='L.0.2' >L.0.2</SelectItem>
-                    <SelectItem value='L.0.3' >L.0.3</SelectItem>
-                    <SelectItem value='L.0.4' >L.0.4</SelectItem>
-                    <SelectItem value='L.0.5' >L.0.5</SelectItem>
-                  </SelectContent>
+                <Select onValueChange={(e) => labelValueChange(e)}>
+                <SelectTrigger className="w-[180px]" >
+                  <SelectValue placeholder="Categories" />
+                </SelectTrigger >
+                    <SelectContent>
+                        {labels.map((label) => (
+                            <SelectItem key={label.id} value={label.id.toString()}>
+                            {label.name}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
                 </Select>
+                {
+                sublabels && (
+                    <Select onValueChange={(e) => setData("label_id",e)}>
+                        <SelectTrigger className="w-[180px]" >
+                        <SelectValue placeholder="Sub-categories" />
+                        </SelectTrigger >
+                            <SelectContent>
+                                {sublabels.map((sublabels) => (
+                                    <SelectItem key={sublabels.id} value={sublabels.id.toString()}>
+                                    {sublabels.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                    </Select>
+                  )
+              }
                 <div className="mt-3 mb-3">
                   <div className="text-xl font-bold"><p>Score settings</p></div>
                   <Input id="score" placeholder="Question score" className='w-1/6' />

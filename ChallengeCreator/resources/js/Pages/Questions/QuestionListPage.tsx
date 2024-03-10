@@ -9,7 +9,9 @@ import QBLayout from "@/Layouts/QBLayout";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/shadcn/ui/select"
@@ -29,7 +31,9 @@ import {
 import { Input } from "@/shadcn/ui/input";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shadcn/ui/dropdown-menu';
 import { router } from '@inertiajs/react'
-import { FormEventHandler, useState } from 'react';
+import { FormEventHandler, SetStateAction, useState } from 'react';
+import { LabelProps } from '@radix-ui/react-label';
+import { LabelType } from '../Label/LabelTable/LabelType';
 
 // export function getParameterByName(name: string) {
 //     const uri = window.location.search
@@ -38,12 +42,22 @@ import { FormEventHandler, useState } from 'react';
 // }
 
 
-export default function QuestionList({ auth, QBank, questions }: PageProps<{ QBank: QB, questions: QPage }>) {
+export default function QuestionList({ auth, QBank, questions, labels, sublabels }: PageProps<{ QBank: QB, questions: QPage, labels: LabelType[], sublabels: LabelType[] }>) {
     const [query, setQuery] = useState<Record<string, string>>({});
     const filter: FormEventHandler = (e) => {
         e.preventDefault();
         router.get(route('questions.index', QBank.id), query, { preserveState: true });
     };
+    const [selectedValue, setSelectedValue] = useState(Array<LabelType>);
+
+    const labelValueChange = (e:string) => {
+        setQuery(prevQuery => ({
+            ...prevQuery,
+            ["label"]: e
+        }));
+        router.reload({only: ['sublabels'], data: {parent: e}})
+
+    }
 
   return (
     <QBLayout
@@ -92,19 +106,39 @@ export default function QuestionList({ auth, QBank, questions }: PageProps<{ QBa
                   <SelectItem value="Last Updated">Last Updated</SelectItem>
                 </SelectContent>
               </Select>
-              <Select>
-                <SelectTrigger className="w-[180px]">
+
+              <Select onValueChange={(e) => labelValueChange(e)}>
+                <SelectTrigger className="w-[180px]" >
                   <SelectValue placeholder="Categories" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All</SelectItem>
-                  <SelectItem value="l01">L.0.1</SelectItem>
-                  <SelectItem value="l02">L.0.2</SelectItem>
-                  <SelectItem value="l03">L.0.3</SelectItem>
-                  <SelectItem value="l04">L.0.4</SelectItem>
-                  <SelectItem value="l05">L.0.5</SelectItem>
-                </SelectContent>
+                </SelectTrigger >
+                    <SelectContent>
+                        {labels.map((label) => (
+                            <SelectItem key={label.id} value={label.id.toString()}>
+                            {label.name}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
               </Select>
+
+              {
+                sublabels && (
+                    <Select onValueChange={(e) => setQuery(prevQuery => ({
+                        ...prevQuery,
+                        ["sublabel"]: e
+                      }))}>
+                        <SelectTrigger className="w-[180px]" >
+                        <SelectValue placeholder="Categories" />
+                        </SelectTrigger >
+                            <SelectContent>
+                                {sublabels.map((sublabels) => (
+                                    <SelectItem key={sublabels.id} value={sublabels.id.toString()}>
+                                    {sublabels.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                    </Select>
+                  )
+              }
               <Button onClick={filter}>
                 Filter
               </Button>

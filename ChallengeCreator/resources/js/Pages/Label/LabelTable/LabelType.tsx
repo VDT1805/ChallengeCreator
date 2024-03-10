@@ -1,6 +1,6 @@
 export interface LabelPage {
     current_page: number
-    data: Label[]
+    data: LabelType[]
     first_page_url: string
     from: number
     last_page: number
@@ -14,7 +14,7 @@ export interface LabelPage {
     total: number
   }
 
-  export interface Label {
+  export interface LabelType {
     id: number
     name: string
     created_at: any
