@@ -14,7 +14,7 @@ import { Input } from '@/shadcn/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shadcn/ui/select';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/shadcn/ui/accordion';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/shadcn/ui/pagination';
-import { Label, LabelPage } from './LabelTable/LabelType';
+import { LabelPage, LabelType } from './LabelTable/LabelType';
 
 
 
@@ -57,7 +57,7 @@ export default function LabelIndex({ auth, QBank, labels }: PageProps<{ QBank: Q
                 </CardContent>
                 </Card>
                 <Accordion type="single" collapsible className="w-full shadow-2xl bg-white">
-                {labels.data.map((label: Label) => (
+                {labels.data.map((label: LabelType) => (
                     <AccordionItem value={label.id as unknown as string}>
                     <AccordionTrigger className="hover:bg-blue-100 bg-white px-3">
                         <div className="flex gap-2 items-center"><FileIcon />{label.name as string}

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CSVController;
 use App\Http\Controllers\LabelController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfileController;
@@ -100,10 +101,16 @@ Route::get('/qbs/{qbID}/questions',[QuestionController::class,'index'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('questions.index');
 
 Route::get('/qbs/{qbID}/questions/create/', [QuestionController::class,'create'])
-->middleware(['auth', 'verified'])->name('questions.create');
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.create');
 
 Route::post('/qbs/{qbID}/questions/create', [QuestionController::class,'store'])
-->middleware(['auth', 'verified'])->name('questions.store');
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.store');
+
+Route::get('/qbs/{qbID}/questions/import/',[CSVController::class,'importForm'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.importForm');
+
+Route::post('/qbs/{qbID}/questions/import/',[CSVController::class,'import'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.import');
 
 Route::get('/qbs/{qbID}/questions/{qID}', [QuestionController::class,'show'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('questions.show');
@@ -116,6 +123,8 @@ Route::put('/qbs/{qbID}/questions/{qID}/edit', [QuestionController::class,'updat
 
 Route::delete('/qbs/{qbID}/questions/{qID}/edit', [QuestionController::class,'destroy'])
 ->middleware(['auth', 'verified','dynamicrole:owner'])->name('questions.destroy');
+
+
 
 ##################################################################
 

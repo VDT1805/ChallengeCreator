@@ -81,7 +81,7 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <FilePlusIcon className="mr-2" />
-                  <Link href={route('importinstruction')}>
+                  <Link href={route('questions.importForm', [QBank.id])}>
                     Import file
                     </Link>
                 </DropdownMenuItem>

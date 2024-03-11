@@ -49,13 +49,13 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
         ans4: "",
         ans5: "",
         ans6: "",
-        correct: "",
+        correct: 1,
         label_id: ""
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        setData('correct',"1");
+        setData('correct',1);
         post(route('questions.store',QBank.id));
     };
 

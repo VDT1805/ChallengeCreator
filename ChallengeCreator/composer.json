@@ -13,6 +13,7 @@
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
         "santigarcor/laratrust": "^8.2",
+        "spatie/simple-excel": "^3.4",
         "tightenco/ziggy": "^1.0",
         "tucker-eric/eloquentfilter": "^3.2"
     },
