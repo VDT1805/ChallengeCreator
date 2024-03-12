@@ -8,8 +8,7 @@ use App\Models\Question;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\ValidationData;
-use Illuminate\Validation\Validator;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
@@ -41,12 +40,24 @@ class CSVController extends Controller
             $fileExtension = $file->getClientOriginalExtension();
             $newFileName = pathinfo($fileName, PATHINFO_FILENAME) . '.' . $fileExtension;
             $path = $request->file('csv')->store("public");
-            $rows = SimpleExcelReader::create(storage_path('app/') . $path, 'csv')->getRows();
+            $rules = ['email' => 'required|email'];
+            $filtered = [];
+            $violators = [];
+            $rows = SimpleExcelReader::create(storage_path('app/') . $path, 'csv')->getRows()->
+            each(function($row) use ($rules, &$filtered, &$violators) {
+                $validator = Validator::make($row, $rules);
+                if ($validator->passes()) {
+                    $filtered[] = $row;
+                } else {
+                    $violators[] = $row;
+                }
+            });
 
             return Inertia::render(
                 "Import/Test",[
                     "QBank" => $QB,
-                    "rows" => $rows
+                    "rows" => $filtered,
+                    "violators" => $violators
                 ]
             );
         } else {

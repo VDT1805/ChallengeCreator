@@ -40,8 +40,9 @@ import QBLayout from '@/Layouts/QBLayout';
 interface UploadProp {
     csv: File | undefined;
 }
-export default function ImportPage({ auth, QBank, rows }: PageProps<{ QBank: QB, rows: any }>) {
+export default function ImportPage({ auth, QBank, rows, violators }: PageProps<{ QBank: QB, rows: any, violators:any }>) {
     console.log(rows);
+    console.log(violators);
     const [position, setPosition] = React.useState("bottom")
     const { data, setData, post, progress } = useForm<UploadProp>({
         csv: undefined,
@@ -49,7 +50,7 @@ export default function ImportPage({ auth, QBank, rows }: PageProps<{ QBank: QB,
 
       const submit: FormEventHandler = (e) => {
         e.preventDefault()
-        post('/users')
+        post(route("questions.import", QBank.id))
       }
 
       const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
