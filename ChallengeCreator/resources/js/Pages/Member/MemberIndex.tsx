@@ -14,7 +14,7 @@ import { MemberPage } from "./MemberType";
 
 
 
-export default function MemberTable({ auth, QBank, members }: PageProps<{ QBank: QB, members: MemberPage }>) {
+export default function MemberIndex({ auth, QBank, members }: PageProps<{ QBank: QB, members: MemberPage }>) {
     // console.log(JSON.stringify(members));
     return (
         <QBLayout

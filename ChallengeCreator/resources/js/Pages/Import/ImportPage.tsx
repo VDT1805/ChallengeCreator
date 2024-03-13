@@ -128,11 +128,11 @@ import { columns } from "./ImportInstructionTable/ImportInstructionColumn"
 import { DataTable } from './ImportInstructionTable/ImportInstructionTable';
 import { data as data1 } from './ImportInstructionTable/ImportInstructionData';
 import React, { FormEventHandler, useState, useCallback } from 'react'
-import { filterProps, motion } from 'framer-motion'
+import { filterProps, motion, progress } from 'framer-motion'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, SubmitHandler, Controller, useFormContext, FormProvider } from 'react-hook-form'
-import { Head, Link, router, useForm as uF } from '@inertiajs/react';
+import { Head, Link, router, useForm as uF, usePage } from '@inertiajs/react';
 import { QB } from '../QuestionBank/QuestionBankType'
 import { PageProps } from '@/types'
 import QBLayout from '@/Layouts/QBLayout'
@@ -248,16 +248,17 @@ export default function ImportPage({ auth, QBank, rows, violators }: PageProps<{
         // const output = await trigger(fields as FieldName[], { shouldFocus: true })
 
         // if (!output) return
+        // console.log(currentStep)
 
         if (currentStep < steps.length - 1) {
-            if (currentStep === steps.length - 2) {
-                router.reload({only: ['rows', 'violators'], data: formData, onSuccess: page => {console.log(formData)}})
+            if (currentStep === steps.length - 3) {
+                // router.reload({only: ['rows', 'violators'], data: formData, onSuccess: page => {console.log(formData)}})
                 await handleSubmit(processForm)()
+                console.log(rows)
             }
             setPreviousStep(currentStep)
             setCurrentStep(step => step + 1)
         }
-        // console.log(formData)
     }
 
     // const { data, setData, post } = uF<UploadProp>({
@@ -297,8 +298,10 @@ export default function ImportPage({ auth, QBank, rows, violators }: PageProps<{
         formData.append('csv', acceptedFiles[0]);
         router.post(route("questions.import", QBank.id), formData, {
             forceFormData: true,
+            // preserveState: true,
+            // onProgress: progress => {console.log(progress)}
         });
-        next();
+        // next();
     }, []);
 
     const { getRootProps, getInputProps } = useDropzone({
@@ -442,7 +445,11 @@ export default function ImportPage({ auth, QBank, rows, violators }: PageProps<{
                             animate={{ x: 0, opacity: 1 }}
                             transition={{ duration: 0.3, ease: 'easeInOut' }}
                         >
-                            
+                            {
+                                rows.map((row: any) => {
+                                    return <p>{row.email}</p>
+                                })
+                            }
                         </motion.div>
                     )}
 

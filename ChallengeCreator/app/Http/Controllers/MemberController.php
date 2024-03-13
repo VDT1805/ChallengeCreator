@@ -23,7 +23,7 @@ class MemberController extends Controller
     {
         //
         $QB = $this->qbService->findOrFail($qbID,"id");
-        $members = $this->mService->getAllPaginated($request->all()+["questionbanks" => $qbID]);
+        $members = $this->mService->getAllPaginated($request->all() + ["questionbanks" => $qbID]);
         // dd($members);
         return Inertia::render("Member/MemberIndex", [
             "QBank" => $QB,

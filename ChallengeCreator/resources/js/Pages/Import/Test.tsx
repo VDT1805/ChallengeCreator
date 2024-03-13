@@ -1,26 +1,5 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { PageProps } from '@/types';
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/shadcn/ui/card"
-import { Input } from "@/shadcn/ui/input"
-import { Label } from "@/shadcn/ui/label"
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/shadcn/ui/select"
-import { Button } from '@/shadcn/ui/button';
-import { Textarea } from '@/shadcn/ui/textarea';
-import { Checkbox } from '@/shadcn/ui/checkbox';
 // import {
 //   Dialog,
 //   DialogContent,
@@ -30,10 +9,7 @@ import { Checkbox } from '@/shadcn/ui/checkbox';
 //   DialogTrigger,
 // } from "@/shadcn/ui/dialog"
 
-
-
 import React, { FormEventHandler, useState } from 'react';
-import { Menu } from '../Menu';
 import { QB } from '../QuestionBank/QuestionBankType';
 import QBLayout from '@/Layouts/QBLayout';
 

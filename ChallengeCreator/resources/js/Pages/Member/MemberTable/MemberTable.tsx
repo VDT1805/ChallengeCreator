@@ -104,11 +104,11 @@ export function DataTable<TData, TValue>({
               Member settings
             </Button>
           </Link> */}
-          <Link href={route('addmember')}>
+          {/* <Link href={route('addmember')}>
             <Button>
               Invite member
             </Button>
-          </Link>
+          </Link> */}
         </div>
       </div>
       <div className="rounded-md border bg-white">

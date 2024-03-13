@@ -105,12 +105,17 @@ class CSVController extends Controller
             });
 
             return Inertia::render(
-                "Import/Test",[
+                "Import/ImportPage",[
                     "QBank" => $QB,
                     "rows" => $filtered,
                     "violators" => $violators
                 ]
             );
+            // return redirect()->back()->with([
+            //             "QBank" => $QB,
+            //             "rows" => $filtered,
+            //             "violators" => $violators
+            // ]);
         } else {
             return response()->json(['error' => 'No file uploaded']);
         }
