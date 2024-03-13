@@ -52,35 +52,35 @@ export default function Dashboard({ auth, QBank, labels }: PageProps<{ QBank: QB
   return (
     <QBLayout
       user={auth.user}
-      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">New Category/Subcategory</h2>} QBank={QBank} CanEdit={true}>
-      <Head title="New Category/Subcategory" />
+      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">New Label & Sublabel</h2>} QBank={QBank} CanEdit={true}>
+      <Head title="New Label/Sublabel" />
       <div className="mt-10 mb-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
         <Card>
           <CardHeader>
-            <CardTitle className="text-3xl font-bold">New Category</CardTitle>
+            <CardTitle className="text-3xl font-bold">New Label</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={submit}>
               <div className="grid w-full items-center gap-4">
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="name" className="text-xl font-bold">Category name</Label>
+                  <Label htmlFor="name" className="text-xl font-bold">Name</Label>
                   <Input id = "name"
                   name="name"
                   value={data.name}
                   onChange={(e) => setData('name', e.target.value)}
-                  placeholder="Name of your category" />
+                  placeholder="Name of your label" />
                 </div>
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="name" className="text-xl font-bold">Description of category</Label>
+                  <Label htmlFor="name" className="text-xl font-bold">Description</Label>
                   <Textarea id = "description"
                   name="description"
                   value={data.description}
                   onChange={(e) => setData('description', e.target.value)}
-                  placeholder="Description of your category" />
+                  placeholder="Description of your label" />
                 </div>
               </div>
               <Button className='mt-5'>
-                Add category
+                Add label
               </Button>
             </form>
           </CardContent>
@@ -90,14 +90,14 @@ export default function Dashboard({ auth, QBank, labels }: PageProps<{ QBank: QB
       <div className="mt-10 mb-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
         <Card>
           <CardHeader>
-            <CardTitle className="text-3xl font-bold">New Subcategory</CardTitle>
+            <CardTitle className="text-3xl font-bold">New Sublabel</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={submit}>
               <div className="grid w-full items-center gap-4">
                 <Select onValueChange={(e) => setData("label_id", e)}>
                     <SelectTrigger className="w-[180px]" >
-                    <SelectValue placeholder="Categories" />
+                    <SelectValue placeholder="Parent label" />
                     </SelectTrigger >
                     <SelectContent>
                         {labels.map((label) => (
@@ -108,24 +108,24 @@ export default function Dashboard({ auth, QBank, labels }: PageProps<{ QBank: QB
                     </SelectContent>
                 </Select>
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="name" className="text-xl font-bold">Subcategory name</Label>
+                  <Label htmlFor="name" className="text-xl font-bold">Name</Label>
                   <Input id="name"
                   name="name"
                   value={data.name}
                   onChange={(e) => setData('name', e.target.value)}
-                  placeholder="Name of your subcategory" />
+                  placeholder="Name of your sublabel" />
                 </div>
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="name" className="text-xl font-bold">Description of subcategory</Label>
+                  <Label htmlFor="name" className="text-xl font-bold">Description of sublabel</Label>
                   <Textarea
                   name="description"
                   value={data.description}
                   onChange={(e) => setData('description', e.target.value)}
-                  placeholder="Description of your subcategory" />
+                  placeholder="Description of your sublabel" />
                 </div>
               </div>
               <Button className='mt-5'>
-                Add subcategory
+                Add sublabel
               </Button>
             </form>
           </CardContent>

@@ -27,7 +27,7 @@ import { QB } from '../QuestionBank/QuestionBankType';
 import QBLayout from '@/Layouts/QBLayout';
 import axios from 'axios';
 
-export default function PDFTest(this: any, { auth, QBank, pdf }: PageProps<{ QBank: QB, pdf:any }>) {
+export default function PDFTest(this: any, { auth, QBank, pdf }: PageProps<{ QBank: QB, pdf: any }>) {
   console.log(pdf);
   const [position, setPosition] = React.useState("bottom")
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -54,9 +54,8 @@ export default function PDFTest(this: any, { auth, QBank, pdf }: PageProps<{ QBa
   return (
     <QBLayout
       user={auth.user}
-      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">New Test</h2>} QBank={QBank} CanEdit={true}>
-      <div className="mt-10 mb-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
-      </div>
+      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight"></h2>} QBank={QBank} CanEdit={true}>
+      <div className="mt-10 mb-10 max-w-7xl mx-auto sm:px-6 lg:px-8"></div>
     </QBLayout>
   );
 }

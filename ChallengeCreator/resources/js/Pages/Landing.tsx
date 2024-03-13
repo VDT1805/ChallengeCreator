@@ -44,12 +44,12 @@ export default function IndexPage({ auth }: PageProps) {
           </div>
           <div className="button flex gap-4">
             <Button asChild>
-              <Link href={route('login')} className="font-semibold text-white-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+              <Link href={route('login')} className="font-semibold text-white-600 hover:text-indianred dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                 Log in
               </Link>
             </Button>
             <Button asChild>
-              <Link href={route('register')} className="font-semibold text-white-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+              <Link href={route('register')} className="font-semibold text-white-600 hover:text-bluegreen dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                 Sign up
               </Link>
             </Button>
@@ -63,7 +63,7 @@ export default function IndexPage({ auth }: PageProps) {
               ChallengeCreator's secure, professional web-based Quiz maker is an easy-to-use, customizable online testing solution for business, training & educational assessments with Tests & Quizzes graded instantly, saving hours of paperwork!
             </p>
             <Button asChild>
-              <Link href={route('questionbanks.index')} className="font-semibold text-white-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+              <Link href={route('questionbanks.index')} className="font-semibold text-white-600 hover:text-bluegreen dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                 Get Started
               </Link>
             </Button>

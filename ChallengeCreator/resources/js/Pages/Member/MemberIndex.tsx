@@ -19,7 +19,7 @@ export default function MemberTable({ auth, QBank, members }: PageProps<{ QBank:
     return (
         <QBLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">All members</h2>} QBank={QBank} CanEdit={true}>
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">All Members</h2>} QBank={QBank} CanEdit={true}>
             <Head title="Members" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

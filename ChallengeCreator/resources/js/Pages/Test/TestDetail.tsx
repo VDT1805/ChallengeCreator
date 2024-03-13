@@ -27,8 +27,6 @@ import {
 import { useState } from "react";
 import axios from "axios";
 
-
-
 export default function TestTable({ auth, QBank, test, questions }: PageProps<{ QBank: QB, test: Test, questions: Array<Question> }>) {
     // console.log(JSON.stringify(questions));
     const [loading, setLoading] = useState(false);
@@ -58,49 +56,65 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
     //     setLoading(false);
     // };
 
-//     const invoice = async() => {
-//         axios({
-//             method: 'post',
-//         url: '/api/download',
-//         data: { qbID: QBank.id, testID: test.id },
-//         responseType: 'arraybuffer',
-//         onDownloadProgress: (progressEvent) => {
-//             let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-//             setPercentage(percentCompleted);
-//             if (percentCompleted === 100) {
-//             setPercentage(0);
-//             setIsDownloading(false);
-//             }
-//         },
-//     })
-//   .then((response) => {
-//     const blob = new Blob([response.data], { type: 'application/octet-stream' });
-//     const url = window.URL.createObjectURL(blob);
-//     const a = document.createElement('a');
-//     a.href = url;
-//     a.download = 'video.mp4';
-//     a.click();
-//   });
+    //     const invoice = async() => {
+    //         axios({
+    //             method: 'post',
+    //         url: '/api/download',
+    //         data: { qbID: QBank.id, testID: test.id },
+    //         responseType: 'arraybuffer',
+    //         onDownloadProgress: (progressEvent) => {
+    //             let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+    //             setPercentage(percentCompleted);
+    //             if (percentCompleted === 100) {
+    //             setPercentage(0);
+    //             setIsDownloading(false);
+    //             }
+    //         },
+    //     })
+    //   .then((response) => {
+    //     const blob = new Blob([response.data], { type: 'application/octet-stream' });
+    //     const url = window.URL.createObjectURL(blob);
+    //     const a = document.createElement('a');
+    //     a.href = url;
+    //     a.download = 'video.mp4';
+    //     a.click();
+    //   });
 
-//     }
-        const dl = () => {
-            setLoading(true);
-            axios({
-                url: route("tests.pdfGen",{ qbID: QBank.id, testID: test.id }),
-                method: 'GET',
-                responseType: 'blob', // important
-            }).then((response) => {
-                const url = window.URL.createObjectURL(new Blob([response.data]));
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', `${test.name}.pdf`);
-                document.body.appendChild(link);
-                link.click();
-            }).catch((err) => {
-                console.log(err);
-            });
-            setLoading(false);
-        }
+    //     }
+    const dl = () => {
+        setLoading(true);
+        axios({
+            url: route("tests.pdfGen", { qbID: QBank.id, testID: test.id }),
+            method: 'GET',
+            responseType: 'blob', // important
+        }).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `${test.name}.pdf`);
+            document.body.appendChild(link);
+            link.click();
+        }).catch((err) => {
+            console.log(err);
+        });
+        setLoading(false);
+    }
+
+    const vie = () => {
+        axios({
+            url: route("tests.pdfStream", { qbID: QBank.id, testID: test.id }),
+            method: 'GET',
+            responseType: 'blob', // important
+        }).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
+            const link = document.createElement('a');
+            link.href = url;
+            document.body.appendChild(link);
+            link.click();
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
 
     return (
         <QBLayout
@@ -131,10 +145,13 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                         Delete
                                     </Button>
                                 </div>
-                                <div className="flex">
+                                <div className="flex gap-2">
                                     {/* <Button className="bg-bluegreen flex gap-3 hover:bg-bluegreen-dark">
                                         <Link href={route('tests.pdfGen', [QBank.id, test.id]) } method = "get">Preview</Link>
                                     </Button> */}
+                                    <Button className="bg-indianred flex gap-3 hover:bg-indianred-dark" onClick={vie} disabled={loading}>
+                                        {loading ? 'Generating PDF...' : 'View PDF'}
+                                    </Button>
                                     <Button className="bg-bluegreen flex gap-3 hover:bg-bluegreen-dark" onClick={dl} disabled={loading}>
                                         {loading ? 'Generating PDF...' : 'Download PDF'}
                                     </Button>

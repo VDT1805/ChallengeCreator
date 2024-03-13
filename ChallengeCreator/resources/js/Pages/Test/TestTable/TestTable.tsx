@@ -75,7 +75,7 @@ export function DataTable<TData, TValue>({
       <div className="grid md:grid-cols-5 md:grid-rows-none py-4 mx-auto max-w-7xl grid-rows-3 grid-flow-col">
         <Input
           placeholder="Search for a test..."
-          className="border-2 border-blue-500 border-solid row-span-1 md:col-span-2" />
+          className="border-2 border-indianred border-solid row-span-1 md:col-span-2" />
         <div className="flex items-center row-span-1 md:col-span-2">
           <DropdownMenu>
             <DropdownMenuTrigger className="flex gap-2">

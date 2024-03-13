@@ -50,11 +50,9 @@ Route::get('/testdetail', function () {
     return Inertia::render('Test/TestDetail');
 })->middleware(['auth', 'verified'])->name('testdetail');
 
-
-
-Route::get('/category', function () {
-    return Inertia::render('Category/Category');
-})->middleware(['auth', 'verified'])->name('category');
+Route::get('/label', function () {
+    return Inertia::render('Label/LabelIndex');
+})->middleware(['auth', 'verified'])->name('label');
 
 Route::get('/member', function () {
     return Inertia::render('Member/Member');
@@ -68,9 +66,9 @@ Route::get('/importinstruction', function () {
     return Inertia::render('Import/ImportInstruction');
 })->middleware(['auth', 'verified'])->name('importinstruction');
 
-Route::get('/reusequestion', function () {
-    return Inertia::render('QuestionBank/ReuseQuestion');
-})->middleware(['auth', 'verified'])->name('reusequestion');
+// Route::get('/reusequestion', function () {
+//     return Inertia::render('QuestionBank/ReuseQuestion');
+// })->middleware(['auth', 'verified'])->name('reusequestion');
 
 ##################################################################
 
@@ -124,8 +122,6 @@ Route::put('/qbs/{qbID}/questions/{qID}/edit', [QuestionController::class,'updat
 Route::delete('/qbs/{qbID}/questions/{qID}/edit', [QuestionController::class,'destroy'])
 ->middleware(['auth', 'verified','dynamicrole:owner'])->name('questions.destroy');
 
-
-
 ##################################################################
 
 Route::get('/qbs/{qbID}/tests',[TestController::class,'index'])
@@ -167,8 +163,12 @@ Route::put('/qbs/{qbID}/tests/{testID}/addques', [TestController::class,'detachQ
 Route::get('/qbs/{qbID}/tests/{testID}/pdf', [TestController::class,'pdfGenerate'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('tests.pdfGen');
 
-##################################################################
+// Route::get('/pdf', [TestController::class,'pdfStream'])->name('pdfStream');
 
+Route::get('/qbs/{qbID}/tests/{testID}/pdfStream', [TestController::class,'pdfStream'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('tests.pdfStream');
+
+##################################################################
 
 Route::get('/qbs/{qbID}/labels',[LabelController::class,'index'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('labels.index');
@@ -191,9 +191,7 @@ Route::put('/qbs/{qbID}/labels/{label}/edit', [LabelController::class,'update'])
 Route::delete('/qbs/{qbID}/labels/{label}/edit', [LabelController::class,'destroy'])
 ->middleware(['auth', 'verified','dynamicrole:owner'])->name('labels.destroy');
 
-
 ##################################################################
-
 
 Route::get('/qbs/{qbID}/members',[MemberController::class,'index'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('members.index');
@@ -216,12 +214,8 @@ Route::put('/qbs/{qbID}/members/{member}/edit', [MemberController::class,'update
 Route::delete('/qbs/{qbID}/members/{member}/edit', [MemberController::class,'destroy'])
 ->middleware(['auth', 'verified','dynamicrole:owner'])->name('members.destroy');
 
-
-
-
-
-Route::get('/addmember', function () {
-    return Inertia::render('Member/AddMember');
-})->middleware(['auth', 'verified'])->name('addmember');
+// Route::get('/addmember', function () {
+//     return Inertia::render('Member/AddMember');
+// })->middleware(['auth', 'verified'])->name('addmember');
 
 require __DIR__.'/auth.php';

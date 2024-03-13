@@ -26,9 +26,9 @@ export default function QBLayout({ user, header, children, QBank, CanEdit }: Pro
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('questionbanks.index')} active={route().current('questionbanks.index')}>
+                                {/* <NavLink href={route('questionbanks.index')} active={route().current('questionbanks.index')}>
                                     Dashboard
-                                </NavLink>
+                                </NavLink> */}
 
                                 <NavLink href={route('tests.index', QBank.id)} active={route().current('tests.index', QBank.id)}>
                                     Tests
@@ -39,7 +39,7 @@ export default function QBLayout({ user, header, children, QBank, CanEdit }: Pro
                                 </NavLink>
 
                                 <NavLink href={route('labels.index', QBank.id)} active={route().current('labels.index', QBank.id)}>
-                                    Categories
+                                    Labels
                                 </NavLink>
 
                                 <NavLink href={route('members.index', QBank.id)} active={route().current('members.index', QBank.id)}>
@@ -135,7 +135,7 @@ export default function QBLayout({ user, header, children, QBank, CanEdit }: Pro
                         </ResponsiveNavLink>
 
                         <ResponsiveNavLink href={route('labels.index', QBank.id)} active={route().current('labels.index', QBank.id)}>
-                            Categories
+                            Labels
                         </ResponsiveNavLink>
 
                         <ResponsiveNavLink href={route('members.index', QBank.id)} active={route().current('members.index', QBank.id)}>

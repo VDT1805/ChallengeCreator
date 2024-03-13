@@ -3,11 +3,11 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown } from "lucide-react"
 import { Button } from "@/shadcn/ui/button"
-import { QuestionBank } from "./QuestionBankType"
+import { LabelType } from "./LabelType"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export const columns: ColumnDef<QuestionBank>[] = [
+export const columns: ColumnDef<LabelType>[] = [
   {
     accessorKey: "id",
     header: () => (
@@ -45,4 +45,5 @@ export const columns: ColumnDef<QuestionBank>[] = [
       >Last Updated</div>)
   },
 ]
-export type { QuestionBank }
+
+export type { LabelType }

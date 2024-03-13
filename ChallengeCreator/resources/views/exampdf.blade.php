@@ -110,16 +110,16 @@
 					<td colspan="2">
 						<table>
 							<tr>
-								<td class="title">
+								{{-- <td class="title">
 									<img
-										src="D:\Pony\dacn-cnpm\ChallengeCreator\resources\js\Pages\logo.png"
+										src="ChallengeCreator\resources\js\Pages\logo.png"
 										style="width: 100%; max-width: 300px"
 									/>
-								</td>
+								</td> --}}
 
 								<td>
 									{{-- Invoice #: 123<br /> --}}
-									Exam Date: {{ date('d-m-Y') }}<br />
+									Exam Date: {{ date('d/m/Y') }}<br />
 									Time: XX Minutes
 								</td>
 							</tr>

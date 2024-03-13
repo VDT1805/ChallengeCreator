@@ -174,7 +174,24 @@ class TestController extends Controller
         ];
         // dd($questions);
         $pdf = PDF::loadView('exampdf',$data);
-        return  $pdf->download($test->name.'.pdf');
+        return $pdf->download($test->name.'.pdf');
+    }
+
+    public function pdfStream($qbID, $testID)
+    {
+        $QB = $this->qbService->findOrFail($qbID,"id");
+        $test = $this->tService->find(["questionbanks" => $qbID, "id" => $testID])->first();
+        if(!$test) {
+            abort(404);
+        }
+        $questions = $this->qService->find(["questionbanks" => $qbID, "tests"=>["qb" => $qbID, "test"=>$testID]]);
+        $data = [
+            "test" => $test,
+            "questions" => $questions
+        ];
+        // dd($questions);
+        $pdf = PDF::loadView('exampdf',$data);
+        return $pdf->stream($test->name.'.pdf');
     }
 
 }
