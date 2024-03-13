@@ -31,7 +31,8 @@ export default {
           dark: "#007191",
         },
         indianred: {
-          DEFAULT: "#E65353ff"
+          DEFAULT: "#E65353ff",
+          dark: "#984447"
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",
