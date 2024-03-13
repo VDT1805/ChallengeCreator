@@ -122,7 +122,8 @@ Route::get('/qbs/{qbID}/questions/{qID}/edit', [QuestionController::class,'edit'
 Route::put('/qbs/{qbID}/questions/{qID}/edit', [QuestionController::class,'update'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.update');
 
-
+Route::post('/qbs/{qbID}/questions/importRules',[CSVController::class,'importRules'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.importRules');
 
 ##################################################################
 
