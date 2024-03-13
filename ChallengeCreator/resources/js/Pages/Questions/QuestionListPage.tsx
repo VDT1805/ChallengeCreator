@@ -146,7 +146,8 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
           </CardContent>
         </Card>
         <Accordion type="single" collapsible className="w-full shadow-2xl bg-white">
-          {questions.data.map((question: Question) => {
+          { questions.data &&
+          questions.data.map((question: Question) => {
              const answers = [
                 question.ans1,
                 question.ans2,
@@ -179,7 +180,7 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                   <Link href={route('questions.edit', [question.question_bank_id, question.id])} method="get">
                     <p className="text-lg font-bold underline text-bluegreen">Edit question</p>
                   </Link>
-                  <Link href={""}>
+                  <Link href={route('questions.destroy',[question.question_bank_id])} method='delete' data={{qID: question.id}}>
                     <p className="text-lg font-bold underline text-indianred">Delete question</p>
                   </Link>
                 </div>

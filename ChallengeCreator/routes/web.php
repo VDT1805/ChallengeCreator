@@ -98,6 +98,9 @@ Route::delete('/qbs/{qbID}/settings', [QuestionBankController::class,'destroy'])
 Route::get('/qbs/{qbID}/questions',[QuestionController::class,'index'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('questions.index');
 
+Route::delete('/qbs/{qbID}/questions', [QuestionController::class,'destroy'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.destroy');
+
 Route::get('/qbs/{qbID}/questions/create/', [QuestionController::class,'create'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.create');
 
@@ -119,8 +122,7 @@ Route::get('/qbs/{qbID}/questions/{qID}/edit', [QuestionController::class,'edit'
 Route::put('/qbs/{qbID}/questions/{qID}/edit', [QuestionController::class,'update'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.update');
 
-Route::delete('/qbs/{qbID}/questions/{qID}/edit', [QuestionController::class,'destroy'])
-->middleware(['auth', 'verified','dynamicrole:owner'])->name('questions.destroy');
+
 
 ##################################################################
 

@@ -87,8 +87,7 @@ class QuestionController extends Controller
         $QB = $this->qbService->findOrFail($qbID,"id");
         $question = $this->qService->findOrFail($qID,"id");
         $labels = $this->lService->getAll(["questionbanks" => $qbID]);
-        dd($labels);
-        return Inertia::render("Questions/Test",[
+        return Inertia::render("Questions/AddQuestion",[
             "QBank"=>$QB,
             "question"=>$question,
             "labels" => $labels
@@ -106,9 +105,9 @@ class QuestionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($qbID,$qID)
+    public function destroy($qbID, Request $request)
     {
-            $deleted = $this->qService->delete($qID);
+            $deleted = $this->qService->delete($request["qID"]);
             if($deleted) {
                 $QB = $this->qbService->findOrFail($qbID,"id");
                 $questions = $this->qService->getAllPaginated(["questionbanks" => $qbID]);
@@ -117,6 +116,9 @@ class QuestionController extends Controller
                 "questions" => $questions
             ]);
 
+        }
+        else {
+            abort(400);
         }
     }
 }
