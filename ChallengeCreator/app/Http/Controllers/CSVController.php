@@ -81,7 +81,7 @@ class CSVController extends Controller
     // }
 
     public function import($qbID, Request $request) {
-        // dd($request);
+        // dd($request->all());
         $errorRow = [];
         $QB = $this->qbService->findOrFail($qbID,"id");
         if ($request->hasFile('csv')) {

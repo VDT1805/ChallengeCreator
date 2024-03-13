@@ -124,13 +124,15 @@
 // }
 
 'use client'
-
-import { FormEventHandler, useState } from 'react'
-import { motion } from 'framer-motion'
+import { columns } from "./ImportInstructionTable/ImportInstructionColumn"
+import { DataTable } from './ImportInstructionTable/ImportInstructionTable';
+import { data as data1 } from './ImportInstructionTable/ImportInstructionData';
+import React, { FormEventHandler, useState, useCallback } from 'react'
+import { filterProps, motion } from 'framer-motion'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, SubmitHandler, Controller, useFormContext, FormProvider } from 'react-hook-form'
-import { useForm as uF } from '@inertiajs/react';
+import { Head, Link, router, useForm as uF } from '@inertiajs/react';
 import { QB } from '../QuestionBank/QuestionBankType'
 import { PageProps } from '@/types'
 import QBLayout from '@/Layouts/QBLayout'
@@ -139,12 +141,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/shadcn/ui/card'
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@radix-ui/react-collapsible'
 import { Label } from '@radix-ui/react-dropdown-menu'
 import { ChevronDownIcon } from 'lucide-react'
-import { columns } from "./ImportInstructionTable/ImportInstructionColumn"
-import { DataTable } from './ImportInstructionTable/ImportInstructionTable';
-import { data } from './ImportInstructionTable/ImportInstructionData';
-import React, { useCallback } from 'react'
-import Dropzone, { useDropzone } from 'react-dropzone'
-import DropzoneField from './ImportComponent'
+import { useDropzone } from 'react-dropzone'
 import { Button } from '@/shadcn/ui/button'
 import axios from 'axios'
 
@@ -164,19 +161,19 @@ const steps = [
     {
         id: 'Step 1',
         name: 'Import Instructions',
-        fields: []
     },
     {
         id: 'Step 2',
         name: 'Import CSV file',
-        fields: ['dropzone']
     },
     {
         id: 'Step 3',
         name: 'Preview questions',
-        fields: ['country', 'state', 'city', 'street', 'zip']
     },
-    { id: 'Step 4', name: 'Complete' }
+    {
+        id: 'Step 4',
+        name: 'Complete'
+    }
 ]
 interface UploadProp {
     csv: File | undefined;
@@ -184,7 +181,7 @@ interface UploadProp {
 type FormInputs = {
     file: FileList;
 };
-export default function ImportPage({ auth, QBank }: PageProps<{ QBank: QB }>) {
+export default function ImportPage({ auth, QBank, rows, violators }: PageProps<{ QBank: QB, rows: any, violators: any }>) {
     const form = useForm<FormInputs>();
 
     const onSubmit = async (data: { file: File }) => {
@@ -213,19 +210,20 @@ export default function ImportPage({ auth, QBank }: PageProps<{ QBank: QB }>) {
             alert('Failed to upload CSV file');
         }
     };
-    const {
-        acceptedFiles,
-        fileRejections,
-        getRootProps,
-        getInputProps
-    } = useDropzone({
-        accept: {
-            'text/csv': ['.csv']
-        }
-    });
+    // const {
+    //     acceptedFiles,
+    //     fileRejections,
+    //     getRootProps,
+    //     getInputProps
+    // } = useDropzone({
+    //     accept: {
+    //         'text/csv': []
+    //     }
+    // });
 
     const [previousStep, setPreviousStep] = useState(0)
     const [currentStep, setCurrentStep] = useState(0)
+    const formData = new FormData();
     const delta = currentStep - previousStep
     const {
         register,
@@ -246,34 +244,71 @@ export default function ImportPage({ auth, QBank }: PageProps<{ QBank: QB }>) {
     type FieldName = keyof Inputs
 
     const next = async () => {
-        const fields = steps[currentStep].fields
-        const output = await trigger(fields as FieldName[], { shouldFocus: true })
+        // const fields = steps[currentStep].fields
+        // const output = await trigger(fields as FieldName[], { shouldFocus: true })
 
-        if (!output) return
+        // if (!output) return
 
         if (currentStep < steps.length - 1) {
             if (currentStep === steps.length - 2) {
+                router.reload({only: ['rows', 'violators'], data: formData, onSuccess: page => {console.log(formData)}})
                 await handleSubmit(processForm)()
             }
             setPreviousStep(currentStep)
             setCurrentStep(step => step + 1)
         }
+        // console.log(formData)
     }
 
-    const { data, setData, post } = uF<UploadProp>({
-        csv: undefined,
-    })
+    // const { data, setData, post } = uF<UploadProp>({
+    //     csv: undefined,
+    // })
 
-    const submit: FormEventHandler = (e) => {
-        e.preventDefault()
-        post(route("questions.import", QBank.id))
-    }
+    // const submit: FormEventHandler = (e) => {
+    //     e.preventDefault()
+    //     post(route("questions.import", QBank.id))
+    // }
 
-    const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.currentTarget.files) {
-            setData("csv", e.currentTarget.files[0]);
+    // const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     if (e.currentTarget.files) {
+    //         setData("csv", e.currentTarget.files[0]);
+    //         post(route("questions.import", QBank.id))
+    //     }
+    // };
+
+    // const [file, setFile] = useState<File>()
+
+    // const submitFile = () => {
+    //     post(route("questions.import", QBank.id))
+    // }
+
+    const [errorMessage, setErrorMessage] = useState('');
+    const onDrop = useCallback((acceptedFiles: any, fileRejections: any) => {
+        setErrorMessage('');
+        if (fileRejections.length > 0) {
+            setTimeout(() => { setErrorMessage(''); }, 2000);
+            return;
+        } else {
+            setErrorMessage('');
         }
-    };
+        // acceptedFiles.forEach(file => {
+        //     formData.append('csv', file);
+        // });
+        formData.append('csv', acceptedFiles[0]);
+        router.post(route("questions.import", QBank.id), formData, {
+            forceFormData: true,
+        });
+        next();
+    }, []);
+
+    const { getRootProps, getInputProps } = useDropzone({
+        onDrop,
+        maxFiles: 1,
+        accept: {
+            'text/csv': []
+        }
+    });
+
 
     const prev = () => {
         if (currentStep > 0) {
@@ -362,6 +397,9 @@ export default function ImportPage({ auth, QBank }: PageProps<{ QBank: QB }>) {
                                 <CardHeader>
                                     <CardTitle className="text-3xl font-bold">Download Question Import Templates</CardTitle>
                                 </CardHeader>
+                                <CardContent>
+                                    <DataTable columns={columns} data={data1} />
+                                </CardContent>
                             </Card>
                         </motion.div>
                     )}
@@ -379,37 +417,48 @@ export default function ImportPage({ auth, QBank }: PageProps<{ QBank: QB }>) {
                                     required: { value: true, message: 'This field is required' },
                                 }}
                                 render={({ field: { onChange, onBlur }, fieldState }) => (
-                                    <form onSubmit={submit}>
-                                        <input type="file" accept='.csv, .xls, .xlsx'
-                                            onChange={handleFile} />
-                                        <Button type="submit">Submit</Button>
-                                    </form>
+                                    <div {...getRootProps({
+                                        className: 'p-6 dropzone',
+                                        'data-tooltip-id': errorMessage ? 'errorTooltip' : ''
+                                    })}>
+                                        <input {...getInputProps()} />
+                                        <p className="border-2 border-dashed border-blue-500 rounded-md p-4 text-center text-blue-500 hover:border-blue-700">
+                                            Drag n' drop or choose a file
+                                        </p>
+                                        {errorMessage && (
+                                            <p className="text-red-500 text-center mt-2">
+                                                {errorMessage}
+                                            </p>
+                                        )}
+                                    </div>
                                 )}
                             />
-                            {/* <Button>Submit</Button> */}
                         </motion.div>
                     )}
 
                     {currentStep === 2 && (
-                        <>
-                            <h2 className='text-base font-semibold leading-7 text-gray-900'>
-                                Complete
-                            </h2>
-                            <p className='mt-1 text-sm leading-6 text-gray-600'>
-                                Thank you for your submission.
-                            </p>
-                        </>
+                        <motion.div
+                            initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        >
+                            
+                        </motion.div>
                     )}
 
                     {currentStep === 3 && (
-                        <>
+                        <motion.div
+                            initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        >
                             <h2 className='text-base font-semibold leading-7 text-gray-900'>
                                 Complete
                             </h2>
                             <p className='mt-1 text-sm leading-6 text-gray-600'>
                                 Thank you for your submission.
                             </p>
-                        </>
+                        </motion.div>
                     )}
                 </form>
 
