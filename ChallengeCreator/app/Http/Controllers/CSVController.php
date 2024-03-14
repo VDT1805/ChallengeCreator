@@ -26,59 +26,22 @@ class CSVController extends Controller
     public function importForm($qbID)
     {
         $QB = $this->qbService->findOrFail($qbID,"id");
+        $template_url = Storage::get("template.csv");
+        // Storage::download("template.csv");
         return Inertia::render("Import/ImportPage",[
             "QBank"=>$QB,
+            // "template_url"=> $template_url
         ]);
     }
 
-    // public function importRules($qbID, Request $request) {
-    //     $rules = ['email' => 'required|email'];
-    //     $filtered = [];
-    //     $violators = [];
-    //     $rows = SimpleExcelReader::create(storage_path('app/') . $path, 'csv')->getRows()->
-    //     each(function($row) use ($rules, &$filtered, &$violators) {
-    //         $validator = Validator::make($row, $rules);
-    //         if ($validator->passes()) {
-    //                 $filtered[] = $row;
-    //             } else {
-    //                 $violators[] = $row;
-    //             }
-    //         });
-    //     return response()->json(['filter' => $filtered]);
-    // }
-
-    // public function import($qbID, Request $request)
-    // {
-    // $errorRow = [];
-    // $QB = $this->qbService->findOrFail($qbID, "id");
-    // if ($request->hasFile('csv')) {
-    //     $file = $request->file('csv');
-    //     $fileName = $file->getClientOriginalName();
-    //     $fileExtension = $file->getClientOriginalExtension();
-    //     $newFileName = pathinfo($fileName, PATHINFO_FILENAME) . '.' . $fileExtension;
-
-    //     $path = $request->file('csv')->store("public");
-
-    //     // Use Laravel-Excel or similar library to read CSV
-    //     $reader = Excel::reader($path, 'csv');
-
-    //     $filtered = [];
-    //     $violators = [];
-
-    //     $reader->each(function ($row) use ($rules, &$filtered, &$violators) {
-    //     $validator = Validator::make($row, $this->importRules($qbID, $request));
-    //     if ($validator->passes()) {
-    //         $filtered[] = $row;
-    //     } else {
-    //         $violators[] = $row->toArray() + ['errors' => $validator->errors()->messages()];
-    //     }
-    //     });
-
-    //     return response()->json(['filter' => $filtered, 'violators' => $violators]);
-    // } else {
-    //     return response()->json(['error' => 'No file uploaded']);
-    // }
-    // }
+    public function downloadTemplate($qbID)
+    {
+        // $template_url = public_path('csv/').'questions_csv_template.csv';
+        // dd($template_url);
+        //return Storage::download('template.csv');
+        $template_url = Storage::get("template.csv");
+        return response()->download($template_url);
+    }
 
     public function import($qbID, Request $request) {
         // dd($request->all());
@@ -89,9 +52,19 @@ class CSVController extends Controller
             // Save the uploaded file with the correct file extension
             $fileName = $file->getClientOriginalName();
             $fileExtension = $file->getClientOriginalExtension();
-            $newFileName = pathinfo($fileName, PATHINFO_FILENAME) . '.' . $fileExtension;
             $path = $request->file('csv')->store("public");
-            $rules = ['email' => 'required|email'];
+            $rules = [
+                'id' => 'string',
+                'question' => 'required|string',
+                'ans1' => 'string',
+                'ans2' => 'string',
+                'ans3' => 'string',
+                'ans4' => 'string',
+                'ans5' => 'string',
+                'ans6' => 'string',
+                'correct' => 'required|numeric',
+                'sublabel' => 'string'
+            ];
             $filtered = [];
             $violators = [];
             $rows = SimpleExcelReader::create(storage_path('app/') . $path, 'csv')->getRows()->

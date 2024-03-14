@@ -71,7 +71,7 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
-        public_path('csv') => storage_path('app/temp'),
+        public_path('csv') => storage_path('app/csv'),
     ],
 
 ];

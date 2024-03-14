@@ -181,7 +181,8 @@ interface UploadProp {
 type FormInputs = {
     file: FileList;
 };
-export default function ImportPage({ auth, QBank, rows, violators }: PageProps<{ QBank: QB, rows: any, violators: any }>) {
+export default function ImportPage({ auth, QBank, rows, violators, template_url }: PageProps<{ QBank: QB, rows: any, violators: any, template_url:any }>) {
+    console.log(template_url);
     const form = useForm<FormInputs>();
 
     const onSubmit = async (data: { file: File }) => {
@@ -255,6 +256,7 @@ export default function ImportPage({ auth, QBank, rows, violators }: PageProps<{
                 // router.reload({only: ['rows', 'violators'], data: formData, onSuccess: page => {console.log(formData)}})
                 await handleSubmit(processForm)()
                 console.log(rows)
+                console.log(violators)
             }
             setPreviousStep(currentStep)
             setCurrentStep(step => step + 1)
@@ -298,7 +300,7 @@ export default function ImportPage({ auth, QBank, rows, violators }: PageProps<{
         formData.append('csv', acceptedFiles[0]);
         router.post(route("questions.import", QBank.id), formData, {
             forceFormData: true,
-            // preserveState: true,
+            preserveState: true,
             // onProgress: progress => {console.log(progress)}
         });
         // next();
@@ -318,6 +320,27 @@ export default function ImportPage({ auth, QBank, rows, violators }: PageProps<{
             setPreviousStep(currentStep)
             setCurrentStep(step => step - 1)
         }
+    }
+
+    const dlTemplate = () => {
+        axios({
+            url: route("questions.downloadTemplate", { qbID: QBank.id}),
+            method: 'GET',
+            responseType: 'blob', // important
+            headers: {
+                'Accept': 'text/csv;charset=utf-8;',
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data], { type: 'text/csv;charset=utf-8;' }));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'file.csv');
+            document.body.appendChild(link);
+            link.click();
+        }).catch((err) => {
+            console.log(err);
+        });
     }
 
     return (
@@ -371,6 +394,9 @@ export default function ImportPage({ auth, QBank, rows, violators }: PageProps<{
                                     <CardTitle className="text-3xl font-bold">Download .CSV Question Template</CardTitle>
                                 </CardHeader>
                                 <CardContent>
+                                <Button className="bg-bluegreen flex gap-3 hover:bg-bluegreen-dark" onClick={dlTemplate}>
+                                    DL
+                                </Button>
                                     <div className="grid w-full items-center gap-4">
                                         <div className="flex flex-col space-y-1.5">
                                             <Label className="text-xl font-bold">Instructions</Label>
@@ -444,12 +470,23 @@ export default function ImportPage({ auth, QBank, rows, violators }: PageProps<{
                             initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
                             animate={{ x: 0, opacity: 1 }}
                             transition={{ duration: 0.3, ease: 'easeInOut' }}
-                        >
-                            {
-                                rows.map((row: any) => {
-                                    return <p>{row.email}</p>
-                                })
-                            }
+                        >   <div>
+                                <h2>Valid Rows</h2>
+                                {
+                                    rows.map((row: any) => {
+                                        return <p>{row.question}</p>
+                                    })
+                                }
+                            </div>
+                            <div>
+                                <h2 className="indianred-500">Invalid</h2>
+                                {
+                                    violators.map((row: any) => {
+                                        return <p>{row.question}</p>
+                                    })
+                                }
+                            </div>
+
                         </motion.div>
                     )}
 
