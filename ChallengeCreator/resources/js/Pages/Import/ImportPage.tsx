@@ -144,6 +144,8 @@ import { ChevronDownIcon } from 'lucide-react'
 import { useDropzone } from 'react-dropzone'
 import { Button } from '@/shadcn/ui/button'
 import axios from 'axios'
+import { LoaderIcon } from "lucide-react";
+
 
 export const FormDataSchema = z.object({
     firstName: z.string().min(1, 'First name is required'),
@@ -153,7 +155,7 @@ export const FormDataSchema = z.object({
     street: z.string().min(1, 'Street is required'),
     city: z.string().min(1, 'City is required'),
     state: z.string().min(1, 'State is required'),
-    zip: z.string().min(1, 'Zip is required')
+    zip: z.string().min(1, 'Zip is required'),
 })
 type Inputs = z.infer<typeof FormDataSchema>
 
@@ -165,6 +167,7 @@ const steps = [
     {
         id: 'Step 2',
         name: 'Import CSV file',
+        field: ["file"]
     },
     {
         id: 'Step 3',
@@ -224,7 +227,9 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
 
     const [previousStep, setPreviousStep] = useState(0)
     const [currentStep, setCurrentStep] = useState(0)
-    const formData = new FormData();
+    // const formData = new FormData();
+    const [formData, setFormData] = useState(new FormData());
+    const [loading, setLoading] = useState(false);
     const delta = currentStep - previousStep
     const {
         register,
@@ -250,13 +255,23 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
 
         // if (!output) return
         // console.log(currentStep)
-
+        console.log(currentStep)
         if (currentStep < steps.length - 1) {
             if (currentStep === steps.length - 3) {
                 // router.reload({only: ['rows', 'violators'], data: formData, onSuccess: page => {console.log(formData)}})
-                await handleSubmit(processForm)()
-                console.log(rows)
-                console.log(violators)
+                // await handleSubmit(processForm)()
+                setLoading(true);
+                router.post(route("questions.import", QBank.id), formData, {
+                    forceFormData: true,
+                    preserveState: true,
+                    onProgress: ()=> {},
+                    onSuccess: () => {
+                        setLoading(false);
+                    }
+                });
+
+                // console.log(rows)
+                // console.log(violators)
             }
             setPreviousStep(currentStep)
             setCurrentStep(step => step + 1)
@@ -298,11 +313,11 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
         //     formData.append('csv', file);
         // });
         formData.append('csv', acceptedFiles[0]);
-        router.post(route("questions.import", QBank.id), formData, {
-            forceFormData: true,
-            preserveState: true,
-            // onProgress: progress => {console.log(progress)}
-        });
+        // router.post(route("questions.import", QBank.id), formData, {
+        //     forceFormData: true,
+        //     preserveState: true,
+        //     onSuccess: () => next()
+        // });
         // next();
     }, []);
 
@@ -445,7 +460,7 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                                 rules={{
                                     required: { value: true, message: 'This field is required' },
                                 }}
-                                render={({ field: { onChange, onBlur }, fieldState }) => (
+                                render={({ field: { onChange, onBlur, value }, fieldState }) => (
                                     <div {...getRootProps({
                                         className: 'p-6 dropzone',
                                         'data-tooltip-id': errorMessage ? 'errorTooltip' : ''
@@ -470,23 +485,24 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                             initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
                             animate={{ x: 0, opacity: 1 }}
                             transition={{ duration: 0.3, ease: 'easeInOut' }}
-                        >   <div>
-                                <h2>Valid Rows</h2>
-                                {
-                                    rows.map((row: any) => {
-                                        return <p>{row.question}</p>
-                                    })
-                                }
-                            </div>
-                            <div>
-                                <h2 className="indianred-500">Invalid</h2>
-                                {
-                                    violators.map((row: any) => {
-                                        return <p>{row.question}</p>
-                                    })
-                                }
-                            </div>
 
+                        >
+                            {loading ? <div><LoaderIcon/></div> :
+                                <div>
+                                    <h2>Valid Rows</h2>
+                                    {rows &&
+                                        rows.map((row: any) => {
+                                            return <p>{row.question}</p>
+                                        })
+                                    }
+                                    <h2 className="indianred-500">Invalid</h2>
+                                    {violators &&
+                                        violators.map((row: any) => {
+                                            return <p>{row.question}</p>
+                                        })
+                                    }
+                                </div>
+                            }
                         </motion.div>
                     )}
 
