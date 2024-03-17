@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, router, useForm } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import {
   Card,
@@ -35,12 +35,13 @@ import { Checkbox } from '@/shadcn/ui/checkbox';
 import React, { FormEventHandler } from 'react';
 import { Menu } from '../Menu';
 import { QB } from '../QuestionBank/QuestionBankType';
-import { Test } from './TestTable/TestType';
 import QBLayout from '@/Layouts/QBLayout';
+import { LabelType } from '../Label/LabelTable/LabelType';
 
 
-export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank: QB, test:Test }>) {
+export default function AddTestQuestion({ auth, QBank, labels, sublabels }: PageProps<{ QBank: QB, labels:  LabelType[], sublabels: LabelType[] }>) {
   const [position, setPosition] = React.useState("bottom")
+  const [checked, setChecked] = React.useState(1);
   const { data, setData, setDefaults, post, processing, errors, reset } = useForm({
         question: "",
         ans1: "",
@@ -49,34 +50,35 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
         ans4: "",
         ans5: "",
         ans6: "",
-        correct: "1",
-        label_id: "1"
+        correct: 1,
+        label_id: ""
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        //Testing purpose only
-        setData('correct', "1");
-        setData('label_id', "1");
-        post(route('tests.storeQuestion',[QBank.id,test.id]));
+        post(route('questions.store',QBank.id));
     };
+
+    const labelValueChange = (e:string) => {
+        router.reload({only: ['sublabels'], data: {parent: e}})
+    }
   return (
     <QBLayout
       user={auth.user}
       header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">New Question</h2>} QBank={QBank} CanEdit={true}>
       <Head title="New Question" />
       <div className="mt-10 mb-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
-      {/* <Menu QBank={QBank} CanEdit={undefined}></Menu> */}
         <Card>
-        {/* <CardHeader>
-            <CardTitle className="text-3xl font-bold">Test {test.name}</CardTitle>
-        </CardHeader> */}
           <CardHeader>
-            <CardTitle className="text-3xl font-bold">Add Question to {test.name}</CardTitle>
+            <CardTitle className="text-3xl font-bold">Add Question</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={submit}>
               <div className="grid w-full items-center gap-4">
+                {/* <div className="flex flex-col space-y-1.5">
+                  <Label htmlFor="name" className="text-xl font-bold">Question name</Label>
+                  <Input id="name" placeholder="Name of your question" />
+                </div> */}
                 <div className="flex flex-col space-y-1.5 mb-5">
                   <Label htmlFor="question" className="text-xl font-bold">Enter your question</Label>
                   <Textarea
@@ -113,7 +115,10 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
                     htmlFor="ans1"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> A.
-                  <Checkbox />
+                  <Checkbox checked = { checked === 1 } onClick={() => {
+                    setChecked(1)
+                    setData("correct", 1);
+                }}/>
                   <Label
                     htmlFor="ans1"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -128,7 +133,10 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
                     htmlFor="ans2"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> B.
-                  <Checkbox />
+                  <Checkbox checked = { checked === 2 } onClick={() => {
+                    setChecked(2)
+                    setData("correct", 2);
+                }}/>
                   <Label
                     htmlFor="ans2"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -143,7 +151,10 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
                     htmlFor="ans3"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> C.
-                  <Checkbox />
+                  <Checkbox checked = { checked === 3 } onClick={() => {
+                    setChecked(3)
+                    setData("correct", 3);
+                }}/>
                   <Label
                     htmlFor="ans3"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -158,7 +169,10 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
                     htmlFor="ans4"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> D.
-                  <Checkbox />
+                  <Checkbox checked = { checked === 4 } onClick={() => {
+                    setChecked(4)
+                    setData("correct", 4);
+                }}/>
                   <Label
                     htmlFor="ans4"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -173,7 +187,10 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
                     htmlFor="ans5"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> E.
-                  <Checkbox />
+                  <Checkbox checked = { checked === 5 } onClick={() => {
+                    setChecked(5)
+                    setData("correct", 5);
+                }}/>
                   <Label
                     htmlFor="ans5"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -188,7 +205,10 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
                     htmlFor="ans6"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> F.
-                  <Checkbox />
+                  <Checkbox checked = { checked === 6 } onClick={() => {
+                    setChecked(6)
+                    setData("correct", 6);
+                }}/>
                   <Label
                     htmlFor="ans6"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -199,20 +219,36 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
 
               <div className="mt-5">
                 <div className="text-xl font-bold"><p>Label settings</p></div>
-                <Select>
-                  <SelectTrigger><SelectValue placeholder="Choose your label" /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value='L.0.1' >L.0.1</SelectItem>
-                    <SelectItem value='L.0.2' >L.0.2</SelectItem>
-                    <SelectItem value='L.0.3' >L.0.3</SelectItem>
-                    <SelectItem value='L.0.4' >L.0.4</SelectItem>
-                    <SelectItem value='L.0.5' >L.0.5</SelectItem>
-                  </SelectContent>
+                <Select onValueChange={(e) => labelValueChange(e)}>
+                <SelectTrigger className="w-[180px]" >
+                  <SelectValue placeholder="Labels" />
+                </SelectTrigger >
+                    <SelectContent>
+                        {labels && labels.map((label) => (
+                            <SelectItem key={label.id} value={label.id.toString()}>
+                            {label.name}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
                 </Select>
-                <div className="mt-3 mb-3">
-                  <div className="text-xl font-bold"><p>Score settings</p></div>
-                  <Input id="score" placeholder="Question score" className='w-1/6' />
-                </div>
+                <br></br>
+                {
+                sublabels && (
+                    <Select onValueChange={(e) => setData("label_id", e)}>
+                        <SelectTrigger className="w-[180px]" >
+                        <SelectValue placeholder="Sublabels" />
+                        </SelectTrigger >
+                            <SelectContent>
+                                {sublabels.map((sublabels) => (
+                                    <SelectItem key={sublabels.id} value={sublabels.id.toString()}>
+                                    {sublabels.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                    </Select>
+                  )
+              }
+              <br></br>
               </div>
               <Button type='submit'>
                   Add question

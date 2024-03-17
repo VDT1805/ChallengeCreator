@@ -23,9 +23,12 @@ class LabelFilter extends ModelFilter
     }
 
     public function all($qbid) {
-        return $this->select('l1.name as label', 'l2.name as sublabel')
-        ->join('labels as l2', 'l1.id', '=', 'l2.label_id')
-        ->where('l1.question_bank_id', $qbid)
+        return $this->select('labels.name', 'child.name')
+        ->join('labels as child', function ($join) use ($qbid) {
+            $join->on('labels.id', '=', 'child.label_id');
+
+        })
+        ->where('labels.question_bank_id', $qbid)
         ->get();
     }
 }

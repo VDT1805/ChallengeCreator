@@ -171,7 +171,7 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                     <DropdownMenuContent>
                                         <DropdownMenuItem>
                                             <PlusIcon className="mr-2" />
-                                            <Link href={route('tests.createQuestion', [QBank.id, test.id])}>Add a new question</Link>
+                                            <Link href={route('questions.create', [QBank.id])} data={{"testid": test.id}} >Add a new question</Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem>
                                             <UpdateIcon className="mr-2" />

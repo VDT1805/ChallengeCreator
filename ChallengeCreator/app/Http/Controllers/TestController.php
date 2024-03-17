@@ -8,7 +8,7 @@ use App\Http\Services\QuestionBankService;
 use App\Http\Services\TestService;
 use App\Http\Services\QuestionService;
 use Barryvdh\DomPDF\Facade\Pdf;
-
+use App\Http\Services\LabelService;
 use Exception;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\File;
@@ -20,10 +20,12 @@ class TestController extends Controller
     private TestService $tService;
     private QuestionBankService $qbService;
     private QuestionService $qService;
-    public function __construct(TestService $tService, QuestionService $qService, QuestionBankService $qbService)
+    private LabelService $lService;
+    public function __construct(LabelService $lService,TestService $tService, QuestionService $qService, QuestionBankService $qbService)
     {
         $this->tService = $tService;
         $this->qService = $qService;
+        $this->lService = $lService;
         $this->qbService = $qbService;
     }
     /**
@@ -105,31 +107,36 @@ class TestController extends Controller
         //
     }
 
-    public function createQuestion($qbID, $testID)
-    {
-        //
-        $QB = $this->qbService->findOrFail($qbID,"id");
-        $test = $this->tService->find(["questionbanks" => $qbID, "id" => $testID])->first();
-        if(!$test) {
-            abort(404);
-        }
-        return Inertia::render("Test/AddTestQuestion",["QBank" => $QB, "test" => $test]);
-    }
+    // public function createQuestion($qbID, $testID, Request $request)
+    // {
+    //     //
+    //     $QB = $this->qbService->findOrFail($qbID,"id");
+    //     $test = $this->tService->find(["questionbanks" => $qbID, "id" => $testID])->first();
+    //     $labels = $this->lService->getAll(["questionbanks" => $qbID]);
+    //     if(!$test) {
+    //         abort(404);
+    //     }
+    //     return Inertia::render("Test/AddTestQuestion",
+    //     ["QBank" => $QB,
+    //     "test" => $test,
+    //     "labels" => $labels,
+    //     "sublabels" => Inertia::lazy(fn() => isset($request["parent"]) ? $this->lService->getAll(["parent" => $request["parent"]]) : [])]);
+    // }
 
-    public function storeQuestion($qbID, $testID, Request $request)
-    {
-        //
-        $QB = $this->qbService->findOrFail($qbID,"id");
-        $test = $this->tService->find(["questionbanks" => $qbID, "id" => $testID])->first();
-        if(!$test) {
-            abort(404);
-        }
-        $inserted = $this->qService->create($request->all()+["question_bank_id" => $qbID]);
-        if ($inserted) {
-            $attachmentResult = $test->questions()->attach($inserted);
-            return redirect()->route("tests.show", ["qbID" => $qbID, "testID" => $testID]);
-        }
-    }
+    // public function storeQuestion($qbID, $testID, Request $request)
+    // {
+    //     //
+    //     $QB = $this->qbService->findOrFail($qbID,"id");
+    //     $test = $this->tService->find(["questionbanks" => $qbID, "id" => $testID])->first();
+    //     if(!$test) {
+    //         abort(404);
+    //     }
+    //     $inserted = $this->qService->create($request->all()+["question_bank_id" => $qbID]);
+    //     if ($inserted) {
+    //         $attachmentResult = $test->questions()->attach($inserted);
+    //         return redirect()->route("tests.show", ["qbID" => $qbID, "testID" => $testID]);
+    //     }
+    // }
 
     public function indexQuestion($qbID, $testID, Request $request) {
         $QB = $this->qbService->findOrFail($qbID,"id");

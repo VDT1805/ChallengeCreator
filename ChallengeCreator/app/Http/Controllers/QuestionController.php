@@ -49,8 +49,9 @@ class QuestionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create($qbID, QuestionRequest $request, $testID=null)
+    public function create($qbID, Request $request, $testID=null)
     {
+        // dd($request);
         $QB = $this->qbService->findOrFail($qbID,"id");
         $labels = $this->lService->getAll(["questionbanks" => $qbID]);
         return Inertia::render("Questions/AddQuestion",["QBank" => $QB,
@@ -64,7 +65,21 @@ class QuestionController extends Controller
     public function store($qbID,Request $request)
     {
         //Test ID can be here!!!
+        // dd($request);
+        $testid = isset($request["testid"]);
+        unset($request["testid"]);
         $inserted = $this->qService->create($request->all()+["question_bank_id" => $qbID]);
+        if ($testid)
+        {
+            $test = $this->tService->findOrFail(["id" => $request["testid"]]);
+            if (!$test) {
+                abort(404);
+            }
+            if ($inserted) {
+                $attachmentResult = $test->questions()->attach($inserted);
+                return redirect()->route("questions.index", ["qbID" => $qbID]);
+            }
+        }
         if ($inserted) {
             return redirect()->route("questions.index", ["qbID" => $qbID]);
         }
@@ -81,17 +96,18 @@ class QuestionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($qbID, $qID)
+    public function edit($qbID, $qID, Request $request)
     {
 
         $QB = $this->qbService->findOrFail($qbID,"id");
         $question = $this->qService->findOrFail($qID,"id");
         $labels = $this->lService->getAll(["questionbanks" => $qbID]);
-        return Inertia::render("Questions/AddQuestion",[
+        return Inertia::render("Questions/QuestionForm",[
             "QBank"=>$QB,
             "question"=>$question,
-            "labels" => $labels
-        ]);
+            "labels" => $labels,
+            "sublabels" => Inertia::lazy(fn() => isset($request["parent"]) ? $this->lService->getAll(["questionbanks" => $qbID, "parent" => $request->parent]) : [])]
+        );
     }
 
     /**

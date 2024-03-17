@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
+import { Head, Link, router, useForm } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import {
   Card,
@@ -39,11 +39,10 @@ import QBLayout from '@/Layouts/QBLayout';
 import { LabelType } from '../Label/LabelTable/LabelType';
 
 
-export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProps<{ QBank: QB, labels:  LabelType[], sublabels: LabelType[] }>) {
+export default function QuestionForm({ auth, QBank, labels, sublabels }: PageProps<{ QBank: QB, labels:  LabelType[], sublabels: LabelType[] }>) {
   const [position, setPosition] = React.useState("bottom")
   const [checked, setChecked] = React.useState(1);
-  let params = new URLSearchParams(window.location.search)
-  const { data, setData, setDefaults, post, processing, errors, reset, transform } = useForm({
+  const { data, setData, setDefaults, post, processing, errors, reset } = useForm({
         question: "",
         ans1: "",
         ans2: "",
@@ -57,13 +56,6 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        if(params.has("testid")) {
-            transform((data) => ({
-                ...data,
-                testid: params.get("testid"),
-              }))
-        }
-
         post(route('questions.store',QBank.id));
     };
 
@@ -242,7 +234,7 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
                 <br></br>
                 {
                 sublabels && (
-                    <Select onValueChange={(e) => setData("label_id",e)}>
+                    <Select onValueChange={(e) => setData("label_id", e)}>
                         <SelectTrigger className="w-[180px]" >
                         <SelectValue placeholder="Sublabels" />
                         </SelectTrigger >
