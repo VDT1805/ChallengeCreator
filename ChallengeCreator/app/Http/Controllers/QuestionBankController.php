@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\LabelService;
 use App\Http\Services\QuestionBankService;
 use App\Models\QuestionBank;
 use Illuminate\Http\RedirectResponse;
@@ -13,10 +14,11 @@ use Illuminate\Support\Facades\Auth;
 class QuestionBankController extends Controller
 {
     private QuestionBankService $qbService;
-
-    public function __construct(QuestionBankService $qbService)
+    private LabelService $lService;
+    public function __construct(QuestionBankService $qbService,LabelService $lService)
     {
         $this->qbService = $qbService;
+        $this->lService = $lService;
     }
     /**
      * Display a listing of the resource.
@@ -51,6 +53,19 @@ class QuestionBankController extends Controller
         //
         $inserted = $this->qbService->create($request->all());
         if ($inserted) {
+            $parent = $this->lService->create(
+            [
+                "name" => "Generic Parent",
+                "description" => "Generic default",
+                "question_bank_id" => $inserted->id
+            ]);
+            $child = $this->lService->create(
+            [
+                    "name" => "Generic",
+                    "description" => "Generic sublabel",
+                    "label_id" => $parent->id,
+                    "question_bank_id" => $inserted->id
+            ]);
             return redirect()->route("questionbanks.show", ["qbID"=>$inserted->id]);
         }
     }
