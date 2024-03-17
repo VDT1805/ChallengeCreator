@@ -53,7 +53,8 @@ export default function LabelIndex({ auth, QBank, labels }: PageProps<{ QBank: Q
                                     <div className="flex gap-2 items-center"><FileIcon />{label.name as string}</div>
                                 </AccordionTrigger>
                                 <AccordionContent className="bg-white px-3 rounded">
-                                    <Separator className="mb-2 mt-2" />
+                                    {/* <Separator className="mb-2 mt-2" /> */}
+                                    {label.description}
                                 </AccordionContent>
                             </AccordionItem>
                         )

@@ -28,7 +28,7 @@ import QBLayout from '@/Layouts/QBLayout';
 import axios from 'axios';
 
 export default function PDFTest(this: any, { auth, QBank, pdf }: PageProps<{ QBank: QB, pdf: any }>) {
-  console.log(pdf);
+  // console.log(pdf);
   const [position, setPosition] = React.useState("bottom")
   const { data, setData, post, processing, errors, reset } = useForm({
         name: '',

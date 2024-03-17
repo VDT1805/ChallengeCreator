@@ -110,24 +110,26 @@
 					<td colspan="2">
 						<table>
 							<tr>
-								{{-- <td class="title">
+								<!-- <td class="title">
 									<img
 										src="ChallengeCreator\resources\js\Pages\logo.png"
 										style="width: 100%; max-width: 300px"
 									/>
-								</td> --}}
+								</td> -->
 
 								<td>
-									{{-- Invoice #: 123<br /> --}}
+									<!-- Invoice #: 123<br /> -->
 									Exam Date: {{ date('d/m/Y') }}<br />
-									Time: XX Minutes
+									Time: XX Minutes<br />
+									Created date: {{$test->created_at}}<br />
+									Last updated: {{$test->updated_at}}
 								</td>
 							</tr>
 						</table>
 					</td>
 				</tr>
 
-				{{-- <tr class="information">
+				<!-- <tr class="information">
 					<td colspan="2">
 						<table>
 							<tr>
@@ -145,9 +147,9 @@
 							</tr>
 						</table>
 					</td>
-				</tr> --}}
+				</tr>
 
-				{{-- <tr class="heading">
+				 <tr class="heading">
 					<td>Payment Method</td>
 
 					<td>Check #</td>
@@ -157,9 +159,9 @@
 					<td>Check</td>
 
 					<td>1000</td>
-				</tr> --}}
+				</tr> -->
 
-				<tr class="heading">
+				<!-- <tr class="heading">
 					<td>Lorem Ipsum</td>
 
 					<td>Lorem Ipsum</td>
@@ -187,7 +189,7 @@
 					<td>Lorem Ipsum</td>
 
 					<td>Lorem Ipsum</td>
-				</tr>
+				</tr> -->
 			</table>
 		</div>
         <div class="test-body">

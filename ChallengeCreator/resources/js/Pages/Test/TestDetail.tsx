@@ -100,7 +100,7 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
         setLoading(false);
     }
 
-    const vie = () => {
+    const view = () => {
         axios({
             url: route("tests.pdfStream", { qbID: QBank.id, testID: test.id }),
             method: 'GET',
@@ -135,11 +135,11 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                         Duplicate
                                     </Button>
                                     <Separator orientation="vertical" className="border-2 border-bluegreen" />
-                                    <Button variant="ghost" className="flex gap-3">
+                                    {/* <Button variant="ghost" className="flex gap-3">
                                         <PrinterIcon className="ml-2 h-4 w-4 mt-1" />
                                         Print
                                     </Button>
-                                    <Separator orientation="vertical" className="border-2 border-bluegreen" />
+                                    <Separator orientation="vertical" className="border-2 border-bluegreen" /> */}
                                     <Button variant="ghost" className="flex gap-3">
                                         <Trash2Icon className="ml-2 h-4 w-4 mt-1" />
                                         Delete
@@ -149,7 +149,7 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                     {/* <Button className="bg-bluegreen flex gap-3 hover:bg-bluegreen-dark">
                                         <Link href={route('tests.pdfGen', [QBank.id, test.id]) } method = "get">Preview</Link>
                                     </Button> */}
-                                    <Button className="bg-indianred flex gap-3 hover:bg-indianred-dark" onClick={vie} disabled={loading}>
+                                    <Button className="bg-indianred flex gap-3 hover:bg-indianred-dark" onClick={view} disabled={loading}>
                                         {loading ? 'Generating PDF...' : 'View PDF'}
                                     </Button>
                                     <Button className="bg-bluegreen flex gap-3 hover:bg-bluegreen-dark" onClick={dl} disabled={loading}>

@@ -557,7 +557,7 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                                     </CardContent>
                                 </Card>
 
-                                <Card className="mb-5 md:col-start-10 col-span-1 pt-2 shadow-2xl">
+                                <Card className="mb-5 pt-2 shadow-2xl">
                                     <CardHeader>
                                         <CardTitle className="text-3xl text-indianred font-bold">Invalid questions</CardTitle>
                                     </CardHeader>
