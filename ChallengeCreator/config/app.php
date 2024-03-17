@@ -170,6 +170,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         EloquentFilter\ServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Mccarlosen\LaravelMpdf\LaravelMpdfServiceProvider::class
+
     ])->toArray(),
 
     /*
@@ -186,6 +188,8 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
         'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
+        'mPDF' => Mccarlosen\LaravelMpdf\Facades\LaravelMpdf::class
+
     ])->toArray(),
 
 ];

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8" />
@@ -145,4 +145,48 @@
                 @endforeach
         </div>
 	</body>
+</html> --}}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <script>
+        MathJax = {
+          loader: {load: ['input/asciimath', 'output/chtml']}
+        }
+        </script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script type="text/javascript" id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js">
+        </script>
+
+</head>
+<body>
+
+<h3>The Cauchy-Schwarz Inequality (TeX)</h3>
+\[ \left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right) \]
+
+<h3>Standard Deviation (MathML)</h3>
+<math display="block"><mrow><mi>&#x03c3;</mi><mo>=</mo><msqrt><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mi>N</mi></mrow></mfrac><mstyle displaystyle="true"><mrow><munderover><mrow><mo>&#x2211;</mo></mrow><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>N</mi></mrow></munderover><mrow><msup><mrow><mo stretchy="false">(</mo><msub><mrow><mi>x</mi></mrow><mrow><mi>i</mi></mrow></msub><mo>&#x2212;</mo><mi>&#x03bc;</mi><mo stretchy="false">)</mo></mrow><mrow><mn>2</mn></mrow></msup></mrow></mrow></mstyle></mrow></msqrt><mo>.</mo></mrow></math>
+
+<p>When `a != 0`, there are two solutions to `ax^2 + bx + c = 0` and
+    they are</p>
+    <p style="text-align:center">
+      `x = (-b +- sqrt(b^2-4ac))/(2a) .`
+    </p>
+
+<h3>Inline equation (TeX)</h3>
+<p>Finally, while display equations look good for a page of samples, the ability to mix math and text in a paragraph is also important. This expression \(\sqrt{3x-1}+(1+x)^2\) is an example of an inline equation.  As you see, MathJax equations can be used this way as well, without unduly disturbing the spacing between lines.</p>
+
+<!-- This block of code adds a button to send the processed HTML code to your script: MathJaxProcess.php -->
+<div id="mpdf-create">
+	<form autocomplete="off" action="MathJaxProcess.php" method="POST" id="pdfform" onSubmit="document.getElementById('bodydata').value=encodeURIComponent(document.body.innerHTML);">
+		<input type="submit" value="PDF" name="PDF"/>
+		<input type="submit" value="SVG" name="SVG"/>
+		<input type="hidden" value="" id="bodydata" name="bodydata" />
+	</form>
+</div>
+
+</body>
 </html>

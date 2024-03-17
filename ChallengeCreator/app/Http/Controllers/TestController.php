@@ -12,7 +12,7 @@ use App\Http\Services\LabelService;
 use Exception;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\File;
-
+use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf;
 
 
 class TestController extends Controller
@@ -199,8 +199,9 @@ class TestController extends Controller
             "questions" => $questions
         ];
         // dd($questions);
-        $pdf = PDF::loadView('exampdf',$data);
+        $pdf = LaravelMpdf::loadView('exampdf',$data);
         return $pdf->stream();
     }
+
 
 }
