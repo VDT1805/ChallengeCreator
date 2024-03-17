@@ -128,68 +128,6 @@
 						</table>
 					</td>
 				</tr>
-
-				<!-- <tr class="information">
-					<td colspan="2">
-						<table>
-							<tr>
-								<td>
-									Sparksuite, Inc.<br />
-									12345 Sunny Road<br />
-									Sunnyville, CA 12345
-								</td>
-
-								<td>
-									Acme Corp.<br />
-									John Doe<br />
-									john@example.com
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-
-				 <tr class="heading">
-					<td>Payment Method</td>
-
-					<td>Check #</td>
-				</tr>
-
-				<tr class="details">
-					<td>Check</td>
-
-					<td>1000</td>
-				</tr> -->
-
-				<!-- <tr class="heading">
-					<td>Lorem Ipsum</td>
-
-					<td>Lorem Ipsum</td>
-				</tr>
-
-				<tr class="item">
-					<td>Lorem Ipsum</td>
-
-					<td>Lorem Ipsum</td>
-				</tr>
-
-				<tr class="item">
-					<td>Lorem Ipsum</td>
-
-					<td>Lorem Ipsum</td>
-				</tr>
-
-				<tr class="item last">
-					<td>Lorem Ipsum</td>
-
-					<td>Lorem Ipsum</td>
-				</tr>
-
-				<tr class="total">
-					<td>Lorem Ipsum</td>
-
-					<td>Lorem Ipsum</td>
-				</tr> -->
 			</table>
 		</div>
         <div class="test-body">

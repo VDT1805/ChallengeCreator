@@ -71,7 +71,9 @@ class TestController extends Controller
         //
         $QB = $this->qbService->findOrFail($qbID,"id");
         $test = $this->tService->find(["questionbanks" => $qbID, "id" => $testID])->first();
-        $questions = $test->questions()->get();
+        // $questions = $test->questions()->get();
+        $questions = $this->qService->find(["questiontest" => $testID]);
+        // dd($questions);
         if(!$test) {
             abort(404);
         }
@@ -149,7 +151,7 @@ class TestController extends Controller
         if(!$test) {
             abort(404);
         }
-        $attachmentResult = $test->questions()->attach($question, ["score" => 1]);
+        $attachmentResult = $test->questions()->attach($question);
     }
 
     public function detachQuestion($qbID, $testID, Request $request) {
@@ -167,7 +169,7 @@ class TestController extends Controller
         if(!$test) {
             abort(404);
         }
-        $questions = $this->qService->find(["questionbanks" => $qbID, "tests"=>["qb" => $qbID, "test"=>$testID]]);
+        $questions = $this->qService->find(["question_test"=>$testID]);
         $data = [
             "test" => $test,
             "questions" => $questions
@@ -184,14 +186,14 @@ class TestController extends Controller
         if(!$test) {
             abort(404);
         }
-        $questions = $this->qService->find(["questionbanks" => $qbID, "tests"=>["qb" => $qbID, "test"=>$testID]]);
+        $questions = $this->qService->find(["question_test"=>$testID]);
         $data = [
             "test" => $test,
             "questions" => $questions
         ];
         // dd($questions);
         $pdf = PDF::loadView('exampdf',$data);
-        return $pdf->stream($test->name.'.pdf');
+        return $pdf->stream();
     }
 
 }

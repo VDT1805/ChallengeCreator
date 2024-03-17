@@ -30,6 +30,15 @@ class QuestionFilter extends ModelFilter
         ->selectRaw('IF(qt.test_id IS NOT NULL, 1, 0) AS inTest')->orderBy("inTest","desc")
         ->get();
     }
+
+    public function questiontest ($testid) {
+        return $this->select('questions.*')
+        ->join('question_test', function ($join) use ($testid) {
+            $join->on('questions.id', '=', 'question_test.question_id')
+                ->where('question_test.test_id', '=', $testid);
+        })
+        ->get();
+    }
     public function id($id) {
         return $this->where("id", '=', $id);
     }
