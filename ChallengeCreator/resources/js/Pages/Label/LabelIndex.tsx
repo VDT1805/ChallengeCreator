@@ -21,7 +21,7 @@ export default function LabelIndex({ auth, QBank, labels }: PageProps<{ QBank: Q
         <QBLayout
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">All Labels/Sublabels</h2>} QBank={QBank} CanEdit={true}>
-            <Head title="Categories/Subcategories" />
+            <Head title="Labels/Sublabels" />
             <div className="py-12 container mx-auto">
                 <Card className="mb-5 md:col-start-10 col-span-1 pt-2 shadow-2xl">
                     <CardHeader>

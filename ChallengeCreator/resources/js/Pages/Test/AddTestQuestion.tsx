@@ -198,7 +198,7 @@ export default function AddTestQuestion({ auth, QBank, test }: PageProps<{ QBank
               </div>
 
               <div className="mt-5">
-                <div className="text-xl font-bold"><p>Category settings</p></div>
+                <div className="text-xl font-bold"><p>Label settings</p></div>
                 <Select>
                   <SelectTrigger><SelectValue placeholder="Choose your label" /></SelectTrigger>
                   <SelectContent>

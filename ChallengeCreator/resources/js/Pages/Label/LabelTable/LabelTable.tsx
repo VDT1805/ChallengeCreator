@@ -76,7 +76,7 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center justify-between gap-4 py-4">
         <div className="grid grid-cols-3 gap-4">
           <Input
-            placeholder="Search category..."
+            placeholder="Search label..."
             value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
               table.getColumn("name")?.setFilterValue(event.target.value)
@@ -99,7 +99,7 @@ export function DataTable<TData, TValue>({
         </div>
         <Link href={route('addcategory')}>
           <Button>
-            Add category
+            Add label
           </Button>
         </Link>
       </div>

@@ -54,7 +54,7 @@ class CSVController extends Controller
             $fileExtension = $file->getClientOriginalExtension();
             $path = $request->file('csv')->store("public");
             $rules = [
-                'id' => 'string',
+                'id' => 'required|string',
                 'question' => 'required|string',
                 'ans1' => 'string',
                 'ans2' => 'string',
@@ -63,6 +63,7 @@ class CSVController extends Controller
                 'ans5' => 'string',
                 'ans6' => 'string',
                 'correct' => 'required|numeric',
+                'label' => 'string',
                 'sublabel' => 'string'
             ];
             $filtered = [];

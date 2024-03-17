@@ -145,17 +145,18 @@ import { useDropzone } from 'react-dropzone'
 import { Button } from '@/shadcn/ui/button'
 import axios from 'axios'
 import { LoaderIcon } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/shadcn/ui/accordion";
 
 
 export const FormDataSchema = z.object({
-    firstName: z.string().min(1, 'First name is required'),
-    lastName: z.string().min(1, 'Last name is required'),
-    email: z.string().min(1, 'Email is required').email('Invalid email address'),
-    country: z.string().min(1, 'Country is required'),
-    street: z.string().min(1, 'Street is required'),
-    city: z.string().min(1, 'City is required'),
-    state: z.string().min(1, 'State is required'),
-    zip: z.string().min(1, 'Zip is required'),
+    // firstName: z.string().min(1, 'First name is required'),
+    // lastName: z.string().min(1, 'Last name is required'),
+    // email: z.string().min(1, 'Email is required').email('Invalid email address'),
+    // country: z.string().min(1, 'Country is required'),
+    // street: z.string().min(1, 'Street is required'),
+    // city: z.string().min(1, 'City is required'),
+    // state: z.string().min(1, 'State is required'),
+    // zip: z.string().min(1, 'Zip is required'),
 })
 type Inputs = z.infer<typeof FormDataSchema>
 
@@ -178,20 +179,39 @@ const steps = [
         name: 'Complete'
     }
 ]
-interface UploadProp {
-    csv: File | undefined;
-}
+
+// interface UploadProp {
+//     csv: File | undefined;
+// }
+
 type FormInputs = {
     file: FileList;
 };
-export default function ImportPage({ auth, QBank, rows, violators, template_url }: PageProps<{ QBank: QB, rows: any, violators: any, template_url:any }>) {
-    console.log(template_url);
+
+export default function ImportPage({ auth, QBank, rows, violators, template_url }: PageProps<{ QBank: QB, rows: any, violators: any, template_url: any }>) {
+    // console.log("template_url:" + template_url)
+    const [previousStep, setPreviousStep] = useState(0);
+    const [currentStep, setCurrentStep] = useState(0);
+    // const formData = new FormData();
+    const [formData, setFormData] = useState(new FormData());
+    const [loading, setLoading] = useState(false);
+    const delta = currentStep - previousStep;
+    const {
+        register,
+        handleSubmit,
+        watch,
+        reset,
+        trigger,
+        formState: { errors }
+    } = useForm<Inputs>({
+        resolver: zodResolver(FormDataSchema)
+    })
     const form = useForm<FormInputs>();
+    const [errorMessage, setErrorMessage] = useState('');
+    const [uploaded, setUploaded] = useState(false);
 
     const onSubmit = async (data: { file: File }) => {
-        const formData = new FormData();
         formData.append('file', data.file);
-
         try {
             const response = await fetch(route('questions.import', QBank.id), {
                 method: 'POST',
@@ -225,37 +245,29 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
     //     }
     // });
 
-    const [previousStep, setPreviousStep] = useState(0)
-    const [currentStep, setCurrentStep] = useState(0)
-    // const formData = new FormData();
-    const [formData, setFormData] = useState(new FormData());
-    const [loading, setLoading] = useState(false);
-    const delta = currentStep - previousStep
-    const {
-        register,
-        handleSubmit,
-        watch,
-        reset,
-        trigger,
-        formState: { errors }
-    } = useForm<Inputs>({
-        resolver: zodResolver(FormDataSchema)
-    })
-
     const processForm: SubmitHandler<Inputs> = data => {
-        console.log(data)
+        // console.log(data)
         reset()
     }
 
-    type FieldName = keyof Inputs
+    // type FieldName = keyof Inputs
+
+    const prev = () => {
+        if (currentStep > 0) {
+            setPreviousStep(currentStep)
+            setCurrentStep(step => step - 1)
+        }
+    }
 
     const next = async () => {
         // const fields = steps[currentStep].fields
         // const output = await trigger(fields as FieldName[], { shouldFocus: true })
-
         // if (!output) return
         // console.log(currentStep)
-        console.log(currentStep)
+        // console.log(currentStep)
+        if (currentStep === 1 && formData.keys == null) {
+            prev()
+        }
         if (currentStep < steps.length - 1) {
             if (currentStep === steps.length - 3) {
                 // router.reload({only: ['rows', 'violators'], data: formData, onSuccess: page => {console.log(formData)}})
@@ -264,7 +276,7 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                 router.post(route("questions.import", QBank.id), formData, {
                     forceFormData: true,
                     preserveState: true,
-                    onProgress: ()=> {},
+                    onProgress: () => { },
                     onSuccess: () => {
                         setLoading(false);
                     }
@@ -300,15 +312,13 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
     //     post(route("questions.import", QBank.id))
     // }
 
-    const [errorMessage, setErrorMessage] = useState('');
     const onDrop = useCallback((acceptedFiles: any, fileRejections: any) => {
         setErrorMessage('');
         if (fileRejections.length > 0) {
             setTimeout(() => { setErrorMessage(''); }, 2000);
             return;
-        } else {
-            setErrorMessage('');
         }
+        else setErrorMessage('');
         // acceptedFiles.forEach(file => {
         //     formData.append('csv', file);
         // });
@@ -329,17 +339,9 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
         }
     });
 
-
-    const prev = () => {
-        if (currentStep > 0) {
-            setPreviousStep(currentStep)
-            setCurrentStep(step => step - 1)
-        }
-    }
-
     const dlTemplate = () => {
         axios({
-            url: route("questions.downloadTemplate", { qbID: QBank.id}),
+            url: route("questions.downloadTemplate", { qbID: QBank.id }),
             method: 'GET',
             responseType: 'blob', // important
             headers: {
@@ -361,6 +363,7 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
     return (
         <QBLayout header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Import CSV file</h2>} QBank={QBank} CanEdit={true} user={auth.user}>
             {/* steps */}
+            <Head title="Import CSV file" />
             <div className="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <nav aria-label='Progress'>
                     <ol role='list' className='space-y-4 md:flex md:space-x-8 md:space-y-0'>
@@ -397,7 +400,7 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                 </nav>
 
                 {/* Form */}
-                <form className='mt-12 py-12' onSubmit={handleSubmit(processForm)}>
+                <form className='mt-12 py-5' onSubmit={handleSubmit(processForm)}>
                     {currentStep === 0 && (
                         <motion.div
                             initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
@@ -409,9 +412,9 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                                     <CardTitle className="text-3xl font-bold">Download .CSV Question Template</CardTitle>
                                 </CardHeader>
                                 <CardContent>
-                                <Button className="bg-bluegreen flex gap-3 hover:bg-bluegreen-dark" onClick={dlTemplate}>
-                                    DL
-                                </Button>
+                                    <Button className="bg-bluegreen flex gap-3 hover:bg-bluegreen-dark mb-5" onClick={dlTemplate}>
+                                        Download CSV template
+                                    </Button>
                                     <div className="grid w-full items-center gap-4">
                                         <div className="flex flex-col space-y-1.5">
                                             <Label className="text-xl font-bold">Instructions</Label>
@@ -457,17 +460,17 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                             <Controller
                                 control={form.control}
                                 name="file"
-                                rules={{
-                                    required: { value: true, message: 'This field is required' },
-                                }}
+                                // rules={{
+                                //     required: { value: true, message: 'This field is required' },
+                                // }}
                                 render={({ field: { onChange, onBlur, value }, fieldState }) => (
                                     <div {...getRootProps({
                                         className: 'p-6 dropzone',
-                                        'data-tooltip-id': errorMessage ? 'errorTooltip' : ''
+                                        'data-tooltip-id': errorMessage ? 'errorTooltip' : '',
                                     })}>
                                         <input {...getInputProps()} />
-                                        <p className="border-2 border-dashed border-blue-500 rounded-md p-4 text-center text-blue-500 hover:border-blue-700">
-                                            Drag n' drop or choose a file
+                                        <p className="border-2 border-dashed border-bluegreen rounded-md p-4 text-center text-bluegreen hover:border-bluegreen-dark">
+                                            Drag & drop a .csv file here, or click to choose a .csv file to upload
                                         </p>
                                         {errorMessage && (
                                             <p className="text-red-500 text-center mt-2">
@@ -487,7 +490,7 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                             transition={{ duration: 0.3, ease: 'easeInOut' }}
 
                         >
-                            {loading ? <div><LoaderIcon/></div> :
+                            {/* {loading ? <div><LoaderIcon /></div> :
                                 <div>
                                     <h2>Valid Rows</h2>
                                     {rows &&
@@ -502,7 +505,87 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                                         })
                                     }
                                 </div>
-                            }
+                            } */}
+                            {/* <Card className="px-5">
+                                <CardTitle className="text-3xl text-green-500 font-bold">Valid questions</CardTitle>
+                                <CardContent>
+                                    {rows &&
+                                        rows.map((row: any) => {
+                                            return <p>Question: {row.question} Correct: {row.correct}</p>
+                                        })
+                                    }
+                                </CardContent>
+                            </Card>
+
+                            <Card className="mt-5">
+                                <CardTitle className="text-3xl text-indianred font-bold">Invalid questions</CardTitle>
+                                <CardContent>
+                                    {violators &&
+                                        violators.map((row: any) => {
+                                            return <p>{row.question}</p>
+                                        })
+                                    }
+                                </CardContent>
+                            </Card> */}
+                            <div className="mx-auto">
+                                <Card className="mb-5 md:col-start-10 col-span-1 pt-2 shadow-2xl">
+                                    <CardHeader>
+                                        <CardTitle className="text-3xl text-green-500 font-bold">Valid questions</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <Accordion type="single" collapsible className="w-full bg-white rounded">
+                                            {rows && rows.map((row: any) => (
+                                                <AccordionItem value={row.id as unknown as string}>
+                                                    <AccordionTrigger className="hover:bg-bluegreen bg-white px-3 rounded">
+                                                        <div className="flex gap-2 items-center">Question: {row.question}</div>
+                                                    </AccordionTrigger>
+                                                    <AccordionContent className="bg-white px-3 rounded">
+                                                        <div className="flex flex-col gap-2">
+                                                            <div>Answer 1: {row.ans1}</div>
+                                                            <div>Answer 2: {row.ans2}</div>
+                                                            <div>Answer 3: {row.ans3}</div>
+                                                            <div>Answer 4: {row.ans4}</div>
+                                                            <div>Answer 5: {row.ans5}</div>
+                                                            <div>Answer 6: {row.ans6}</div>
+                                                            <div className="text-green-500 font-bold">Correct answer: {row.correct}</div>
+                                                        </div>
+                                                    </AccordionContent>
+                                                </AccordionItem>
+                                            )
+                                            )}
+                                        </Accordion>
+                                    </CardContent>
+                                </Card>
+
+                                <Card className="mb-5 md:col-start-10 col-span-1 pt-2 shadow-2xl">
+                                    <CardHeader>
+                                        <CardTitle className="text-3xl text-indianred font-bold">Invalid questions</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                    <Accordion type="single" collapsible className="w-full bg-white rounded">
+                                            {violators && violators.map((row: any) => (
+                                                <AccordionItem value={row.id as unknown as string}>
+                                                    <AccordionTrigger className="hover:bg-bluegreen bg-white px-3 rounded">
+                                                        <div className="flex gap-2 items-center">Question: {row.question}</div>
+                                                    </AccordionTrigger>
+                                                    <AccordionContent className="bg-white px-3 rounded">
+                                                        <div className="flex flex-col gap-2">
+                                                            <div>Answer 1: {row.ans1}</div>
+                                                            <div>Answer 2: {row.ans2}</div>
+                                                            <div>Answer 3: {row.ans3}</div>
+                                                            <div>Answer 4: {row.ans4}</div>
+                                                            <div>Answer 5: {row.ans5}</div>
+                                                            <div>Answer 6: {row.ans6}</div>
+                                                            <div className="text-green-500 font-bold">Correct answer: {row.correct}</div>
+                                                        </div>
+                                                    </AccordionContent>
+                                                </AccordionItem>
+                                            )
+                                            )}
+                                        </Accordion>
+                                    </CardContent>
+                                </Card>
+                            </div>
                         </motion.div>
                     )}
 

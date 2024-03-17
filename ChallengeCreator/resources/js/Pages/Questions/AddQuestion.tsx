@@ -200,10 +200,10 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
               </div>
 
               <div className="mt-5">
-                <div className="text-xl font-bold"><p>Category settings</p></div>
+                <div className="text-xl font-bold"><p>Label settings</p></div>
                 <Select onValueChange={(e) => labelValueChange(e)}>
                 <SelectTrigger className="w-[180px]" >
-                  <SelectValue placeholder="Categories" />
+                  <SelectValue placeholder="Labels" />
                 </SelectTrigger >
                     <SelectContent>
                         {labels.map((label) => (
@@ -217,7 +217,7 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
                 sublabels && (
                     <Select onValueChange={(e) => setData("label_id",e)}>
                         <SelectTrigger className="w-[180px]" >
-                        <SelectValue placeholder="Sub-categories" />
+                        <SelectValue placeholder="Sublabels" />
                         </SelectTrigger >
                             <SelectContent>
                                 {sublabels.map((sublabels) => (

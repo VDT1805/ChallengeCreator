@@ -59,8 +59,8 @@ export default function AddTest({ auth, QBank }: PageProps<{ QBank: QB }>) {
                   placeholder="Name of your test"/>
                 </div>
               </div>
-              <Button type='submit' className='mt-2'>
-                    Add new test
+              <Button type='submit' className='mt-5'>
+                    Add test
                 </Button>
             </form>
           </CardContent>
