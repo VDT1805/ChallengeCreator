@@ -122,6 +122,7 @@ class QuestionController extends Controller
     public function update($qbID,$qID,Request $request)
     {
         $this->qService->update($qID, $request->all());
+        return redirect()->route("questions.index", ["qbID" => $qbID]);
     }
 
     /**
