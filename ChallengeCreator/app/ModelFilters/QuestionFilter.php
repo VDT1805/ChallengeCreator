@@ -52,7 +52,7 @@ class QuestionFilter extends ModelFilter
     }
 
     public function sublabels($id) {
-        return $this->where("label_id", '=', $id);
+        return $this->where("questions.label_id", '=', $id);
     }
 
     public function keyword($keyword) {

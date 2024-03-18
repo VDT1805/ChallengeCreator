@@ -68,7 +68,7 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
     };
 
     const labelValueChange = (e:string) => {
-        router.reload({only: ['sublabels'], data: {parent: e}})
+        router.reload({only: ['sublabels'], data: {labels: e}})
     }
   return (
     <QBLayout

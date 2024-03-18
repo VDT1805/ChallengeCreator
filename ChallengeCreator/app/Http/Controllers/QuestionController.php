@@ -30,18 +30,16 @@ class QuestionController extends Controller
      */
     public function index($qbID, Request $request)
     {
+        $parentid = $request["labels"];
         $QB = $this->qbService->findOrFail($qbID,"id");
         $questions = $this->qService->getAllPaginated($request->all()+["questionbanks" => $qbID]);
         // dd($questions);
         $labels = $this->lService->getAll(["questionbanks" => $qbID]);
-        // if(isset($request["parent"])) {
-        //     dd($request->parent);
-        // }
         return Inertia::render("Questions/QuestionListPage", [
             "QBank" => $QB,
             "questions" => $questions,
             "labels" => $labels,
-            "sublabels" => Inertia::lazy(fn() => isset($request["parent"]) ? $this->lService->getAll(["parent" => $request->parent]) : [])
+            "sublabels" => fn() => $parentid ? $this->lService->getAll(["parent" => $parentid]) : []
         ]);
 
     }
@@ -49,14 +47,14 @@ class QuestionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create($qbID, Request $request, $testID=null)
+    public function create($qbID, Request $request)
     {
         // dd($request);
         $QB = $this->qbService->findOrFail($qbID,"id");
         $labels = $this->lService->getAll(["questionbanks" => $qbID]);
         return Inertia::render("Questions/AddQuestion",["QBank" => $QB,
         "labels" => $labels,
-        "sublabels" => Inertia::lazy(fn() => isset($request["parent"]) ? $this->lService->getAll(["parent" => $request->parent]) : [])]);
+        "sublabels" => fn() => isset($request["labels"]) ? $this->lService->getAll(["parent" => $request->labels]) : []]);
     }
 
     /**
@@ -133,10 +131,13 @@ class QuestionController extends Controller
             $deleted = $this->qService->delete($request["qID"]);
             if($deleted) {
                 $QB = $this->qbService->findOrFail($qbID,"id");
+                $labels = $this->lService->getAll(["questionbanks" => $qbID]);
                 $questions = $this->qService->getAllPaginated(["questionbanks" => $qbID]);
             return Inertia::render("Questions/QuestionListPage", [
                 "QBank" => $QB,
-                "questions" => $questions
+                "questions" => $questions,
+                "labels" => $labels,
+                "sublabels" => fn() => isset($request["labels"]) ? $this->lService->getAll(["parent" => $request->labels]) : []
             ]);
 
         }

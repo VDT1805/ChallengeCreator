@@ -32,4 +32,5 @@ class LabelFilter extends ModelFilter
         ->where('labels.question_bank_id', $qbid)
         ->get();
     }
+
 }

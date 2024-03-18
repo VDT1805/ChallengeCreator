@@ -31,7 +31,7 @@ import {
 import { Input } from "@/shadcn/ui/input";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shadcn/ui/dropdown-menu';
 import { router } from '@inertiajs/react'
-import { FormEventHandler, SetStateAction, useState } from 'react';
+import { FormEventHandler, SetStateAction, useEffect, useState } from 'react';
 import { LabelProps } from '@radix-ui/react-label';
 import { LabelType } from '../Label/LabelTable/LabelType';
 
@@ -46,17 +46,16 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
     const [query, setQuery] = useState<Record<string, string>>({});
     const filter: FormEventHandler = (e) => {
         e.preventDefault();
-        router.get(route('questions.index', QBank.id), query, { preserveState: true });
+        router.get(route('questions.index', QBank.id), query, { preserveState: true, preserveScroll:true });
     };
     const [selectedValue, setSelectedValue] = useState(Array<LabelType>);
 
     const labelValueChange = (e:string) => {
         setQuery(prevQuery => ({
             ...prevQuery,
-            ["label"]: e
+            ["labels"]: e
         }));
-        router.reload({only: ['sublabels'], data: {parent: e}})
-
+        router.reload({only: ['sublabels'], data: {labels: e}})
     }
 
   return (
@@ -109,7 +108,7 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
 
               <Select onValueChange={(e) => labelValueChange(e)}>
                 <SelectTrigger className="w-[180px]" >
-                  <SelectValue placeholder="Categories" />
+                  <SelectValue placeholder="Labels" />
                 </SelectTrigger >
                     <SelectContent>
                         {labels.map((label) => (
@@ -124,10 +123,10 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                 sublabels && (
                     <Select onValueChange={(e) => setQuery(prevQuery => ({
                         ...prevQuery,
-                        ["sublabel"]: e
+                        ["sublabels"]: e
                       }))}>
                         <SelectTrigger className="w-[180px]" >
-                        <SelectValue placeholder="Categories" />
+                        <SelectValue placeholder="Sublabels" />
                         </SelectTrigger >
                             <SelectContent>
                                 {sublabels.map((sublabels) => (
@@ -172,7 +171,7 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                 <p className="flex gap-2 font-bold items-center text-green-500">Answer 4: {question.ans4} <CheckCircledIcon /> </p>
                 <p>Answer 5: {question.ans5}</p>
                 <p>Answer 6: {question.ans6}</p> */}
-                {answers.map((answer, index) => (
+                {answers && answers.map((answer, index) => (
                     answer && <p key={index}>Answer {index + 1}: {answer}</p>
                 ))}
                 <Separator className="mb-2 mt-2" />
