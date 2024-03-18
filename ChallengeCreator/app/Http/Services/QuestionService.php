@@ -177,7 +177,7 @@ class QuestionService implements BaseCrudServiceInterface
     public function update($keyOrModel, array $data): ?Model
     {
         $qb = Question::find($keyOrModel);
-        $qb -> question = $data["question"];
+        $qb -> update($data);
         $qb -> save();
         return $qb;
     }

@@ -32,17 +32,19 @@ import { Checkbox } from '@/shadcn/ui/checkbox';
 
 
 
-import React, { FormEventHandler } from 'react';
+import React, { FormEventHandler, useEffect } from 'react';
 import { Menu } from '../Menu';
 import { QB } from '../QuestionBank/QuestionBankType';
 import QBLayout from '@/Layouts/QBLayout';
 import { LabelType } from '../Label/LabelTable/LabelType';
+import { Question } from './QuestionType';
 
 
-export default function QuestionForm({ auth, QBank, labels, sublabels }: PageProps<{ QBank: QB, labels:  LabelType[], sublabels: LabelType[] }>) {
-  const [position, setPosition] = React.useState("bottom")
-  const [checked, setChecked] = React.useState(1);
-  const { data, setData, setDefaults, post, processing, errors, reset } = useForm({
+export default function QuestionForm({ auth, QBank, labels, sublabels, currLabel, currSublabel, question }: PageProps<{ QBank: QB, labels:  LabelType[], sublabels: LabelType[], currLabel: LabelType, currSublabel: LabelType, question: Question }>) {
+  console.log(question.correct);
+    const [position, setPosition] = React.useState("bottom")
+  const [checked, setChecked] = React.useState(question.correct);
+  const { data, setData, setDefaults, post, processing, errors, reset, put } = useForm({
         question: "",
         ans1: "",
         ans2: "",
@@ -54,9 +56,23 @@ export default function QuestionForm({ auth, QBank, labels, sublabels }: PagePro
         label_id: ""
     });
 
+    useEffect(() => {
+        setData({
+            question: question.question,
+            ans1: question.ans1,
+            ans2: question.ans2,
+            ans3: question.ans3,
+            ans4: question.ans4,
+            ans5: question.ans5,
+            ans6: question.ans6,
+            correct: 1,
+            label_id: currLabel.id.toString()
+        })
+    }, []);
+
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('questions.store',QBank.id));
+        put(route('questions.update',[QBank.id,question.id]));
     };
 
     const labelValueChange = (e:string) => {
@@ -115,7 +131,7 @@ export default function QuestionForm({ auth, QBank, labels, sublabels }: PagePro
                     htmlFor="ans1"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> A.
-                  <Checkbox checked = { checked === 1 } onClick={() => {
+                  <Checkbox checked = { checked == 1 } onClick={() => {
                     setChecked(1)
                     setData("correct", 1);
                 }}/>
@@ -133,7 +149,7 @@ export default function QuestionForm({ auth, QBank, labels, sublabels }: PagePro
                     htmlFor="ans2"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> B.
-                  <Checkbox checked = { checked === 2 } onClick={() => {
+                  <Checkbox checked = { checked == 2 } onClick={() => {
                     setChecked(2)
                     setData("correct", 2);
                 }}/>
@@ -151,7 +167,7 @@ export default function QuestionForm({ auth, QBank, labels, sublabels }: PagePro
                     htmlFor="ans3"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> C.
-                  <Checkbox checked = { checked === 3 } onClick={() => {
+                  <Checkbox checked = { checked == 3 } onClick={() => {
                     setChecked(3)
                     setData("correct", 3);
                 }}/>
@@ -169,7 +185,7 @@ export default function QuestionForm({ auth, QBank, labels, sublabels }: PagePro
                     htmlFor="ans4"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> D.
-                  <Checkbox checked = { checked === 4 } onClick={() => {
+                  <Checkbox checked = { checked == 4 } onClick={() => {
                     setChecked(4)
                     setData("correct", 4);
                 }}/>
@@ -187,7 +203,7 @@ export default function QuestionForm({ auth, QBank, labels, sublabels }: PagePro
                     htmlFor="ans5"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> E.
-                  <Checkbox checked = { checked === 5 } onClick={() => {
+                  <Checkbox checked = { checked == 5 } onClick={() => {
                     setChecked(5)
                     setData("correct", 5);
                 }}/>
@@ -205,7 +221,7 @@ export default function QuestionForm({ auth, QBank, labels, sublabels }: PagePro
                     htmlFor="ans6"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> F.
-                  <Checkbox checked = { checked === 6 } onClick={() => {
+                  <Checkbox checked = { checked == 6 } onClick={() => {
                     setChecked(6)
                     setData("correct", 6);
                 }}/>
@@ -221,12 +237,17 @@ export default function QuestionForm({ auth, QBank, labels, sublabels }: PagePro
                 <div className="text-xl font-bold"><p>Label settings</p></div>
                 <Select onValueChange={(e) => labelValueChange(e)}>
                 <SelectTrigger className="w-[180px]" >
-                  <SelectValue placeholder="Labels" />
+                  <SelectValue placeholder={currLabel.name} />
                 </SelectTrigger >
                     <SelectContent>
                         {labels && labels.map((label) => (
-                            <SelectItem key={label.id} value={label.id.toString()}>
+                            <SelectItem
+                            aria-selected = {label.id === currLabel.id}
+                            key={label.id}
+                            value={label.id.toString()}
+                            >
                             {label.name}
+
                             </SelectItem>
                         ))}
                     </SelectContent>
@@ -236,12 +257,14 @@ export default function QuestionForm({ auth, QBank, labels, sublabels }: PagePro
                 sublabels && (
                     <Select onValueChange={(e) => setData("label_id", e)}>
                         <SelectTrigger className="w-[180px]" >
-                        <SelectValue placeholder="Sublabels" />
+                        <SelectValue placeholder={currSublabel.name} />
                         </SelectTrigger >
                             <SelectContent>
-                                {sublabels.map((sublabels) => (
-                                    <SelectItem key={sublabels.id} value={sublabels.id.toString()}>
-                                    {sublabels.name}
+                                {sublabels.map((sublabel) => (
+                                    <SelectItem
+                                    aria-selected = {sublabel.id === currLabel.id}
+                                    key={sublabel.id} value={sublabel.id.toString()}>
+                                    {sublabel.name}
                                     </SelectItem>
                                 ))}
                             </SelectContent>

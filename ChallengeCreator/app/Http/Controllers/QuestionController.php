@@ -102,18 +102,24 @@ class QuestionController extends Controller
         $QB = $this->qbService->findOrFail($qbID,"id");
         $question = $this->qService->findOrFail($qID,"id");
         $labels = $this->lService->getAll(["questionbanks" => $qbID]);
+        $currSublabel = $this->lService->findOrFail($question->label_id,"id");
+        $currLabel = $this->lService->findOrFail($currSublabel->label_id,"id");
         return Inertia::render("Questions/QuestionForm",[
             "QBank"=>$QB,
             "question"=>$question,
             "labels" => $labels,
-            "sublabels" => Inertia::lazy(fn() => isset($request["parent"]) ? $this->lService->getAll(["questionbanks" => $qbID, "parent" => $request->parent]) : [])]
+            "currLabel" => $currLabel,
+            "currSublabel" => $currSublabel,
+            "sublabels" => fn() => isset($request["parent"]) ?
+            $this->lService->getAll(["questionbanks" => $qbID, "parent" => $request->parent]) :
+            $this->lService->getAll([ "parent" => $currLabel->id])]
         );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update($qID,Request $request)
+    public function update($qbID,$qID,Request $request)
     {
         $this->qService->update($qID, $request->all());
     }
