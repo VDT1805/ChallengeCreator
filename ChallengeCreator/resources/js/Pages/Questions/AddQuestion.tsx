@@ -39,37 +39,37 @@ import QBLayout from '@/Layouts/QBLayout';
 import { LabelType } from '../Label/LabelTable/LabelType';
 
 
-export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProps<{ QBank: QB, labels:  LabelType[], sublabels: LabelType[] }>) {
+export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProps<{ QBank: QB, labels: LabelType[], sublabels: LabelType[] }>) {
   const [position, setPosition] = React.useState("bottom")
   const [checked, setChecked] = React.useState(1);
   let params = new URLSearchParams(window.location.search)
   const { data, setData, setDefaults, post, processing, errors, reset, transform } = useForm({
-        question: "",
-        ans1: "",
-        ans2: "",
-        ans3: "",
-        ans4: "",
-        ans5: "",
-        ans6: "",
-        correct: 1,
-        label_id: ""
-    });
+    question: "",
+    ans1: "",
+    ans2: "",
+    ans3: "",
+    ans4: "",
+    ans5: "",
+    ans6: "",
+    correct: 1,
+    label_id: ""
+  });
 
-    const submit: FormEventHandler = (e) => {
-        e.preventDefault();
-        if(params.has("testid")) {
-            transform((data) => ({
-                ...data,
-                testid: params.get("testid"),
-              }))
-        }
-
-        post(route('questions.store',QBank.id));
-    };
-
-    const labelValueChange = (e:string) => {
-        router.reload({only: ['sublabels'], data: {labels: e}})
+  const submit: FormEventHandler = (e) => {
+    e.preventDefault();
+    if (params.has("testid")) {
+      transform((data) => ({
+        ...data,
+        testid: params.get("testid"),
+      }))
     }
+
+    post(route('questions.store', QBank.id));
+  };
+
+  const labelValueChange = (e: string) => {
+    router.reload({ only: ['sublabels'], data: { labels: e } })
+  }
   return (
     <QBLayout
       user={auth.user}
@@ -90,11 +90,11 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
                 <div className="flex flex-col space-y-1.5 mb-5">
                   <Label htmlFor="question" className="text-xl font-bold">Enter your question</Label>
                   <Textarea
-                  id = "question"
-                  name="question"
-                  value={data.question}
-                  onChange={(e) => setData('question', e.target.value)}
-                  placeholder="Content of your question" />
+                    id="question"
+                    name="question"
+                    value={data.question}
+                    onChange={(e) => setData('question', e.target.value)}
+                    placeholder="Content of your question" />
                 </div>
               </div>
               {/* {
@@ -123,10 +123,10 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
                     htmlFor="ans1"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> A.
-                  <Checkbox checked = { checked === 1 } onClick={() => {
+                  <Checkbox checked={checked === 1} onClick={() => {
                     setChecked(1)
                     setData("correct", 1);
-                }}/>
+                  }} />
                   <Label
                     htmlFor="ans1"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -141,10 +141,10 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
                     htmlFor="ans2"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> B.
-                  <Checkbox checked = { checked === 2 } onClick={() => {
+                  <Checkbox checked={checked === 2} onClick={() => {
                     setChecked(2)
                     setData("correct", 2);
-                }}/>
+                  }} />
                   <Label
                     htmlFor="ans2"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -159,10 +159,10 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
                     htmlFor="ans3"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> C.
-                  <Checkbox checked = { checked === 3 } onClick={() => {
+                  <Checkbox checked={checked === 3} onClick={() => {
                     setChecked(3)
                     setData("correct", 3);
-                }}/>
+                  }} />
                   <Label
                     htmlFor="ans3"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -177,10 +177,10 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
                     htmlFor="ans4"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> D.
-                  <Checkbox checked = { checked === 4 } onClick={() => {
+                  <Checkbox checked={checked === 4} onClick={() => {
                     setChecked(4)
                     setData("correct", 4);
-                }}/>
+                  }} />
                   <Label
                     htmlFor="ans4"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -195,10 +195,10 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
                     htmlFor="ans5"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> E.
-                  <Checkbox checked = { checked === 5 } onClick={() => {
+                  <Checkbox checked={checked === 5} onClick={() => {
                     setChecked(5)
                     setData("correct", 5);
-                }}/>
+                  }} />
                   <Label
                     htmlFor="ans5"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -213,10 +213,10 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
                     htmlFor="ans6"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> F.
-                  <Checkbox checked = { checked === 6 } onClick={() => {
+                  <Checkbox checked={checked === 6} onClick={() => {
                     setChecked(6)
                     setData("correct", 6);
-                }}/>
+                  }} />
                   <Label
                     htmlFor="ans6"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -228,39 +228,37 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
               <div className="mt-5">
                 <div className="text-xl font-bold"><p>Label settings</p></div>
                 <Select onValueChange={(e) => labelValueChange(e)}>
-                <SelectTrigger className="w-[180px]" >
-                  <SelectValue placeholder="Labels" />
-                </SelectTrigger >
-                    <SelectContent>
-                        {labels && labels.map((label) => (
-                            <SelectItem key={label.id} value={label.id.toString()}>
-                            {label.name}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
+                  <SelectTrigger className="w-[180px] mb-2" >
+                    <SelectValue placeholder="Labels" />
+                  </SelectTrigger >
+                  <SelectContent>
+                    {labels && labels.map((label) => (
+                      <SelectItem key={label.id} value={label.id.toString()}>
+                        {label.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
                 </Select>
+                {sublabels && (
+                  <Select onValueChange={(e) => setData("label_id", e)}>
+                    <SelectTrigger className="w-[180px]" >
+                      <SelectValue placeholder="Sublabels" />
+                    </SelectTrigger >
+                    <SelectContent>
+                      {sublabels.map((sublabels) => (
+                        <SelectItem key={sublabels.id} value={sublabels.id.toString()}>
+                          {sublabels.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )
+                }
                 <br></br>
-                {
-                sublabels && (
-                    <Select onValueChange={(e) => setData("label_id",e)}>
-                        <SelectTrigger className="w-[180px]" >
-                        <SelectValue placeholder="Sublabels" />
-                        </SelectTrigger >
-                            <SelectContent>
-                                {sublabels.map((sublabels) => (
-                                    <SelectItem key={sublabels.id} value={sublabels.id.toString()}>
-                                    {sublabels.name}
-                                    </SelectItem>
-                                ))}
-                            </SelectContent>
-                    </Select>
-                  )
-              }
-              <br></br>
               </div>
               <Button type='submit'>
-                  Add question
-            </Button>
+                Add question
+              </Button>
             </form>
           </CardContent>
         </Card>

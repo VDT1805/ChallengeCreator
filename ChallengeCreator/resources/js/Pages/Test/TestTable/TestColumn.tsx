@@ -48,6 +48,15 @@ export const columns: ColumnDef<Question>[] = [
   //     >Author</div>)
   // },
   {
+    accessorKey: "correct",
+    header: () => (
+      <div
+        style={{
+          textAlign: "center"
+        }}
+      >Correct answer</div>)
+  },
+  {
     accessorKey: "created_at",
     header: () => (
       <div
@@ -56,15 +65,15 @@ export const columns: ColumnDef<Question>[] = [
         }}
       >Created At</div>)
   },
-  // {
-  //   accessorKey: "updated_at",
-  //   header: () => (
-  //     <div
-  //       style={{
-  //         textAlign: "center"
-  //       }}
-  //     >Updated At</div>)
-  // },
+  {
+    accessorKey: "updated_at",
+    header: () => (
+      <div
+        style={{
+          textAlign: "center"
+        }}
+      >Updated At</div>)
+  },
   {
     id: "actions",
     cell: ({ row }) => {

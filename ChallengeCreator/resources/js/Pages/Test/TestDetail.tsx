@@ -1,5 +1,5 @@
 import { Test, columns } from "./TestTable/TestColumn"
-import { DataTable } from "./TestTable/TestDetailTable"
+import { TestDetailTable } from "./TestTable/TestDetailTable"
 import { Head, Link } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import { Button } from "@/shadcn/ui/button";
@@ -203,7 +203,7 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                 </Select>
                                 <Select>
                                     <SelectTrigger className="w-[180px]">
-                                        <SelectValue placeholder="Categories" />
+                                        <SelectValue placeholder="Labels" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="all">All</SelectItem>
@@ -242,7 +242,7 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                     </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu> */}
-                    <DataTable columns={columns} data={questions} />
+                    <TestDetailTable columns={columns} data={questions} />
                 </div>
             </div>
         </QBLayout>

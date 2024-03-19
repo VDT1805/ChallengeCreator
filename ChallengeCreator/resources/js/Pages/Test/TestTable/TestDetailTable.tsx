@@ -40,14 +40,12 @@ import {
 } from "@/shadcn/ui/collapsible"
 import { FilePlusIcon, PlusIcon, ShuffleIcon, UpdateIcon } from "@radix-ui/react-icons"
 
-
-
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-export function DataTable<TData, TValue>({
+export function TestDetailTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {

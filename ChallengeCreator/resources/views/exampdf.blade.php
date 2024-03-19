@@ -1,4 +1,4 @@
-{{-- <!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8" />
@@ -115,10 +115,9 @@
 										src="ChallengeCreator\resources\js\Pages\logo.png"
 										style="width: 100%; max-width: 300px"
 									/>
-								</td> -->
-
+								</td>
 								<td>
-									<!-- Invoice #: 123<br /> -->
+									Invoice #: 123<br />
 									Exam Date: {{ date('d/m/Y') }}<br />
 									Time: XX Minutes<br />
 									Created date: {{$test->created_at}}<br />
@@ -145,7 +144,7 @@
                 @endforeach
         </div>
 	</body>
-</html> --}}
+</html> -->
 
 <!DOCTYPE html>
 <html>

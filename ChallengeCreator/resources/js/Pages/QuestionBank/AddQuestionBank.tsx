@@ -39,7 +39,7 @@ export default function AddQuestionBank({auth}: PageProps) {
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={submit}>
-                            <div className="grid w-full items-center gap-4">
+                            <div className="grid w-full items-center gap-2">
                                     <Label htmlFor="name" className="text-xl font-bold">Question bank name</Label>
                                     <Input id="name"
                                         type="name"
@@ -47,7 +47,7 @@ export default function AddQuestionBank({auth}: PageProps) {
                                         value={data.name}
                                         onChange={(e) => setData('name', e.target.value)}
                                         placeholder="Name of your question bank"
-                                        className="mb-2" />
+                                        className="mb-5" />
                             </div>
                             <Button type='submit'>
                                 {/* <Link href={route('testlist')}> */}
