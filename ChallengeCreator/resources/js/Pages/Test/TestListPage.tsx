@@ -1,5 +1,5 @@
 import { Test } from "./TestTable/TestColumn"
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import { Button } from "@/shadcn/ui/button";
 import { QB } from "../QuestionBank/QuestionBankType";
@@ -18,7 +18,7 @@ import {
 } from "@/shadcn/ui/card"
 import { Input } from "@/shadcn/ui/input";
 import { FileIcon, PlusIcon } from "@radix-ui/react-icons";
-import React from "react";
+import React, { useState } from "react";
 import {
     Select,
     SelectContent,
@@ -27,10 +27,19 @@ import {
     SelectValue,
 } from "@/shadcn/ui/select"
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/shadcn/ui/pagination";
+import { LabelType } from "../Label/LabelTable/LabelType";
 
-export default function TestListPage({ auth, QBank, tests }: PageProps<{ QBank: QB, tests: any }>) {
+export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{ QBank: QB, tests: any, labels: LabelType[] }>) {
     // console.log(JSON.stringify(tests));
     const [sortState, setSortState] = React.useState("Alphabetical")
+    const [query, setQuery] = useState<Record<string, string>>({});
+    const labelValueChange = (e: string) => {
+        setQuery(prevQuery => ({
+            ...prevQuery,
+            ["labels"]: e
+        }));
+        router.reload({ only: ['sublabels'], data: { labels: e } })
+    }
     return (
         <QBLayout
             user={auth.user}
@@ -60,17 +69,16 @@ export default function TestListPage({ auth, QBank, tests }: PageProps<{ QBank: 
                                     <SelectItem onClick={() => { setSortState("Last Updated") }} value="Last Updated">Last Updated</SelectItem>
                                 </SelectContent>
                             </Select>
-                            <Select>
-                                <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="Categories" />
-                                </SelectTrigger>
+                            <Select onValueChange={(e) => labelValueChange(e)}>
+                                <SelectTrigger className="w-[180px]" >
+                                    <SelectValue placeholder="Labels" />
+                                </SelectTrigger >
                                 <SelectContent>
-                                    <SelectItem value="all">All</SelectItem>
-                                    <SelectItem value="l01">L.0.1</SelectItem>
-                                    <SelectItem value="l02">L.0.2</SelectItem>
-                                    <SelectItem value="l03">L.0.3</SelectItem>
-                                    <SelectItem value="l04">L.0.4</SelectItem>
-                                    <SelectItem value="l05">L.0.5</SelectItem>
+                                    {labels.map((label) => (
+                                        <SelectItem key={label.id} value={label.id.toString()}>
+                                            {label.name}
+                                        </SelectItem>
+                                    ))}
                                 </SelectContent>
                             </Select>
                             <Button>
@@ -94,10 +102,11 @@ export default function TestListPage({ auth, QBank, tests }: PageProps<{ QBank: 
                                     <Link href={route('tests.show', [test.question_bank_id, test.id])}>
                                         <Button className='bg-bluegreen text-white font-bold rounded-t px-4 py-2'>
                                             Edit test
-                                        </Button>                                    </Link>
-                                    <Link href={route('tests.destroy')}>
+                                        </Button>
+                                    </Link>
+                                    <Link href={route('tests.destroy', [test.question_bank_id, test.id])}>
                                         <Button className='bg-red-500 text-white font-bold rounded-t px-4 py-2'>
-                                            Delete question
+                                            Delete test
                                         </Button>
                                     </Link>
                                 </div>

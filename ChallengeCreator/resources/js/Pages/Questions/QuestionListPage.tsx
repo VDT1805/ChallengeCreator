@@ -90,17 +90,19 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
             </div>
             <Separator className="mb-3 mt-2" />
             <div className="flex items-center gap-2">
-              {/* <Input
+              <Input
                 onChange={(e) => setQuery(prevQuery => ({
                   ...prevQuery,
                   ["keyword"]: e.target.value
                 }))}
                 placeholder="Search for a question..."
-                className="border-2 border-blue-500 border-solid" /> */}
-              <MathJaxContext>
+                className="border-2 border-blue-500 border-solid" />
+              {/* <MathJaxContext>
                 <h2>Basic MathJax example with Latex</h2>
-                <MathJax>{"\\(\\frac{10}{4x} \\approx 2^{12}\\)"}</MathJax>
-              </MathJaxContext>
+                <MathJax>
+                  {"\\(\\frac{10}{4x} \\approx 2^{12}\\)"}
+                </MathJax>
+              </MathJaxContext> */}
               <Select>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Sort by" />
@@ -176,9 +178,21 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                 <p className="flex gap-2 font-bold items-center text-green-500">Answer 4: {question.ans4} <CheckCircledIcon /> </p>
                 <p>Answer 5: {question.ans5}</p>
                 <p>Answer 6: {question.ans6}</p> */}
-                    {answers && answers.map((answer, index) => (
+                    {/* {answers && answers.map((answer, index) => (
                       answer && <p key={index}>Answer {index + 1}: {answer}</p>
-                    ))}
+                    ))} */}
+                    {
+                      answers && answers.map((ans, idx) => {
+                        var correct = question.correct;
+                        if (idx + 1 == correct) {
+                          return <p key={idx} className="flex gap-2 font-bold items-center text-green-500">Answer {idx + 1}: {ans}<CheckCircledIcon /> </p>
+                          // return <p key={correct} className="flex gap-2 font-bold items-center text-green-500">Answer {idx + 1}: {ans}<CheckCircledIcon /> </p>
+                        }
+                        else {
+                          return <p key={idx} className="flex gap-2">Answer {idx + 1}: {ans}</p>
+                        }
+                      })
+                    }
                     <Separator className="mb-2 mt-2" />
                     <div className="flex gap-4">
                       <Link href={route('questions.edit', [question.question_bank_id, question.id])} method="get">

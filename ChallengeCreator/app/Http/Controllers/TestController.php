@@ -31,13 +31,15 @@ class TestController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($qbID)
+    public function index($qbID, Request $request)
     {
         $QB = $this->qbService->findOrFail($qbID,"id");
         $tests = $this->tService->getAllPaginated(["questionbanks" => $qbID]);
+        $labels = $this->lService->getAll(["questionbanks" => $qbID]);
         return Inertia::render("Test/TestListPage", [
             "QBank" => $QB,
-            "tests" => $tests
+            "tests" => $tests,
+            "labels" => $labels,
         ]);
 
     }
