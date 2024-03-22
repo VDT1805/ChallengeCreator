@@ -90,15 +90,8 @@ class MemberService
      */
     public function create(array $data): ?Model
     {
-        $model = resolve(User::class);
-        $saved = $model->fill($data)->save();
-
-        if (!$saved) {
-            return null;
-        }
-        if (!is_array($model->getKey())) {
-            return $model->refresh();
-        }
+        $role = Role::where("name",$data["role"])->first();
+        $model  = Auth::user()->addRole($role,$data["qb"]);
 
         return $model;
     }
@@ -112,7 +105,7 @@ class MemberService
     public function insert(array $data): bool
     {
         $role = Role::where("name",$data["role"])->first();
-        $saved  = $data["user"]->addRole($role,$data["qb"]);
+        $saved  = Auth::user()->addRole($role,$data["qb"]);
         return $saved;
     }
 

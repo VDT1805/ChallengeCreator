@@ -6,6 +6,9 @@ use App\Http\Services\MemberService;
 use App\Http\Services\QuestionBankService;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
+use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 class MemberController extends Controller
 {
@@ -24,27 +27,71 @@ class MemberController extends Controller
         //
         $QB = $this->qbService->findOrFail($qbID,"id");
         $members = $this->mService->getAllPaginated($request->all() + ["questionbanks" => $qbID]);
+        $inviteURL = URL::temporarySignedRoute(
+            'members.store', now()->addMinutes(30)
+            ,["qbID" => $qbID,"role" => "editor"]
+            ,absolute:true
+        );
         // dd($members);
         return Inertia::render("Member/MemberIndex", [
             "QBank" => $QB,
-            "members" => $members
+            "members" => $members,
+            "inviteURL" => $inviteURL
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($qbID, Request $request)
     {
         //
+        // $QB = $this->qbService->findOrFail($qbID,"id");
+
+        // if (!$QB) {
+        //     abort(404);
+        // }
+        // $inviteURL = URL::temporarySignedRoute(
+        //     'members.store', now()->addMinutes($request["time"])
+        //     ,["qbID" => $qbID,"role" => $request["role"]]
+        //     ,absolute:true
+        // );
+        // return Inertia::render("Member/InviteMemberForm", [
+        //     "QBank" => $QB,
+        //     "inviteURL" => $inviteURL
+        // ]);
+        //
+        if (! $request->hasValidSignature()) {
+            abort(403);
+        }
+        $QB = $this->qbService->findOrFail($qbID,"id");
+        $res = $this->mService->create(["qb" => $QB, "role" => $request["role"]]);
+        if($res) {
+            return redirect()->route("questionbanks.show", ["qbID"=>$QB->id]);
+        }
+        else {
+            abort(404);
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store($qbID,Request $request)
     {
         //
+        // if (! $request->hasValidSignature()) {
+        //     abort(403);
+        // }
+        // $QB = $this->qbService->findOrFail($qbID,"id");
+        // $res = $this->mService->insert(["qb" => $QB, "role" => $request["role"]]);
+        // if($res) {
+        //     return redirect()->route("questionbanks.show", ["qbID"=>$QB->id]);
+        // }
+        // else {
+        //     abort(403);
+        // }
+
     }
 
     /**

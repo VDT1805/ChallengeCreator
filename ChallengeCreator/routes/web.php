@@ -199,11 +199,11 @@ Route::delete('/qbs/{qbID}/labels/{label}/edit', [LabelController::class,'destro
 Route::get('/qbs/{qbID}/members',[MemberController::class,'index'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('members.index');
 
-Route::get('/qbs/{qbID}/members/create/', [MemberController::class,'create'])
-->middleware(['auth', 'verified'])->name('members.create');
+Route::get('/qbs/{qbID}/members/invite', [MemberController::class,'create'])
+->middleware(['auth', 'verified','throttle:60,1'])->name('members.create');
 
-Route::post('/qbs/{qbID}/members/create', [MemberController::class,'store'])
-->middleware(['auth', 'verified'])->name('members.store');
+Route::post('/qbs/{qbID}/members/invite', [MemberController::class,'store'])
+->middleware(['auth', 'verified', 'signed','throttle:60,1'])->name('members.store');
 
 Route::get('/qbs/{qbID}/members/{member}', [MemberController::class,'show'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('members.show');
@@ -217,8 +217,5 @@ Route::put('/qbs/{qbID}/members/{member}/edit', [MemberController::class,'update
 Route::delete('/qbs/{qbID}/members/{member}/edit', [MemberController::class,'destroy'])
 ->middleware(['auth', 'verified','dynamicrole:owner'])->name('members.destroy');
 
-// Route::get('/addmember', function () {
-//     return Inertia::render('Member/AddMember');
-// })->middleware(['auth', 'verified'])->name('addmember');
 
 require __DIR__.'/auth.php';

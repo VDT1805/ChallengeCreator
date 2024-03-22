@@ -14,8 +14,9 @@ import { MemberPage } from "./MemberType";
 
 
 
-export default function MemberIndex({ auth, QBank, members }: PageProps<{ QBank: QB, members: MemberPage }>) {
-    // console.log(JSON.stringify(members));
+export default function MemberIndex({ auth, QBank, members, inviteURL }: PageProps<{ QBank: QB, members: MemberPage, inviteURL: any }>) {
+    console.log(inviteURL);
+    console.log(JSON.stringify(members));
     return (
         <QBLayout
             user={auth.user}
