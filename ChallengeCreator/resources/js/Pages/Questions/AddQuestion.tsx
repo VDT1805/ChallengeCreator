@@ -38,11 +38,24 @@ import { QB } from '../QuestionBank/QuestionBankType';
 import QBLayout from '@/Layouts/QBLayout';
 import { LabelType } from '../Label/LabelTable/LabelType';
 
+// type QRows = {
+//     question: string,
+//     ans1: string,
+//     ans2: string,
+//     ans3: string,
+//     ans4: string,
+//     ans5: string,
+//     ans6: string,
+//     correct: number,
+//     label_id: string,
+//     testid : null | string
+//   };
 
 export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProps<{ QBank: QB, labels: LabelType[], sublabels: LabelType[] }>) {
   const [position, setPosition] = React.useState("bottom")
   const [checked, setChecked] = React.useState(1);
-  let params = new URLSearchParams(window.location.search)
+  const params = new URLSearchParams(window.location.search)
+  console.log(params.get("testid"))
   const { data, setData, setDefaults, post, processing, errors, reset, transform } = useForm({
     question: "",
     ans1: "",
@@ -58,10 +71,10 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
   const submit: FormEventHandler = (e) => {
     e.preventDefault();
     if (params.has("testid")) {
-      transform((data) => ({
-        ...data,
-        testid: params.get("testid"),
-      }))
+        transform((data) => ({
+            ...data,
+            testid: params.get("testid")
+          }))
     }
 
     post(route('questions.store', QBank.id));

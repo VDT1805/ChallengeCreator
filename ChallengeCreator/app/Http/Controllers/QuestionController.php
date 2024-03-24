@@ -64,12 +64,13 @@ class QuestionController extends Controller
     {
         //Test ID can be here!!!
         // dd($request);
-        $testid = isset($request["testid"]);
+        $testid = $request["testid"];
         unset($request["testid"]);
         $inserted = $this->qService->create($request->all()+["question_bank_id" => $qbID]);
         if ($testid)
         {
-            $test = $this->tService->findOrFail(["id" => $request["testid"]]);
+            $test = $this->tService->find(["questionbanks" => $qbID,"id" => (string) $testid])->first();
+            // dd($test);
             if (!$test) {
                 abort(404);
             }

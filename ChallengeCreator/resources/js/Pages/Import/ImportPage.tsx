@@ -127,7 +127,7 @@
 import { columns } from "./ImportInstructionTable/ImportInstructionColumn"
 import { DataTable } from './ImportInstructionTable/ImportInstructionTable';
 import { data as data1 } from './ImportInstructionTable/ImportInstructionData';
-import React, { FormEventHandler, useState, useCallback } from 'react'
+import React, { FormEventHandler, useState, useCallback, useEffect } from 'react'
 import { filterProps, motion, progress } from 'framer-motion'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -194,6 +194,10 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
     const [currentStep, setCurrentStep] = useState(0);
     // const formData = new FormData();
     const [formData, setFormData] = useState(new FormData());
+    const { data, setData, setDefaults, post, processing, transform } = uF({
+        questions: [],
+      });
+
     const [loading, setLoading] = useState(false);
     const delta = currentStep - previousStep;
     const {
@@ -244,6 +248,13 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
     //         'text/csv': []
     //     }
     // });
+    // useEffect(() => {
+    // // Code to run once
+    // console.log("effe")
+    // setData("questions", rows)
+    // console.log(rows)
+    // }, []);
+
 
     const processForm: SubmitHandler<Inputs> = data => {
         // console.log(data)
@@ -279,8 +290,23 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                     onProgress: () => { },
                     onSuccess: () => {
                         setLoading(false);
+                    },
+                    onFinish: () => {
+                        console.log("effe")
+                        setData("questions", rows)
+                        console.log(data)
                     }
                 });
+                // console.log(3)
+                // console.log(rows)
+
+
+                // console.log(rows)
+                // console.log(violators)
+            }
+            if (currentStep === steps.length - 2) {
+                setData("questions", rows)
+                console.log(data)
 
                 // console.log(rows)
                 // console.log(violators)

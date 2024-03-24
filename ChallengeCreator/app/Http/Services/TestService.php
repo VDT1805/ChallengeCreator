@@ -69,6 +69,8 @@ class TestService implements BaseCrudServiceInterface
         $search = [
             $column => $key
         ];
+        dd($search);
+        dd(Test::filter($search)->toSql());
         return Test::filter($search)->first();
     }
 
@@ -80,6 +82,8 @@ class TestService implements BaseCrudServiceInterface
      */
     public function find(array $attributes): Collection
     {
+        // dd($attributes,Test::filter($attributes)->count());
+        // dd(Test::filter($attributes)->toSql());
         return Test::filter($attributes)->get();
     }
 

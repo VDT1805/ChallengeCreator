@@ -17,8 +17,8 @@ class TestFilter extends ModelFilter
     {
         return $this->where('question_bank_id','=', $id);
     }
-    public function id($id)
+    public function id(string $id)
     {
-        return $this->where('id','=', $id);
+        return $this->where([['id','=', $id]]);
     }
 }
