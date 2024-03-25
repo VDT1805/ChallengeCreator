@@ -23,13 +23,22 @@ class LabelFilter extends ModelFilter
     }
 
 
-    public function all($qbid) {
-        return $this->select('labels.name', 'child.name')
-        ->join('labels as child', function ($join) use ($qbid) {
-            $join->on('labels.id', '=', 'child.label_id');
+    // public function all($qbid) {
+    //     return $this->select('labels.*', 'child.*')
+    //     ->join('labels as child', function ($join) use ($qbid) {
+    //         $join->on('labels.id', '=', 'child.label_id');
 
-        })
-        ->where('labels.question_bank_id', $qbid)
+    //     })
+    //     ->where('labels.question_bank_id', $qbid)
+    //     ->get();
+    // }
+
+    public function all($qbid) {
+        return $this->where("question_bank_id", '=', $qbid)->whereNull("label_id")
+        ->withCount("questions")
+        ->with(['sublabels' => function($query){
+            $query->withCount('questions');
+        }])
         ->get();
     }
 

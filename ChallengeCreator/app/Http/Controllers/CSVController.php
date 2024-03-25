@@ -68,7 +68,7 @@ class CSVController extends Controller
             ];
             $filtered = [];
             $violators = [];
-            $rows = SimpleExcelReader::create(storage_path('app/') . $path, 'csv')->getRows()->
+            SimpleExcelReader::create(storage_path('app/') . $path, 'csv')->getRows()->
             each(function($row) use ($rules, &$filtered, &$violators) {
                 $validator = Validator::make($row, $rules);
                 if ($validator->passes()) {
@@ -77,6 +77,8 @@ class CSVController extends Controller
                     $violators[] = $row;
                 }
             });
+
+            $this->qService->createMany($filtered);
 
             return Inertia::render(
                 "Import/ImportPage",[

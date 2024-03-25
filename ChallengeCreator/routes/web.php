@@ -42,30 +42,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/testlist', function () {
-    return Inertia::render('Test/TestList');
-})->middleware(['auth', 'verified'])->name('testlist');
-
-Route::get('/testdetail', function () {
-    return Inertia::render('Test/TestDetail');
-})->middleware(['auth', 'verified'])->name('testdetail');
-
-Route::get('/label', function () {
-    return Inertia::render('Label/LabelIndex');
-})->middleware(['auth', 'verified'])->name('label');
-
-Route::get('/member', function () {
-    return Inertia::render('Member/Member');
-})->middleware(['auth', 'verified'])->name('member');
-
-Route::get('/import', function () {
-    return Inertia::render('Import/Import');
-})->middleware(['auth', 'verified'])->name('import');
-
-Route::get('/importinstruction', function () {
-    return Inertia::render('Import/ImportInstruction');
-})->middleware(['auth', 'verified'])->name('importinstruction');
-
 // Route::get('/reusequestion', function () {
 //     return Inertia::render('QuestionBank/ReuseQuestion');
 // })->middleware(['auth', 'verified'])->name('reusequestion');
@@ -135,6 +111,12 @@ Route::get('/qbs/{qbID}/tests/create/', [TestController::class,'create'])
 
 Route::post('/qbs/{qbID}/tests/create', [TestController::class,'store'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('tests.store');
+
+Route::get('/qbs/{qbID}/tests/randcreate', [TestController::class,'randomCreate'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('tests.randcreate');
+
+Route::post('/qbs/{qbID}/tests/randcreate', [TestController::class,'randomStore'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('tests.randstore');
 
 Route::get('/qbs/{qbID}/tests/{testID}', [TestController::class,'show'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('tests.show');

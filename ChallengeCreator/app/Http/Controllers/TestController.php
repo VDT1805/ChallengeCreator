@@ -205,5 +205,28 @@ class TestController extends Controller
         return $pdf->stream();
     }
 
+    public function randomCreate($qbID)
+    {
+        //
+        // dd($request);
+        $QB = $this->qbService->findOrFail($qbID,"id");
+        $labels = $this->lService->getAll(["all" => $qbID]);
+        return Inertia::render("Test/RandomTestCreate",["QBank" => $QB, "labels" => $labels]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function randomStore($qbID,Request $request)
+    {
+        //
+
+        $inserted = $this->tService->create($request->all()+["question_bank_id" => $qbID]);
+        if ($inserted) {
+            $questions = $this->qService->getAll(["randSublabels" => [$request["sublabels"],$request["count"]]]);
+            return redirect()->route("tests.index", ["qbID" => $qbID]);
+        }
+    }
+
 
 }

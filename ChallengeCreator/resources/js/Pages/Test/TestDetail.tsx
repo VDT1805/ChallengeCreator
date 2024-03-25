@@ -179,11 +179,12 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                         </DropdownMenuItem>
                                         <DropdownMenuItem>
                                             <ShuffleIcon className="mr-2" />
-                                            Add random question</DropdownMenuItem>
-                                        <DropdownMenuItem>
+                                            <Link href={route('tests.randcreate', [QBank.id])}>Add random question</Link>
+                                        </DropdownMenuItem>
+                                        {/* <DropdownMenuItem>
                                             <FilePlusIcon className="mr-2" />
                                             <Link href={route('importinstruction')}>Import file</Link>
-                                        </DropdownMenuItem>
+                                        </DropdownMenuItem> */}
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </div>

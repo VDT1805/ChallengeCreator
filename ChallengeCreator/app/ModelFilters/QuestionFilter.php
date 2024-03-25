@@ -55,6 +55,14 @@ class QuestionFilter extends ModelFilter
         return $this->where("questions.label_id", '=', $id);
     }
 
+    public function randSublabels($id, $limit = null) {
+        $query = $this->where("questions.label_id", '=', $id)->inRandomOrder();
+        if ($limit) {
+            $query->limit($limit);
+        }
+        return $query;
+    }
+
     public function keyword($keyword) {
         return $this->where("question", 'LIKE', '%'.$keyword.'%');
     }

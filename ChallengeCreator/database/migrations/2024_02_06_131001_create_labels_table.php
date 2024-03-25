@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('description');
             $table->foreignId('question_bank_id')->constrained('question_banks')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignIdFor(Label::class)->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->unique(['name','question_bank_id']);
 
         });
 
