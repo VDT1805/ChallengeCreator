@@ -211,7 +211,7 @@ class TestController extends Controller
         // dd($request);
         $QB = $this->qbService->findOrFail($qbID,"id");
         $labels = $this->lService->getAll(["all" => $qbID]);
-        return Inertia::render("Test/RandomTestCreate",["QBank" => $QB, "labels" => $labels]);
+        return Inertia::render("Test/AddRandomTest",["QBank" => $QB, "labels" => $labels]);
     }
 
     /**

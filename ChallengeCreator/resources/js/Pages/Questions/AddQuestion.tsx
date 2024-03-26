@@ -29,9 +29,6 @@ import { Checkbox } from '@/shadcn/ui/checkbox';
 //   DialogTitle,
 //   DialogTrigger,
 // } from "@/shadcn/ui/dialog"
-
-
-
 import React, { FormEventHandler } from 'react';
 import { Menu } from '../Menu';
 import { QB } from '../QuestionBank/QuestionBankType';
@@ -55,7 +52,7 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
   const [position, setPosition] = React.useState("bottom")
   const [checked, setChecked] = React.useState(1);
   const params = new URLSearchParams(window.location.search)
-  console.log(params.get("testid"))
+  // console.log(params.get("testid"))
   const { data, setData, setDefaults, post, processing, errors, reset, transform } = useForm({
     question: "",
     ans1: "",

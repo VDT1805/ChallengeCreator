@@ -26,8 +26,8 @@ import { Menu } from '../Menu';
 import { QB } from '../QuestionBank/QuestionBankType';
 import QBLayout from '@/Layouts/QBLayout';
 
-export default function RandomTestCreate({ auth, QBank, labels }: PageProps<{ QBank: QB, labels: any }>) {
-    console.log(labels);
+export default function AddRandomTest({ auth, QBank, labels }: PageProps<{ QBank: QB, labels: any }>) {
+    // console.log(labels);
   const [position, setPosition] = React.useState("bottom")
   const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
@@ -42,18 +42,18 @@ export default function RandomTestCreate({ auth, QBank, labels }: PageProps<{ QB
   return (
     <QBLayout
       user={auth.user}
-      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">New Test</h2>} QBank={QBank} CanEdit={true}>
+      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Add Random Questions</h2>} QBank={QBank} CanEdit={true}>
       <Head title="New Test" />
       <div className="mt-10 mb-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
       <Card>
           <CardHeader>
-            <CardTitle className="text-3xl font-bold">Add Test</CardTitle>
+            <CardTitle className="text-3xl font-bold">Add random questions</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={submit}>
               <div className="grid w-full items-center gap-4">
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="name" className="text-xl font-bold">Test name</Label>
+                  <Label htmlFor="name" className="text-xl font-bold">Test </Label>
                   <Input id="name"
                   value={data.name}
                   onChange={(e) => setData('name', e.target.value)}

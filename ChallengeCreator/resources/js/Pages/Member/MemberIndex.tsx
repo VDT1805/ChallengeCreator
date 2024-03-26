@@ -28,8 +28,8 @@ import { Copy } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shadcn/ui/select";
 
 export default function MemberIndex({ auth, QBank, members, inviteURL }: PageProps<{ QBank: QB, members: MemberPage, inviteURL: any }>) {
-    console.log(inviteURL);
-    console.log(JSON.stringify(members));
+    // console.log(inviteURL);
+    // console.log(JSON.stringify(members));
     return (
         <QBLayout
             user={auth.user}
