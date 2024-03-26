@@ -1,6 +1,6 @@
 export interface MemberPage {
     current_page: number
-    data: Member[]
+    data: MemberType[]
     first_page_url: string
     from: number
     last_page: number
@@ -14,7 +14,7 @@ export interface MemberPage {
     total: number
   }
 
-  export interface Member {
+  export interface MemberType {
     id: number
     name: string
     email: string
@@ -23,7 +23,7 @@ export interface MemberPage {
     updated_at?: string
     role_name: string
   }
-
+  
   export interface Link {
     url?: string
     label: string

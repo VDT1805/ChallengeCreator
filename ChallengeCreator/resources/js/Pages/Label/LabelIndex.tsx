@@ -1,17 +1,12 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import { PageProps } from '@/types';
-import { Menubar } from '@radix-ui/react-menubar';
 import { Button } from "@/shadcn/ui/button";
-import { Menu } from "../Menu";
 import { QB } from "../QuestionBank/QuestionBankType"
 import QBLayout from "@/Layouts/QBLayout"
 import { Card, CardContent, CardHeader, CardTitle } from '@/shadcn/ui/card';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shadcn/ui/dropdown-menu';
 import { FileIcon, FilePlusIcon, PlusIcon } from '@radix-ui/react-icons';
 import { Separator } from '@/shadcn/ui/separator';
 import { Input } from '@/shadcn/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shadcn/ui/select';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/shadcn/ui/accordion';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/shadcn/ui/pagination';
 import { LabelPage, LabelType } from './LabelTable/LabelType';
