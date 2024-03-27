@@ -91,7 +91,9 @@ class MemberService
     public function create(array $data): ?Model
     {
         $role = Role::where("name",$data["role"])->first();
-        $model  = Auth::user()->addRole($role,$data["qb"]);
+        // $model  = Auth::user()->addRole($role,$data["qb"]);
+        $model = Auth::user()->hasRole(['owner', 'editor', 'viewer'], 'my-awesome-team', true);
+        dd($model);
 
         return $model;
     }

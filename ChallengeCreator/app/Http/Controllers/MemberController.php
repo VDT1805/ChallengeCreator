@@ -27,16 +27,22 @@ class MemberController extends Controller
         //
         $QB = $this->qbService->findOrFail($qbID,"id");
         $members = $this->mService->getAllPaginated($request->all() + ["questionbanks" => $qbID]);
-        $inviteURL = URL::temporarySignedRoute(
+        $editorURL = URL::temporarySignedRoute(
             'members.store', now()->addMinutes(30)
             ,["qbID" => $qbID,"role" => "editor"]
+            ,absolute:true
+        );
+        $viewerURL = URL::temporarySignedRoute(
+            'members.store', now()->addMinutes(30)
+            ,["qbID" => $qbID,"role" => "viewer"]
             ,absolute:true
         );
         // dd($members);
         return Inertia::render("Member/MemberIndex", [
             "QBank" => $QB,
             "members" => $members,
-            "inviteURL" => $inviteURL
+            "editorURL" => $editorURL,
+            "viewerURL" => $viewerURL
         ]);
     }
 

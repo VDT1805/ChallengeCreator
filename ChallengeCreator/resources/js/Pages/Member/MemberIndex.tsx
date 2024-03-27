@@ -27,9 +27,10 @@ import { Label } from "@/shadcn/ui/label";
 import { Copy } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shadcn/ui/select";
 
-export default function MemberIndex({ auth, QBank, members, inviteURL }: PageProps<{ QBank: QB, members: MemberPage, inviteURL: any }>) {
+export default function MemberIndex({ auth, QBank, members, editorURL, viewerURL }: PageProps<{ QBank: QB, members: MemberPage, editorURL: string, viewerURL: string }>) {
     // console.log(inviteURL);
     // console.log(JSON.stringify(members));
+    console.log(viewerURL)
     return (
         <QBLayout
             user={auth.user}
@@ -62,9 +63,9 @@ export default function MemberIndex({ auth, QBank, members, inviteURL }: PagePro
                                             <Label htmlFor="link" className="sr-only">
                                                 Link
                                             </Label>
-                                            <Input defaultValue={inviteURL} readOnly />
+                                            <Input defaultValue={editorURL} readOnly />
                                         </div>
-                                        <Button type="submit" size="sm" className="px-3" onClick={() => { navigator.clipboard.writeText(inviteURL); alert("Link has been copied to clipboard!") }}>
+                                        <Button type="submit" size="sm" className="px-3" onClick={() => { navigator.clipboard.writeText(editorURL); alert("Link has been copied to clipboard!") }}>
                                             <span className="sr-only">Copy</span>
                                             <Copy className="h-4 w-4" />
                                         </Button>
