@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Models\QuestionBank;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -91,9 +92,14 @@ class MemberService
     public function create(array $data): ?Model
     {
         $role = Role::where("name",$data["role"])->first();
-        // $model  = Auth::user()->addRole($role,$data["qb"]);
-        $model = Auth::user()->hasRole(['owner', 'editor', 'viewer'], 'my-awesome-team', true);
-        dd($model);
+        // $team = QuestionBank::where("id",$data["qb"])->get();
+        $existed  = Auth::user()->hasRole(["owner","editor","viewer"],$data["qb"]);
+        if($existed) {
+            throw new Exception("existing user");
+        }
+        else {
+            Auth::user()->addRole($role,$data["qb"]);
+        }
 
         return $model;
     }

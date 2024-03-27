@@ -70,14 +70,21 @@ class MemberController extends Controller
         if (! $request->hasValidSignature()) {
             abort(403);
         }
-        $QB = $this->qbService->findOrFail($qbID,"id");
-        $res = $this->mService->create(["qb" => $QB, "role" => $request["role"]]);
-        if($res) {
-            return redirect()->route("questionbanks.show", ["qbID"=>$QB->id]);
+        try {
+            $QB = $this->qbService->findOrFail($qbID,"id");
+            $res = $this->mService->create(["qb" => $QB, "role" => $request["role"]]);
+            if($res) {
+                return redirect()->route("questionbanks.show", ["qbID"=>$QB->id]);
+            }
+            else {
+                abort(404);
+            }
+
         }
-        else {
-            abort(404);
+        catch (\Throwable $e) {
+            abort(400, $e->getMessage());
         }
+
     }
 
     /**
