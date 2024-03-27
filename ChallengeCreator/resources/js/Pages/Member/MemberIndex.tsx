@@ -1,7 +1,4 @@
-import { columns } from "./MemberTable/MemberColumn"
-import { DataTable } from "./MemberTable/MemberTable"
-import { data } from "./MemberTable/MemberData"
-import { Head, Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import { QB } from "../QuestionBank/QuestionBankType";
 import QBLayout from "@/Layouts/QBLayout";
@@ -15,15 +12,12 @@ import { Separator } from '@/shadcn/ui/separator';
 import { Input } from "@/shadcn/ui/input";
 import {
     Dialog,
-    DialogClose,
     DialogContent,
     DialogDescription,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "@/shadcn/ui/dialog"
-import { Label } from "@/shadcn/ui/label";
 import { Copy } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shadcn/ui/select";
 
@@ -42,7 +36,7 @@ export default function MemberIndex({ auth, QBank, members, editorURL, viewerURL
                         <CardTitle className="text-3xl font-bold">All members</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="flex justify-end">
+                    <div className="flex justify-end">
                             {/* <Button onClick={() => { navigator.clipboard.writeText(inviteURL); alert("Link has been copied to clipboard") }}>
                                 <PlusIcon className="mr-2" />
                                 Share
@@ -51,36 +45,55 @@ export default function MemberIndex({ auth, QBank, members, editorURL, viewerURL
                                 <DialogTrigger asChild>
                                     <Button> <Share1Icon className="mr-2" /> Share </Button>
                                 </DialogTrigger>
-                                <DialogContent className="sm:max-w-md">
-                                    <DialogHeader>
-                                        <DialogTitle>Share link</DialogTitle>
+                                <DialogContent>
+                                    <DialogHeader className="mt-3">
                                         <DialogDescription>
-                                            Anyone who has this link will be able to view this.
+                                            <b className="text-bluegreen">Anyone with this link will be able to view this Question Bank:</b>
                                         </DialogDescription>
                                     </DialogHeader>
-                                    <div className="flex items-center space-x-2">
-                                        <div className="grid flex-1 gap-2">
-                                            <Label htmlFor="link" className="sr-only">
+                                    <div className="flex items-center justify-center space-x-2 -my-2">
+                                        {/*<div className="grid flex-1 gap-2">
+                                             <Label htmlFor="link" className="sr-only">
                                                 Link
-                                            </Label>
-                                            <Input defaultValue={editorURL} readOnly />
-                                        </div>
+                                            </Label> */}
+                                        <Input className="focus:border-bluegreen border-2" defaultValue={viewerURL} readOnly />
+                                        {/*</div>*/}
+                                        <Button type="submit" size="sm" className="px-3" onClick={() => { navigator.clipboard.writeText(viewerURL); alert("Link has been copied to clipboard!") }}>
+                                            <span className="sr-only">Copy</span>
+                                            <Copy className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                    <DialogHeader>
+                                        <DialogTitle>Share Question Bank</DialogTitle>
+                                        <DialogDescription>
+                                            <b className="text-indianred">Anyone with this link will be able to edit this Question Bank:</b>
+                                        </DialogDescription>
+                                    </DialogHeader>
+                                    <div className="flex items-center space-x-2 -my-2">
+                                        {/*<div className="grid flex-1 gap-2">
+                                             <Label htmlFor="link" className="sr-only">
+                                                Link
+                                            </Label> */}
+                                        <Input className="focus:border-indianred border-2" defaultValue={editorURL} readOnly />
+                                        {/* </div> */}
                                         <Button type="submit" size="sm" className="px-3" onClick={() => { navigator.clipboard.writeText(editorURL); alert("Link has been copied to clipboard!") }}>
                                             <span className="sr-only">Copy</span>
                                             <Copy className="h-4 w-4" />
                                         </Button>
                                     </div>
-                                    <DialogFooter className="sm:justify-start">
+                                    {/* <DialogFooter className="sm:justify-start">
                                         <DialogClose asChild>
                                             <Button>
                                                 Close
                                             </Button>
                                         </DialogClose>
-                                    </DialogFooter>
+                                    </DialogFooter> */}
                                 </DialogContent>
                             </Dialog>
                         </div>
+
                         <Separator className="mb-3 mt-2" />
+
                         <div className="flex items-center gap-2">
                             <Input
                                 placeholder="Search for a member..."
