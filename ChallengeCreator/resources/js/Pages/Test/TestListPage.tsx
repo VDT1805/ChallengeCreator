@@ -15,6 +15,7 @@ import {
     Card,
     CardContent,
     CardHeader,
+    CardTitle,
 } from "@/shadcn/ui/card"
 import { Input } from "@/shadcn/ui/input";
 import { FileIcon, PlusIcon } from "@radix-ui/react-icons";
@@ -47,6 +48,9 @@ export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{
             <Head title="Tests" />
             <div className="py-12 container mx-auto">
                 <Card className="mb-5 md:col-start-10 col-span-1 pt-5">
+                    {/* <CardHeader>
+                        <CardTitle className="text-3xl font-bold">All tests</CardTitle>
+                    </CardHeader> */}
                     <CardContent>
                         <div className="flex justify-end">
                             <Link href={route('tests.create', QBank.id)} >

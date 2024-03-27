@@ -43,7 +43,7 @@ export default function AddRandomTest({ auth, QBank, labels }: PageProps<{ QBank
     <QBLayout
       user={auth.user}
       header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Add Random Questions</h2>} QBank={QBank} CanEdit={true}>
-      <Head title="New Test" />
+      <Head title="Add Random Questions" />
       <div className="mt-10 mb-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
       <Card>
           <CardHeader>
@@ -53,7 +53,7 @@ export default function AddRandomTest({ auth, QBank, labels }: PageProps<{ QBank
             <form onSubmit={submit}>
               <div className="grid w-full items-center gap-4">
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="name" className="text-xl font-bold">Test </Label>
+                  <Label htmlFor="name" className="text-xl font-bold">Generic Parent &gt; Parent</Label>
                   <Input id="name"
                   value={data.name}
                   onChange={(e) => setData('name', e.target.value)}

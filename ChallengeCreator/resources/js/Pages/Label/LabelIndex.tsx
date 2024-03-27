@@ -18,10 +18,10 @@ export default function LabelIndex({ auth, QBank, labels }: PageProps<{ QBank: Q
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">All Labels/Sublabels</h2>} QBank={QBank} CanEdit={true}>
             <Head title="Labels/Sublabels" />
             <div className="py-12 container mx-auto">
-                <Card className="mb-5 md:col-start-10 col-span-1 pt-2 shadow-2xl">
-                    <CardHeader>
+                <Card className="mb-5 md:col-start-10 col-span-1 pt-5 shadow-2xl">
+                    {/* <CardHeader>
                         <CardTitle className="text-3xl font-bold">All labels</CardTitle>
-                    </CardHeader>
+                    </CardHeader> */}
                     <CardContent>
                         <div className="flex justify-end">
                             <Link href={route('labels.create', [QBank.id])}>

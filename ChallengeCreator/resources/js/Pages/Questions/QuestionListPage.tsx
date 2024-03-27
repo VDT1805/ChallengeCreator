@@ -21,6 +21,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  CardTitle,
 } from "@/shadcn/ui/card"
 import { Separator } from "@/shadcn/ui/separator";
 import {
@@ -65,7 +66,10 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
       header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">All Questions</h2>} QBank={QBank} CanEdit={true}>
       <Head title="Questions" />
       <div className="py-12 container mx-auto">
-        <Card className="mb-5 md:col-start-10 col-span-1 pt-2">
+        <Card className="mb-5 md:col-start-10 col-span-1 pt-5">
+          {/* <CardHeader>
+            <CardTitle className="text-3xl font-bold">All questions</CardTitle>
+          </CardHeader> */}
           <CardContent>
             <div className="flex justify-end">
               <DropdownMenu>
