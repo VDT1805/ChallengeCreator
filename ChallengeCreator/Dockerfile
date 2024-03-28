@@ -48,7 +48,9 @@ RUN apt-get update -y && apt-get install -y \
     libjpeg-dev \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
-    libpng-dev
+    libpng-dev \
+    libzip-dev \
+         && docker-php-ext-install zip
 
 # PHP Extension
 RUN docker-php-ext-install gettext intl pdo_mysql gd
