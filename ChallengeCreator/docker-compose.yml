@@ -1,0 +1,65 @@
+
+networks:
+    webapp:
+        driver: bridge
+
+
+services:
+    nginx:
+        image: nginx:stable-alpine
+        container_name: ${APP_NAME}_nginx
+        ports:
+            - "8000:80"
+        links:
+            - php
+        volumes:
+            - ./:/var/www/html
+            - ./docker/nginx/site.conf:/etc/nginx/conf.d/default.conf:rw
+            - ./docker/logs/nginx:/var/logs/nginx:rw
+        depends_on:
+            - php
+            - db
+        networks:
+            - webapp
+
+    php:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: ${APP_NAME}_php
+        volumes:
+            - ./:/var/www/html
+        ports:
+            - "9001:9000"
+        networks:
+            - webapp
+
+    db:
+        image: mysql:latest
+        restart: unless-stopped
+        container_name: mysql_db
+        ports:
+            - '3306:3306'
+        volumes:
+            - ./docker/mysql/data:/var/lib/mysql
+        environment:
+            MYSQL_USER: test
+            MYSQL_DATABASE: ${DB_USERNAME}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        networks:
+            - webapp
+
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:5
+        container_name: ${APP_NAME}_phpmyadmin
+        ports:
+            - 8888:80
+        depends_on:
+            - db
+        networks:
+            - webapp
+
+
+
+
