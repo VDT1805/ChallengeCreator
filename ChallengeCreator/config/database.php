@@ -46,7 +46,7 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('DB_HOST', 'mysql_db'),
             'port' => env('DB_PORT', '3307'),
             'database' => env('DB_DATABASE', 'ChallengeCreator'),
             'username' => env('DB_USERNAME', 'root'),
