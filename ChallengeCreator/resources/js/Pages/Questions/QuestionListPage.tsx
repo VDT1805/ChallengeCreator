@@ -167,9 +167,11 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                 question.ans6
               ];
               return (
+                <MathJaxContext>
                 <AccordionItem value={question.id as unknown as string}>
                   <AccordionTrigger className="hover:bg-blue-100 bg-white px-3">
-                    <div className="flex gap-2 items-center"><FileIcon />{question.question as string}
+                    <div className="flex gap-2 items-center">
+                      <FileIcon /><MathJax>{question.question as string}</MathJax>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="bg-white px-3">
@@ -189,11 +191,11 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                       answers && answers.map((ans, idx) => {
                         var correct = question.correct;
                         if (idx + 1 == correct) {
-                          return <p key={idx} className="flex gap-2 font-bold items-center text-green-500">Answer {idx + 1}: {ans}<CheckCircledIcon /> </p>
+                          return <MathJax><p key={idx} className="flex gap-2 font-bold items-center text-green-500">Answer {idx + 1}: {ans}<CheckCircledIcon /> </p></MathJax>
                           // return <p key={correct} className="flex gap-2 font-bold items-center text-green-500">Answer {idx + 1}: {ans}<CheckCircledIcon /> </p>
                         }
                         else {
-                          return <p key={idx} className="flex gap-2">Answer {idx + 1}: {ans}</p>
+                          return <MathJax><p key={idx} className="flex gap-2">Answer {idx + 1}: {ans}</p></MathJax>
                         }
                       })
                     }
@@ -212,6 +214,7 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                     </div>
                   </AccordionContent>
                 </AccordionItem>
+                </MathJaxContext>
               );
             }
             )}

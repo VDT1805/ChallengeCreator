@@ -22,6 +22,7 @@ import { QB } from '../QuestionBank/QuestionBankType';
 import QBLayout from '@/Layouts/QBLayout';
 import { LabelType } from '../Label/LabelTable/LabelType';
 import { Question } from './QuestionType';
+import { MathJax, MathJaxContext } from 'better-react-mathjax';
 
 export default function QuestionForm({ auth, QBank, labels, sublabels, currLabel, currSublabel, question }: PageProps<{ QBank: QB, labels: LabelType[], sublabels: LabelType[], currLabel: LabelType, currSublabel: LabelType, question: Question }>) {
   console.log(question.correct);
@@ -61,6 +62,22 @@ export default function QuestionForm({ auth, QBank, labels, sublabels, currLabel
   const labelValueChange = (e: string) => {
     router.reload({ only: ['sublabels'], data: { parent: e } })
   }
+
+  const config = {
+    loader: { load: ["[tex]/html"] },
+    tex: {
+      packages: { "[+]": ["html"] },
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      displayMath: [
+        ["$$", "$$"],
+        ["\\[", "\\]"]
+      ]
+    }
+  };
+
   return (
     <QBLayout
       user={auth.user}
@@ -80,12 +97,15 @@ export default function QuestionForm({ auth, QBank, labels, sublabels, currLabel
                 </div> */}
                 <div className="flex flex-col space-y-1.5 mb-5">
                   <Label htmlFor="question" className="text-xl font-bold">Enter your question</Label>
-                  <Textarea
-                    id="question"
-                    name="question"
-                    value={data.question}
-                    onChange={(e) => setData('question', e.target.value)}
-                    placeholder="Content of your question" />
+                  <MathJaxContext version={3} config={config}>
+                    <Textarea
+                      id="question"
+                      name="question"
+                      value={data.question}
+                      onChange={(e) => setData('question', e.target.value)}
+                      placeholder="Content of your question" />
+                    Preview: <MathJax>{data["question"]}</MathJax>
+                  </MathJaxContext>
                 </div>
               </div>
               {/* {
@@ -123,8 +143,11 @@ export default function QuestionForm({ auth, QBank, labels, sublabels, currLabel
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> This answer is correct.
                 </div>
-                <Textarea id="ans1" name="ans1" value={data.ans1} onChange={(e) => setData('ans1', e.target.value)} placeholder="Content of your answer" />
-              </div>
+                <MathJaxContext version={3} config={config}>
+                  <Textarea id="ans1" name="ans1" value={data.ans1} onChange={(e) => { setData('ans1', e.target.value) }} placeholder="Content of your answer" />
+                  Preview: <MathJax>{data["ans1"]}</MathJax>
+                  {/* "\\(\\frac{10}{4x} \\approx 2^{12}\\)" */}
+                </MathJaxContext>              </div>
 
               <div className="flex flex-col space-y-1.5 mb-5 mb-3">
                 <div className="flex items-center space-x-2">
@@ -141,7 +164,10 @@ export default function QuestionForm({ auth, QBank, labels, sublabels, currLabel
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> This answer is correct.
                 </div>
-                <Textarea id="ans2" name="ans2" value={data.ans2} onChange={(e) => setData('ans2', e.target.value)} placeholder="Content of your answer" />
+                <MathJaxContext>
+                  <Textarea id="ans2" name="ans2" value={data.ans2} onChange={(e) => { setData('ans2', e.target.value) }} placeholder="Content of your answer" />
+                  Preview: <MathJax>{data["ans2"]}</MathJax>
+                </MathJaxContext>
               </div>
 
               <div className="flex flex-col space-y-1.5 mb-5 mb-3">
@@ -159,7 +185,10 @@ export default function QuestionForm({ auth, QBank, labels, sublabels, currLabel
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> This answer is correct.
                 </div>
-                <Textarea id="ans3" name="ans3" value={data.ans3} onChange={(e) => setData('ans3', e.target.value)} placeholder="Content of your answer" />
+                <MathJaxContext>
+                  <Textarea id="ans3" name="ans3" value={data.ans3} onChange={(e) => { setData('ans3', e.target.value) }} placeholder="Content of your answer" />
+                  Preview: <MathJax>{data["ans3"]}</MathJax>
+                </MathJaxContext>
               </div>
 
               <div className="flex flex-col space-y-1.5 mb-5 mb-3">
@@ -177,7 +206,10 @@ export default function QuestionForm({ auth, QBank, labels, sublabels, currLabel
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> This answer is correct.
                 </div>
-                <Textarea id="ans4" name="ans4" value={data.ans4} onChange={(e) => setData('ans4', e.target.value)} placeholder="Content of your answer" />
+                <MathJaxContext version={3} config={config}>
+                  <Textarea id="ans4" name="ans4" value={data.ans4} onChange={(e) => { setData('ans4', e.target.value) }} placeholder="Content of your answer" />
+                  Preview: <MathJax>{data["ans4"]}</MathJax>
+                </MathJaxContext>
               </div>
 
               <div className="flex flex-col space-y-1.5 mb-5 mb-3">
@@ -195,7 +227,10 @@ export default function QuestionForm({ auth, QBank, labels, sublabels, currLabel
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> This answer is correct.
                 </div>
-                <Textarea id="ans5" name="ans5" value={data.ans5} onChange={(e) => setData('ans5', e.target.value)} placeholder="Content of your answer" />
+                <MathJaxContext version={3} config={config}>
+                  <Textarea id="ans5" name="ans5" value={data.ans5} onChange={(e) => { setData('ans5', e.target.value) }} placeholder="Content of your answer" />
+                  Preview: <MathJax>{data["ans5"]}</MathJax>
+                </MathJaxContext>
               </div>
 
               <div className="flex flex-col space-y-1.5 mb-5 mb-3">
@@ -213,7 +248,10 @@ export default function QuestionForm({ auth, QBank, labels, sublabels, currLabel
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> This answer is correct.
                 </div>
-                <Textarea id="ans6" name="ans6" value={data.ans6} onChange={(e) => setData('ans6', e.target.value)} placeholder="Content of your answer" />
+                <MathJaxContext version={3} config={config}>
+                  <Textarea id="ans6" name="ans6" value={data.ans6} onChange={(e) => { setData('ans6', e.target.value) }} placeholder="Content of your answer" />
+                  Preview: <MathJax>{data["ans6"]}</MathJax>
+                </MathJaxContext>
               </div>
 
               <div className="mt-5">
