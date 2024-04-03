@@ -1,13 +1,26 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown } from "lucide-react"
+import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { MemberType } from "./MemberType"
 import { Button } from "@/shadcn/ui/button"
-import { Member } from "./MemberType"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/shadcn/ui/dropdown-menu"
+import { router } from "@inertiajs/react"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export const columns: ColumnDef<Member>[] = [
+type MemberProps = {
+    members: MemberType[];
+    extraId: string; // Additional ID prop
+};
+export const MemberColumns: ColumnDef<MemberType>[] = [
   {
     accessorKey: "id",
     header: () => (
@@ -27,22 +40,41 @@ export const columns: ColumnDef<Member>[] = [
       >Name</div>)
   },
   {
-    accessorKey: "author",
+    accessorKey: "role_name",
     header: () => (
       <div
         style={{
           textAlign: "center"
         }}
-      >Author</div>)
+      >Role</div>)
   },
-  {
-    accessorKey: "lastUpdated",
-    header: () => (
-      <div
-        style={{
-          textAlign: "center"
-        }}
-      >Last Updated</div>)
+    {
+    id: "actions",
+    cell: ({ row }) => {
+      const member = row.original
+    console.log(window.location.href)
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+            onClick={() => router.visit(route("members.destroy",[]),{
+                method: "delete",
+                data: {
+                    role: member.role_name
+                }
+            })}
+            >Delete</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )
+    },
   },
 ]
-export type { Member }

@@ -148,8 +148,6 @@ Route::put('/qbs/{qbID}/tests/{testID}/addques', [TestController::class,'detachQ
 Route::get('/qbs/{qbID}/tests/{testID}/pdf', [TestController::class,'pdfGenerate'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('tests.pdfGen');
 
-// Route::get('/pdf', [TestController::class,'pdfStream'])->name('pdfStream');
-
 Route::get('/qbs/{qbID}/tests/{testID}/pdfStream', [TestController::class,'pdfStream'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('tests.pdfStream');
 
@@ -196,7 +194,7 @@ Route::get('/qbs/{qbID}/members/{member}/edit', [MemberController::class,'edit']
 Route::put('/qbs/{qbID}/members/{member}/edit', [MemberController::class,'update'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('members.update');
 
-Route::delete('/qbs/{qbID}/members/{member}/edit', [MemberController::class,'destroy'])
+Route::delete('/qbs/{qbID}/members', [MemberController::class,'destroy'])
 ->middleware(['auth', 'verified','dynamicrole:owner'])->name('members.destroy');
 
 

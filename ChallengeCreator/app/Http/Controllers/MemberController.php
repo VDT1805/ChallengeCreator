@@ -28,17 +28,17 @@ class MemberController extends Controller
         $QB = $this->qbService->findOrFail($qbID,"id");
         $members = $this->mService->getAllPaginated($request->all() + ["questionbanks" => $qbID]);
         $editorURL = URL::temporarySignedRoute(
-            'members.store', now()->addMinutes(30)
+            'members.store', now()->addMinutes(60)
             ,["qbID" => $qbID,"role" => "editor"]
             ,absolute:true
         );
         $viewerURL = URL::temporarySignedRoute(
-            'members.store', now()->addMinutes(30)
+            'members.store', now()->addMinutes(60)
             ,["qbID" => $qbID,"role" => "viewer"]
             ,absolute:true
         );
         // dd($members);
-        return Inertia::render("Member/MemberIndex", [
+        return Inertia::render("Member/MemberIndexTest", [
             "QBank" => $QB,
             "members" => $members,
             "editorURL" => $editorURL,
@@ -134,8 +134,29 @@ class MemberController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($qbID, Request $request)
     {
         //
+        dd($request);
+        $QB = $this->qbService->findOrFail($qbID,"id");
+        $members = $this->mService->getAllPaginated($request->all() + ["questionbanks" => $qbID]);
+        $editorURL = URL::temporarySignedRoute(
+            'members.store', now()->addMinutes(60)
+            ,["qbID" => $qbID,"role" => "editor"]
+            ,absolute:true
+        );
+        $viewerURL = URL::temporarySignedRoute(
+            'members.store', now()->addMinutes(60)
+            ,["qbID" => $qbID,"role" => "viewer"]
+            ,absolute:true
+        );
+        $this->mService->delete($request["user"],["role" => $request["role"], "team" => $request["team"]]);
+
+        return Inertia::render("Member/MemberIndexTest", [
+            "QBank" => $QB,
+            "members" => $members,
+            "editorURL" => $editorURL,
+            "viewerURL" => $viewerURL
+        ]);
     }
 }

@@ -93,6 +93,7 @@ class MemberService
     {
         $role = Role::where("name",$data["role"])->first();
         // $team = QuestionBank::where("id",$data["qb"])->get();
+        // dd($team, $data["qb"]);
         $existed  = Auth::user()->hasRole(["owner","editor","viewer"],$data["qb"]);
         if($existed) {
             throw new Exception("existing user");
@@ -101,7 +102,7 @@ class MemberService
             Auth::user()->addRole($role,$data["qb"]);
         }
 
-        return $model;
+        return $data["qb"];
     }
 
     /**

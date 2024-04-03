@@ -47,7 +47,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[]
 }
 
-export function DataTable<TData, TValue>({
+export function MemberTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -73,7 +73,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center justify-between gap-4 py-4">
+      <div className="flex items-center justify-around gap-4 py-4">
         <div className="grid grid-cols-3 gap-4">
           <Input
             placeholder="Search member..."
@@ -98,18 +98,6 @@ export function DataTable<TData, TValue>({
           </div>
         </div>
 
-        <div className="flex justify-evenly gap-4">
-          {/* <Link href={route('settings')}>
-            <Button>
-              Member settings
-            </Button>
-          </Link> */}
-          {/* <Link href={route('addmember')}>
-            <Button>
-              Invite member
-            </Button>
-          </Link> */}
-        </div>
       </div>
       <div className="rounded-md border bg-white">
         <Table>
