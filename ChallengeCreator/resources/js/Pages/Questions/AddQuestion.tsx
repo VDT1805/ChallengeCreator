@@ -1,4 +1,3 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import {
@@ -21,19 +20,11 @@ import {
 import { Button } from '@/shadcn/ui/button';
 import { Textarea } from '@/shadcn/ui/textarea';
 import { Checkbox } from '@/shadcn/ui/checkbox';
-// import {
-//   Dialog,
-//   DialogContent,
-//   DialogDescription,
-//   DialogHeader,
-//   DialogTitle,
-//   DialogTrigger,
-// } from "@/shadcn/ui/dialog"
-import React, { FormEventHandler } from 'react';
-import { Menu } from '../Menu';
+import React, { FormEventHandler, useState } from 'react';
 import { QB } from '../QuestionBank/QuestionBankType';
 import QBLayout from '@/Layouts/QBLayout';
 import { LabelType } from '../Label/LabelTable/LabelType';
+import { MathJax, MathJaxContext } from 'better-react-mathjax';
 
 // type QRows = {
 //     question: string,
@@ -49,8 +40,8 @@ import { LabelType } from '../Label/LabelTable/LabelType';
 //   };
 
 export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProps<{ QBank: QB, labels: LabelType[], sublabels: LabelType[] }>) {
-  const [position, setPosition] = React.useState("bottom")
-  const [checked, setChecked] = React.useState(1);
+  const [position, setPosition] = useState("bottom")
+  const [checked, setChecked] = useState(1);
   const params = new URLSearchParams(window.location.search)
   // console.log(params.get("testid"))
   const { data, setData, setDefaults, post, processing, errors, reset, transform } = useForm({
@@ -68,10 +59,10 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
   const submit: FormEventHandler = (e) => {
     e.preventDefault();
     if (params.has("testid")) {
-        transform((data) => ({
-            ...data,
-            testid: params.get("testid")
-          }))
+      transform((data) => ({
+        ...data,
+        testid: params.get("testid")
+      }))
     }
 
     post(route('questions.store', QBank.id));
@@ -80,6 +71,24 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
   const labelValueChange = (e: string) => {
     router.reload({ only: ['sublabels'], data: { labels: e } })
   }
+
+  const [mathText, setMathText] = useState("");
+
+  const config = {
+    loader: { load: ["[tex]/html"] },
+    tex: {
+      packages: { "[+]": ["html"] },
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      displayMath: [
+        ["$$", "$$"],
+        ["\\[", "\\]"]
+      ]
+    }
+  };
+
   return (
     <QBLayout
       user={auth.user}
@@ -142,7 +151,11 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   ></Label> This answer is correct.
                 </div>
-                <Textarea id="ans1" name="ans1" value={data.ans1} onChange={(e) => setData('ans1', e.target.value)} placeholder="Content of your answer" />
+                <MathJaxContext version={3} config={config}>
+                  <Textarea id="ans1" name="ans1" value={data.ans1} onChange={(e) => {setData('ans1', e.target.value); setMathText(e.target.value)}} placeholder="Content of your answer" />
+                  Preview: <MathJax>{mathText}</MathJax>
+                  {/* "\\(\\frac{10}{4x} \\approx 2^{12}\\)" */}
+                </MathJaxContext>
               </div>
 
               <div className="flex flex-col space-y-1.5 mb-5 mb-3">
