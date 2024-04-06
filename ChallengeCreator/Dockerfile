@@ -51,7 +51,7 @@ RUN apt-get update -y && apt-get install -y \
     libpng-dev \
     libzip-dev \
          && docker-php-ext-install zip
-
+RUN echo "max_execution_time = 300" > /usr/local/etc/php/conf.d/max_execution_time.ini
 # PHP Extension
 RUN docker-php-ext-install gettext intl pdo_mysql gd
 
