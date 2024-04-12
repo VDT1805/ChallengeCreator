@@ -196,7 +196,7 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
     const [formData, setFormData] = useState(new FormData());
     const { data, setData, setDefaults, post, processing, transform } = uF({
         questions: [],
-      });
+    });
 
     const [loading, setLoading] = useState(false);
     const delta = currentStep - previousStep;
@@ -292,9 +292,9 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                         setLoading(false);
                     },
                     onFinish: () => {
-                        console.log("effe")
+                        // console.log("effe")
                         setData("questions", rows)
-                        console.log(data)
+                        // console.log(data)
                     }
                 });
                 // console.log(3)
@@ -384,6 +384,12 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
         }).catch((err) => {
             console.log(err);
         });
+    }
+
+    const removeFile = () => {
+        // formData.delete("text/csv")
+        setFormData(new FormData())
+        console.log(formData)
     }
 
     return (
@@ -506,6 +512,7 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                                     </div>
                                 )}
                             />
+                            {formData.getAll.length > 0 && <Button onClick={removeFile}>Remove uploaded file</Button>}
                         </motion.div>
                     )}
 
@@ -588,7 +595,7 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                                         <CardTitle className="text-3xl text-indianred font-bold">Invalid questions</CardTitle>
                                     </CardHeader>
                                     <CardContent>
-                                    <Accordion type="single" collapsible className="w-full bg-white rounded">
+                                        <Accordion type="single" collapsible className="w-full bg-white rounded">
                                             {violators && violators.map((row: any) => (
                                                 <AccordionItem value={row.id as unknown as string}>
                                                     <AccordionTrigger className="hover:bg-bluegreen bg-white px-3 rounded">

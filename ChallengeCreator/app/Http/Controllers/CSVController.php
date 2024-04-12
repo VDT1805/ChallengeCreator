@@ -78,7 +78,7 @@ class CSVController extends Controller
                 }
             });
 
-            $this->qService->createMany($filtered);
+            // $this->qService->createMany($filtered);
 
             return Inertia::render(
                 "Import/ImportPage",[
