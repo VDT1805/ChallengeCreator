@@ -1,4 +1,4 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
+// import ApplicationLogo from '@/Components/ApplicationLogo';
 import { Link } from '@inertiajs/react';
 import { PropsWithChildren } from 'react';
 
@@ -10,7 +10,7 @@ export default function Guest({ children }: PropsWithChildren) {
             <div>
                 <Link href="/">
                     {/* <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" /> */}
-                    <img className="block h-28 w-auto fill-current text-gray-800" src={logo} />
+                    <img className="block mt-5 h-28 w-auto fill-current text-gray-800" src={logo} />
                 </Link>
             </div>
 

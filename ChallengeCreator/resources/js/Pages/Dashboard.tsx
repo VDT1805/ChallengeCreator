@@ -11,9 +11,7 @@ import {
 } from "@/shadcn/ui/card"
 import { Button } from '@/shadcn/ui/button';
 import { Input } from '@/shadcn/ui/input';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/shadcn/ui/dropdown-menu"
-import { ArrowUpDown } from "lucide-react"
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { QBPage } from './QuestionBank/QuestionBankType';
 import {
     Pagination,
@@ -24,10 +22,19 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/shadcn/ui/pagination"
-import { PlusIcon } from '@radix-ui/react-icons';
+import { DotFilledIcon, PlusIcon } from '@radix-ui/react-icons';
+import { Separator } from '@radix-ui/react-menubar';
 
 export default function Dashboard({ auth, QBS }: PageProps<{ QBS: QBPage }>) {
-    const [sortState, setSortState] = React.useState("Alphabetical")
+    // const [hex, setHex] = useState("#ffffff")
+    // const randomizedHex = () => {
+    //     const randomColor = '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6)
+    //     setHex(randomColor)
+    //     console.log(hex)
+    // }
+    // useEffect(() => {
+    //     randomizedHex()
+    // }, [])
     // console.log(JSON.stringify(QBS));
     return (
         <AuthenticatedLayout
@@ -40,18 +47,6 @@ export default function Dashboard({ auth, QBS }: PageProps<{ QBS: QBPage }>) {
                         placeholder="Search for a question bank..."
                         className="border-2 border-blue-500 border-solid row-span-1 md:col-span-2" />
                     <div className="flex items-center row-span-1 md:col-span-2">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger className="flex gap-2">
-                                <ArrowUpDown className="ml-2 h-4 w-4 mt-1" />
-                                Sort By: {
-                                    sortState
-                                }
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <DropdownMenuItem onClick={() => { setSortState("Alphabetical") }}>Alphabetical</DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => { setSortState("Last Updated") }}>Last Updated</DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
                     </div>
                     <div className="md:col-start-10 col-span-1">
                         <Link href={route('questionbanks.create')}>
@@ -66,11 +61,12 @@ export default function Dashboard({ auth, QBS }: PageProps<{ QBS: QBPage }>) {
                     {QBS.data.map(item => (
                         <Link href={route('questionbanks.show', item.id)}>
                             <Card>
-                                <CardHeader>
-                                    <CardTitle>Question Bank {item.id}</CardTitle>
+                                <CardHeader className='flex flex-row gap-2 align-center'>
+                                    <CardTitle className="border-2" style={{ borderColor: `${'#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6)}` }}><Separator></Separator></CardTitle>
+                                    <CardTitle className="text-3xl font-bold">{item.name}</CardTitle>
                                 </CardHeader>
                                 <CardContent>
-                                    <p>{item.name}</p>
+                                    <p>ID: {item.id}</p>
                                 </CardContent>
                             </Card>
                         </Link>
