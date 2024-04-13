@@ -85,9 +85,8 @@ export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{
                                     ))}
                                 </SelectContent>
                             </Select>
-                            <Button>
-                                Filter
-                            </Button>
+                            <Button>Filter</Button>
+                            <Button variant={"destructive"}>Clear filters</Button>
                         </div>
                     </CardContent>
                 </Card>
