@@ -148,16 +148,19 @@ import { LoaderIcon } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/shadcn/ui/accordion";
 
 
-export const FormDataSchema = z.object({
-    // firstName: z.string().min(1, 'First name is required'),
-    // lastName: z.string().min(1, 'Last name is required'),
-    // email: z.string().min(1, 'Email is required').email('Invalid email address'),
-    // country: z.string().min(1, 'Country is required'),
-    // street: z.string().min(1, 'Street is required'),
-    // city: z.string().min(1, 'City is required'),
-    // state: z.string().min(1, 'State is required'),
-    // zip: z.string().min(1, 'Zip is required'),
-})
+// export const FormDataSchema = z.object({
+// firstName: z.string().min(1, 'First name is required'),
+// lastName: z.string().min(1, 'Last name is required'),
+// email: z.string().min(1, 'Email is required').email('Invalid email address'),
+// country: z.string().min(1, 'Country is required'),
+// street: z.string().min(1, 'Street is required'),
+// city: z.string().min(1, 'City is required'),
+// state: z.string().min(1, 'State is required'),
+// zip: z.string().min(1, 'Zip is required'),
+// })
+// type Inputs = z.infer<typeof FormDataSchema>
+
+export const FormDataSchema = z.object({})
 type Inputs = z.infer<typeof FormDataSchema>
 
 const steps = [
@@ -192,13 +195,12 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
     // console.log("template_url:" + template_url)
     const [previousStep, setPreviousStep] = useState(0);
     const [currentStep, setCurrentStep] = useState(0);
-    // const formData = new FormData();
     const [formData, setFormData] = useState(new FormData());
+    const [message, setMessage] = useState("Drag & drop a .csv file here, or click to choose a .csv file to upload")
+    const [dropzoneStyle, setDropzoneStyle] = useState("border-2 border-dashed border-indianred rounded-md p-4 text-center text-indianred hover:border-indianred-dark")
     const { data, setData, setDefaults, post, processing, transform } = uF({
         questions: [],
     });
-
-    const [loading, setLoading] = useState(false);
     const delta = currentStep - previousStep;
     const {
         register,
@@ -212,7 +214,6 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
     })
     const form = useForm<FormInputs>();
     const [errorMessage, setErrorMessage] = useState('');
-    const [uploaded, setUploaded] = useState(false);
 
     const onSubmit = async (data: { file: File }) => {
         formData.append('file', data.file);
@@ -226,7 +227,7 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                 throw new Error('Failed to upload CSV file');
             }
 
-            // Handle successful upload and response from backend (optional)
+            // Handle successful upload and response
             const data = await response.json();
             console.log('Upload successful:', data);
 
@@ -238,30 +239,11 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
             alert('Failed to upload CSV file');
         }
     };
-    // const {
-    //     acceptedFiles,
-    //     fileRejections,
-    //     getRootProps,
-    //     getInputProps
-    // } = useDropzone({
-    //     accept: {
-    //         'text/csv': []
-    //     }
-    // });
-    // useEffect(() => {
-    // // Code to run once
-    // console.log("effe")
-    // setData("questions", rows)
-    // console.log(rows)
-    // }, []);
-
 
     const processForm: SubmitHandler<Inputs> = data => {
         // console.log(data)
         reset()
     }
-
-    // type FieldName = keyof Inputs
 
     const prev = () => {
         if (currentStep > 0) {
@@ -275,21 +257,21 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
         // const output = await trigger(fields as FieldName[], { shouldFocus: true })
         // if (!output) return
         // console.log(currentStep)
-        // console.log(currentStep)
-        if (currentStep === 1 && formData.keys == null) {
-            prev()
+        if (currentStep === 1 && acceptedFiles.length == 0) {
+            alert("Upload a .csv file to continue")
+            return
         }
-        if (currentStep < steps.length - 1) {
+        else if (currentStep < steps.length - 1) {
             if (currentStep === steps.length - 3) {
                 // router.reload({only: ['rows', 'violators'], data: formData, onSuccess: page => {console.log(formData)}})
                 // await handleSubmit(processForm)()
-                setLoading(true);
+                // setLoading(true);
+                formData.append('csv', acceptedFiles[0]);
                 router.post(route("questions.import", QBank.id), formData, {
                     forceFormData: true,
                     preserveState: true,
                     onProgress: () => { },
                     onSuccess: () => {
-                        setLoading(false);
                     },
                     onFinish: () => {
                         // console.log("effe")
@@ -297,58 +279,29 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                         // console.log(data)
                     }
                 });
-                // console.log(3)
-                // console.log(rows)
-
-
-                // console.log(rows)
-                // console.log(violators)
+                // setLoading(false)
             }
             if (currentStep === steps.length - 2) {
                 setData("questions", rows)
-                console.log(data)
-
-                // console.log(rows)
-                // console.log(violators)
             }
             setPreviousStep(currentStep)
             setCurrentStep(step => step + 1)
         }
     }
 
-    // const { data, setData, post } = uF<UploadProp>({
-    //     csv: undefined,
-    // })
-
-    // const submit: FormEventHandler = (e) => {
-    //     e.preventDefault()
-    //     post(route("questions.import", QBank.id))
-    // }
-
-    // const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     if (e.currentTarget.files) {
-    //         setData("csv", e.currentTarget.files[0]);
-    //         post(route("questions.import", QBank.id))
-    //     }
-    // };
-
-    // const [file, setFile] = useState<File>()
-
-    // const submitFile = () => {
-    //     post(route("questions.import", QBank.id))
-    // }
-
-    const onDrop = useCallback((acceptedFiles: any, fileRejections: any) => {
-        setErrorMessage('');
-        if (fileRejections.length > 0) {
-            setTimeout(() => { setErrorMessage(''); }, 2000);
-            return;
-        }
-        else setErrorMessage('');
+    const onDrop = useCallback(async (acceptedFiles: any, fileRejections: any) => {
+        // setErrorMessage('');
+        // if (fileRejections.length > 0) {
+        //     setTimeout(() => { setErrorMessage(''); }, 2000);
+        //     return;
+        // }
+        // else setErrorMessage('');
         // acceptedFiles.forEach(file => {
         //     formData.append('csv', file);
         // });
         formData.append('csv', acceptedFiles[0]);
+        setMessage(acceptedFiles[0].name)
+        setDropzoneStyle("border-2 border-dashed border-bluegreen rounded-md p-4 text-center text-bluegreen hover:border-bluegreen-dark")
         // router.post(route("questions.import", QBank.id), formData, {
         //     forceFormData: true,
         //     preserveState: true,
@@ -357,13 +310,17 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
         // next();
     }, []);
 
-    const { getRootProps, getInputProps } = useDropzone({
+    const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
         onDrop,
         maxFiles: 1,
         accept: {
             'text/csv': []
         }
     });
+
+    // const acceptedFileItems = acceptedFiles.map(file => (
+    //     <p>{file.name}</p>
+    //   ));
 
     const dlTemplate = () => {
         axios({
@@ -386,10 +343,18 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
         });
     }
 
-    const removeFile = () => {
+    const removeFile = async () => {
+        // console.log(formData)
         // formData.delete("text/csv")
+        // var dropzone = document.getElementById("dropzone")
+        // dropzone!.innerText = "Drag & drop a .csv file here, or click to choose a .csv file to upload"
+        setMessage("Drag & drop a .csv file here, or click to choose a .csv file to upload")
+        setDropzoneStyle("border-2 border-dashed border-indianred rounded-md p-4 text-center text-indianred hover:border-indianred-dark")
         setFormData(new FormData())
-        console.log(formData)
+        alert("Removed the uploaded file")
+        while (acceptedFiles.length) {
+            acceptedFiles.pop();
+        }
     }
 
     return (
@@ -472,14 +437,14 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                                 </CardContent>
                             </Card>
                             <br></br>
-                            <Card>
+                            {/* <Card>
                                 <CardHeader>
                                     <CardTitle className="text-3xl font-bold">Download Question Import Templates</CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <DataTable columns={columns} data={data1} />
                                 </CardContent>
-                            </Card>
+                            </Card> */}
                         </motion.div>
                     )}
 
@@ -501,14 +466,9 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                                         'data-tooltip-id': errorMessage ? 'errorTooltip' : '',
                                     })}>
                                         <input {...getInputProps()} />
-                                        <p className="border-2 border-dashed border-bluegreen rounded-md p-4 text-center text-bluegreen hover:border-bluegreen-dark">
-                                            Drag & drop a .csv file here, or click to choose a .csv file to upload
+                                        <p id="dropzone" className={dropzoneStyle}>
+                                            {message}
                                         </p>
-                                        {errorMessage && (
-                                            <p className="text-red-500 text-center mt-2">
-                                                {errorMessage}
-                                            </p>
-                                        )}
                                     </div>
                                 )}
                             />
@@ -521,7 +481,6 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                             initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
                             animate={{ x: 0, opacity: 1 }}
                             transition={{ duration: 0.3, ease: 'easeInOut' }}
-
                         >
                             {/* {loading ? <div><LoaderIcon /></div> :
                                 <div>
