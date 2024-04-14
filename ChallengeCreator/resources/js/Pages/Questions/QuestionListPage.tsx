@@ -60,6 +60,25 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
     router.reload({ only: ['sublabels'], data: { labels: e } })
   }
 
+  useEffect(() => {
+    // window.Echo.private(`qb.${QBank.id}`).listen('QuestionCreated', (e: any) => {
+    //     console.log(e);
+    // });
+    window.Echo.channel("test").listen('QuestionCreated', (e: any) => {
+         console.log("QuestionCreated", e);
+    });
+
+
+    const name = `qb.${QBank.id}`;
+    const privateChannel = window.Echo.private(name);
+    const eventName = 'QuestionCreated';
+    const event = privateChannel.eventFormatter.format(eventName);
+    privateChannel.listen(eventName, (e:any) => {
+            console.log(e);
+    });
+
+  });
+
   return (
     <QBLayout
       user={auth.user}
@@ -67,9 +86,6 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
       <Head title="Questions" />
       <div className="py-12 container mx-auto">
         <Card className="mb-5 md:col-start-10 col-span-1 pt-5">
-          {/* <CardHeader>
-            <CardTitle className="text-3xl font-bold">All questions</CardTitle>
-          </CardHeader> */}
           <CardContent>
             <div className="flex justify-end">
               <DropdownMenu>

@@ -17,6 +17,12 @@ class Question extends Model
         );
     }
 
+    public function questionbanks() {
+        return $this->belongsTo(
+            QuestionBank::class
+        );
+    }
+
     public function labels() {
         return $this->belongsTo(
             Label::class

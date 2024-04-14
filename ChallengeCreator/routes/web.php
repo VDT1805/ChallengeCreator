@@ -10,6 +10,8 @@ use App\Http\Controllers\TestController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
+use App\Events\TestEvent;
 
 /*
 |--------------------------------------------------------------------------
@@ -197,5 +199,11 @@ Route::put('/qbs/{qbID}/members/{member}/edit', [MemberController::class,'update
 Route::delete('/qbs/{qbID}/members', [MemberController::class,'destroy'])
 ->middleware(['auth', 'verified','dynamicrole:owner'])->name('members.destroy');
 
+
+Route::get('/event', function (Request $request) {
+    // dd($request->color);
+    TestEvent::dispatch($request->color);
+    return 'Message sent!';
+})->name('fire.public.event');
 
 require __DIR__.'/auth.php';
