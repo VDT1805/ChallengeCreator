@@ -35,3 +35,8 @@ export interface QPage {
     label: string
     active: boolean
   }
+
+  export interface QuestionEvent {
+    author: string
+    question: Question
+  }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\QuestionCreated;
 use App\Http\Requests\QuestionRequest;
 use App\Http\Services\LabelService;
 use App\Http\Services\QuestionBankService;
@@ -11,6 +12,7 @@ use App\Models\Question;
 use App\Models\QuestionBank;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
@@ -62,8 +64,6 @@ class QuestionController extends Controller
      */
     public function store($qbID,Request $request)
     {
-        //Test ID can be here!!!
-        // dd($request);
         $testid = $request["testid"];
         unset($request["testid"]);
         $inserted = $this->qService->create($request->all()+["question_bank_id" => $qbID]);
@@ -76,10 +76,12 @@ class QuestionController extends Controller
             }
             if ($inserted) {
                 $attachmentResult = $test->questions()->attach($inserted);
+                QuestionCreated::dispatch($inserted,Auth::user()->name);
                 return redirect()->route("questions.index", ["qbID" => $qbID]);
             }
         }
         if ($inserted) {
+            QuestionCreated::dispatch($inserted,Auth::user()->name);
             return redirect()->route("questions.index", ["qbID" => $qbID]);
         }
     }

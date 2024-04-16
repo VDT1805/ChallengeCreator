@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Question;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -17,10 +18,12 @@ class QuestionCreated implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public string $message;
-    public function __construct(string $message)
+    public string $author;
+    public Question $question;
+    public function __construct( Question $question,string $author)
     {
-        $this->message = $message;
+        $this->author = $author;
+        $this->question = $question;
     }
 
     /**
@@ -32,7 +35,7 @@ class QuestionCreated implements ShouldBroadcast
     {
         return [
             new Channel("test"),
-            new PrivateChannel('qb.1')
+            new PrivateChannel('qb.'.$this->question->question_bank_id)
         ];
     }
 }

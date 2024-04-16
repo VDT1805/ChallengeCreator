@@ -39,6 +39,6 @@ window.Echo = new Echo({
     enabledTransports: ['ws', 'wss']
 });
 
-window.Echo.channel('test').listen('TestEvent', (e: any) => {
-    console.log(e);
-});
+// window.Echo.channel('test').listen('TestEvent', (e: any) => {
+//     console.log(e);
+// });
