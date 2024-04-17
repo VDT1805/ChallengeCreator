@@ -22,5 +22,5 @@ Broadcast::channel('test', function ($user, $id) {
     return true;
 });
 Broadcast::channel('qb.{id}', function ($user, $id) {
-    return $user->isAbleTo('questionbank-read',$id);
+    return $user->isAbleTo('question-read',$id);
 });
