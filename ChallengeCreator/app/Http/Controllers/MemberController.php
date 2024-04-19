@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MemberOut;
 use App\Http\Services\MemberService;
 use App\Http\Services\QuestionBankService;
 use Inertia\Inertia;
@@ -137,7 +138,8 @@ class MemberController extends Controller
     public function destroy($qbID, Request $request)
     {
         //
-        dd($request);
+        // dd($request);
+        // dd($request["user"],$this->mService->getAll(["id"=>$request["user"]])->first());
         $QB = $this->qbService->findOrFail($qbID,"id");
         $members = $this->mService->getAllPaginated($request->all() + ["questionbanks" => $qbID]);
         $editorURL = URL::temporarySignedRoute(
@@ -151,7 +153,7 @@ class MemberController extends Controller
             ,absolute:true
         );
         $this->mService->delete($request["user"],["role" => $request["role"], "team" => $request["team"]]);
-
+        MemberOut::dispatch($this->mService->findOrFail($request["user"],"id"),$request["team"]);
         return Inertia::render("Member/MemberIndexTest", [
             "QBank" => $QB,
             "members" => $members,

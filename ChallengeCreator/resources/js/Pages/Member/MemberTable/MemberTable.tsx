@@ -39,6 +39,7 @@ import {
   CollapsibleTrigger,
 } from "@/shadcn/ui/collapsible"
 import { FilePlusIcon, PlusIcon, ShuffleIcon, UpdateIcon } from "@radix-ui/react-icons"
+import { QB } from "@/Pages/QuestionBank/QuestionBankType"
 
 
 

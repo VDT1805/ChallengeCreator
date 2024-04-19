@@ -21,6 +21,9 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('test', function ($user, $id) {
     return true;
 });
-Broadcast::channel('qb.{id}', function ($user, $id) {
+Broadcast::channel('qb.{id}.question', function ($user, $id) {
     return $user->isAbleTo('question-read',$id);
+});
+Broadcast::channel('qb.{id}.general', function ($user, $id) {
+    return true;
 });

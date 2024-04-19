@@ -13,7 +13,10 @@ class UserFilter extends ModelFilter
     * @var array
     */
     // public $relations = ["questionbanks"=>"users"];
-
+    public function id($id)
+    {
+        return $this->where("id", $id);
+    }
     public function questionbanks($id)
     {
         return $this->join("role_user", function($join) use ($id){

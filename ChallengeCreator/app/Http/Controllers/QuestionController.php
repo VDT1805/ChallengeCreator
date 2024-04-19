@@ -13,7 +13,7 @@ use App\Models\QuestionBank;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
-
+use App\Events\QuestionEvent;
 class QuestionController extends Controller
 {
     private QuestionService $qService;
@@ -76,12 +76,12 @@ class QuestionController extends Controller
             }
             if ($inserted) {
                 $attachmentResult = $test->questions()->attach($inserted);
-                QuestionCreated::dispatch($inserted,Auth::user()->name);
+                QuestionEvent::dispatch($inserted,Auth::user()->name,"Created");
                 return redirect()->route("questions.index", ["qbID" => $qbID]);
             }
         }
         if ($inserted) {
-            QuestionCreated::dispatch($inserted,Auth::user()->name);
+            QuestionEvent::dispatch($inserted,Auth::user()->name,"Created");
             return redirect()->route("questions.index", ["qbID" => $qbID]);
         }
     }

@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Models\Question;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -10,20 +9,20 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-
-class QuestionCreated implements ShouldBroadcast
+use App\Models\User;
+class MemberOut implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public string $author;
-    public Question $question;
-    public function __construct( Question $question,string $author)
+    public User $member;
+    public string $team_id;
+    public function __construct($member,$team_id)
     {
-        $this->author = $author;
-        $this->question = $question;
+        $this->member = $member;
+        $this->team_id = $team_id;
     }
 
     /**
@@ -34,8 +33,7 @@ class QuestionCreated implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel("test"),
-            new PrivateChannel('qb.'.$this->question->question_bank_id)
+            new PrivateChannel('qb.'.$this->team_id.'.general'),
         ];
     }
 }

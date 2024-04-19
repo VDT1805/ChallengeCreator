@@ -1,4 +1,4 @@
-import { useState, PropsWithChildren, ReactNode } from 'react';
+import { useState, PropsWithChildren, ReactNode, useEffect } from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
@@ -9,9 +9,43 @@ import { User } from '@/types';
 import logo from '../Pages/logo.png'
 import { QB } from '@/Pages/QuestionBank/QuestionBankType';
 
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+  } from "@/shadcn/ui/alert-dialog"
+
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/shadcn/ui/alert"
+import { Button } from '@/shadcn/ui/button';
+
+
+
+
 export default function QBLayout({ user, header, children, QBank, CanEdit }: PropsWithChildren<{ user: User, header?: ReactNode, QBank: QB, CanEdit: Boolean }>) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+    const [openAlert, setOpenAlert] = useState(false);
+    useEffect(() => {
+        const name = `qb.${QBank.id}.general`;
+        const privateChannel = window.Echo.private(name);
+        privateChannel.listen('MemberOut', (e:any) => {
+                if(user.id == e.member.id){
+                    setOpenAlert(true);
+                  }
+                console.log(e);
+        });
 
+    },[]);
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="bg-white border-b border-gray-100">
@@ -176,6 +210,19 @@ export default function QBLayout({ user, header, children, QBank, CanEdit }: Pro
             )}
 
             <main>{children}</main>
+            <AlertDialog open={openAlert} onOpenChange={setOpenAlert}>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                            <AlertDialogTitle>Something is wrong</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                Your permission in this Question Bank has been revoked. Please contact the owner for more information.
+                            </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                            <Button> <a href={route("questionbanks.index")}>Back to the dashboard</a></Button>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                </AlertDialog>
         </div>
     );
 }

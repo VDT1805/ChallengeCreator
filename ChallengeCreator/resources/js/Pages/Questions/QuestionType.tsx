@@ -39,4 +39,5 @@ export interface QPage {
   export interface QuestionEvent {
     author: string
     question: Question
+    type: string
   }

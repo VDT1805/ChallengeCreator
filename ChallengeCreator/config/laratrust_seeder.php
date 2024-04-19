@@ -20,12 +20,14 @@ return [
             'member' => 'c,r,u,d'
         ],
         'editor' => [
+            'questionbank' => 'r',
             'question' => 'c,r,u,d',
             'test' => 'c,r,u,d',
             'label' => 'c,r,u,d',
             'member' => 'r'
         ],
         'viewer' => [
+            'questionbank' => 'r',
             'question' => 'r',
             'test' => 'r',
             'label' => 'r',

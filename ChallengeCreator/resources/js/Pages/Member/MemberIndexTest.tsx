@@ -103,7 +103,7 @@ export default function MemberIndex({ auth, QBank, members, editorURL, viewerURL
                             <Button>
                                 Filter
                             </Button> */}
-                            <MemberTable columns={MemberColumns} data={members.data}></MemberTable>
+                            <MemberTable columns={MemberColumns(QBank)} data={members.data}></MemberTable>
                         </div>
                     </CardContent>
                 </Card>

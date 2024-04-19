@@ -42,6 +42,7 @@ class MemberService
      */
     public function getAll(array $search = []): EloquentCollection
     {
+        // dd(User::filter($search)->toSql());
         return User::filter($search)->get();
         // return $this->repository->getAll($search);
     }
@@ -183,7 +184,9 @@ class MemberService
      */
     public function delete($keyOrModel, array $data): bool
     {
-        return User::where("id",$keyOrModel)->removeRole($data["role"], $data["team"]);;
+        $user = User::find($keyOrModel);
+        $user->removeRole($data["role"], $data["team"]);
+        return true;
     }
 
     /**

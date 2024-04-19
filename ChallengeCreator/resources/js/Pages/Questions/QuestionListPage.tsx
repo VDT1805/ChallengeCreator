@@ -81,7 +81,7 @@ function EventTable({changeLog}: {changeLog: QuestionEvent[]}) {
                                     return (
                             <TableRow className="bg-accent">
                                     <TableCell className="font-medium">{event.question.question}</TableCell>
-                                    <TableCell className="hidden sm:table-cell">Create</TableCell>
+                                    <TableCell className="hidden sm:table-cell">{event.type}</TableCell>
                                     <TableCell className="hidden md:table-cell">{formatTime(event.question.created_at)}</TableCell>
                                     <TableCell className="text-right">{event.author}</TableCell>
                             </TableRow>)
@@ -150,9 +150,9 @@ const [changeLog, setChangeLog] = useState<QuestionEvent[]>([]);
 var currentdate = new Date();
 
 useEffect(() => {
-    const name = `qb.${QBank.id}`;
+    const name = `qb.${QBank.id}.question`;
     const privateChannel = window.Echo.private(name);
-    privateChannel.listen('QuestionCreated', (e:QuestionEvent) => {
+    privateChannel.listen('QuestionEvent', (e:QuestionEvent) => {
             console.log(e);
             setChangeLog(prevState => [...prevState, e]);
     });

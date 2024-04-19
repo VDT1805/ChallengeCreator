@@ -13,14 +13,15 @@ import {
   DropdownMenuTrigger,
 } from "@/shadcn/ui/dropdown-menu"
 import { router } from "@inertiajs/react"
+import { QB } from "@/Pages/QuestionBank/QuestionBankType"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-type MemberProps = {
-    members: MemberType[];
-    extraId: string; // Additional ID prop
-};
-export const MemberColumns: ColumnDef<MemberType>[] = [
+// type MemberProps = {
+//     members: MemberType[];
+//     extraId: string; // Additional ID prop
+// };
+export const MemberColumns = (QBank:QB): ColumnDef<MemberType>[] => [
   {
     accessorKey: "id",
     header: () => (
@@ -65,10 +66,12 @@ export const MemberColumns: ColumnDef<MemberType>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-            onClick={() => router.visit(route("members.destroy",[]),{
+            onClick={() => router.visit(route("members.destroy",QBank.id),{
                 method: "delete",
                 data: {
-                    role: member.role_name
+                    user: member.id,
+                    role: member.role_name,
+                    team: QBank.id
                 }
             })}
             >Delete</DropdownMenuItem>
