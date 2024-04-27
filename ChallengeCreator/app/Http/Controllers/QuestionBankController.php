@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateQBRequest;
 use App\Http\Services\LabelService;
 use App\Http\Services\QuestionBankService;
 use App\Models\QuestionBank;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -48,7 +50,7 @@ class QuestionBankController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request):RedirectResponse
+    public function store(CreateQBRequest $request):RedirectResponse
     {
         //
         $inserted = $this->qbService->create($request->all());
@@ -100,7 +102,7 @@ class QuestionBankController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $qbID)
+    public function update(CreateQBRequest $request, $qbID)
     {
         //
         $this->qbService->update($qbID, $request->all());

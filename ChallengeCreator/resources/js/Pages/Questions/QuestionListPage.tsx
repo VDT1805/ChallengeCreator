@@ -110,7 +110,7 @@ function UpdateDialog(changeLog: QuestionEvent[]) {
           <DialogHeader>
             <DialogTitle>Update Log</DialogTitle>
             <DialogDescription>
-              Logs of every update made to the question.
+              Logs of every update made to the question bank by users.
             </DialogDescription>
           </DialogHeader>
           <div className="flex items-center space-x-2">

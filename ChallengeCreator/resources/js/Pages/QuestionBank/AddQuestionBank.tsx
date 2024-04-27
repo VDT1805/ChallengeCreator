@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import {
     Card,
@@ -17,9 +17,11 @@ import { FormEventHandler, useEffect } from 'react';
 import { QB } from './QuestionBankType';
 
 export default function AddQuestionBank({auth}: PageProps) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, reset } = useForm({
         name: ''
     });
+
+    const { errors } = usePage().props;
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -48,7 +50,10 @@ export default function AddQuestionBank({auth}: PageProps) {
                                         onChange={(e) => setData('name', e.target.value)}
                                         placeholder="Name of your question bank"
                                         className="mb-5" />
+                                    {errors.name && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+{errors.name}</div>}
                             </div>
+
                             <Button type='submit'>
                                 {/* <Link href={route('testlist')}> */}
                                 Add question bank
