@@ -301,16 +301,21 @@ return (
                                         }
                                         <Separator className="mb-2 mt-2" />
                                         <div className="flex gap-4">
-                                            <Link href={route('questions.edit', [question.question_bank_id, question.id])} method="get">
+                                            <Link href={route('questions.edit', [question.question_bank_id, question.id])} method="get" as="button">
                                                 <Button className='bg-bluegreen text-white font-bold rounded-t px-4 py-2'>
                                                     Edit question
                                                 </Button>
                                             </Link>
-                                            <Link href={route('questions.destroy', [question.question_bank_id])} method='delete' data={{ qID: question.id }}>
+                                            <Link href={route('questions.destroy', [question.question_bank_id])} method='delete' data={{ qID: question.id }} as="button">
                                                 <Button className='bg-red-500 text-white font-bold rounded-t px-4 py-2'>
                                                     Delete question
                                                 </Button>
                                             </Link>
+                                            {/* <Link href={route('questions.destroy', [question.question_bank_id,question.id])} method='delete' as="button">
+                                                <Button className='bg-red-500 text-white font-bold rounded-t px-4 py-2'>
+                                                    Delete question
+                                                </Button>
+                                            </Link> */}
                                         </div>
                                     </AccordionContent>
                                 </AccordionItem>

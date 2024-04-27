@@ -52,22 +52,6 @@ class MemberController extends Controller
      */
     public function create($qbID, Request $request)
     {
-        //
-        // $QB = $this->qbService->findOrFail($qbID,"id");
-
-        // if (!$QB) {
-        //     abort(404);
-        // }
-        // $inviteURL = URL::temporarySignedRoute(
-        //     'members.store', now()->addMinutes($request["time"])
-        //     ,["qbID" => $qbID,"role" => $request["role"]]
-        //     ,absolute:true
-        // );
-        // return Inertia::render("Member/InviteMemberForm", [
-        //     "QBank" => $QB,
-        //     "inviteURL" => $inviteURL
-        // ]);
-        //
         if (! $request->hasValidSignature()) {
             abort(403);
         }

@@ -189,7 +189,10 @@ class TestService implements BaseCrudServiceInterface
      */
     public function delete($keyOrModel): bool
     {
-        return Test::where("id",$keyOrModel)->delete();
+        if (is_int($keyOrModel)) {
+            return Test::where("id",$keyOrModel)->delete();
+        }
+        return $keyOrModel->delete();
     }
 
     /**

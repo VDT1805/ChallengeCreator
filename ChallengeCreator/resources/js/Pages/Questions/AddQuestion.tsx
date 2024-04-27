@@ -25,6 +25,7 @@ import { QB } from '../QuestionBank/QuestionBankType';
 import QBLayout from '@/Layouts/QBLayout';
 import { LabelType } from '../Label/LabelTable/LabelType';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
+import InputError from '@/Components/InputError';
 
 // type QRows = {
 //     question: string,
@@ -43,8 +44,7 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
   const [position, setPosition] = useState("bottom")
   const [checked, setChecked] = useState(1);
   const params = new URLSearchParams(window.location.search)
-  // console.log(params.get("testid"))
-  const { data, setData, setDefaults, post, processing, errors, reset, transform } = useForm({
+  const { data, setData, setDefaults, post, processing, reset, transform } = useForm({
     question: "",
     ans1: "",
     ans2: "",
@@ -55,6 +55,8 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
     correct: 1,
     label_id: ""
   });
+  const { errors } = usePage().props
+  console.log(errors)
 
   const submit: FormEventHandler = (e) => {
     e.preventDefault();
@@ -71,16 +73,6 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
     router.reload({ only: ['sublabels'], data: { labels: e } })
   }
 
-  // let initialAnswers = {
-  //   ans1: "",
-  //   ans2: "",
-  //   ans3: "",
-  //   ans4: "",
-  //   ans5: "",
-  //   ans6: "",
-  // };
-
-  // const [mathText, setMathText] = useState(initialAnswers);
 
 const config = {
   loader: { load: ["[tex]/html"] },
@@ -110,11 +102,8 @@ return (
         <CardContent>
           <form onSubmit={submit}>
             <div className="grid w-full items-center gap-4">
-              {/* <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="name" className="text-xl font-bold">Question name</Label>
-                  <Input id="name" placeholder="Name of your question" />
-                </div> */}
               <div className="flex flex-col space-y-1.5 mb-5">
+
                 <Label htmlFor="question" className="text-xl font-bold">Enter your question</Label>
                 <MathJaxContext version={3} config={config}>
                 <Textarea
@@ -124,28 +113,10 @@ return (
                   onChange={(e) => setData('question', e.target.value)}
                   placeholder="Content of your question" />
                   Preview: <MathJax>{data["question"]}</MathJax>
+                  <InputError message={errors.question}></InputError>
                   </MathJaxContext>
               </div>
             </div>
-            {/* {
-                ans.map(kv => (
-                    <div className="flex flex-col space-y-1.5 mb-5 mb-3">
-                        <Label htmlFor="name" className="text-xl font-bold">Add your multiple choice answer options</Label>
-                        <div className="flex items-center space-x-2">
-                        <Label
-                            htmlFor= {kv.key}
-                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        ></Label>
-                        <Checkbox />
-                        <Label
-                            htmlFor={kv.key}
-                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        ></Label> This answer is correct.
-                        </div>
-                        <Textarea id={kv.value} name={kv.value} value={data[kv.value as keyof typeof data]} onChange={(e) => setData(kv.value, e.target.value)} placeholder="Content of your answer" />
-                    </div>
-                ))
-              } */}
             <div className="flex flex-col space-y-1.5 mb-5 mb-3">
               <Label htmlFor="name" className="text-xl font-bold">Add your multiple choice answer options</Label>
               <div className="flex items-center space-x-2">
@@ -303,6 +274,7 @@ return (
                 </Select>
               )
               }
+              <InputError message={errors.label_id}></InputError>
               <br></br>
             </div>
             <Button type='submit'>

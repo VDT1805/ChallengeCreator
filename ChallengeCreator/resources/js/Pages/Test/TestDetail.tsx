@@ -140,10 +140,12 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                         Print
                                     </Button>
                                     <Separator orientation="vertical" className="border-2 border-bluegreen" /> */}
-                                    <Button variant="ghost" className="flex gap-3">
-                                        <Trash2Icon className="ml-2 h-4 w-4 mt-1" />
-                                        Delete
-                                    </Button>
+                                    <Link method="delete" href={route('tests.destroy', [test.question_bank_id, test.id])}>
+                                        <Button variant="ghost" className="flex gap-3">
+                                            <Trash2Icon className="ml-2 h-4 w-4 mt-1" />
+                                            Delete
+                                        </Button>
+                                    </Link>
                                 </div>
                                 <div className="flex gap-2">
                                     {/* <Button className="bg-bluegreen flex gap-3 hover:bg-bluegreen-dark">

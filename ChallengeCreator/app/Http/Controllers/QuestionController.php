@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use App\Events\QuestionEvent;
+use App\Http\Requests\QuestionFormRequest;
+
 class QuestionController extends Controller
 {
     private QuestionService $qService;
@@ -62,7 +64,7 @@ class QuestionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($qbID,Request $request)
+    public function store($qbID,QuestionFormRequest $request)
     {
         $testid = $request["testid"];
         unset($request["testid"]);
@@ -105,6 +107,7 @@ class QuestionController extends Controller
         $labels = $this->lService->getAll(["questionbanks" => $qbID]);
         $currSublabel = $this->lService->findOrFail($question->label_id,"id");
         $currLabel = $this->lService->findOrFail($currSublabel->label_id,"id");
+
         return Inertia::render("Questions/QuestionForm",[
             "QBank"=>$QB,
             "question"=>$question,
@@ -120,32 +123,28 @@ class QuestionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update($qbID,$qID,Request $request)
+    public function update($qbID,$qID,QuestionFormRequest $request)
     {
-        $this->qService->update($qID, $request->all());
+        $updated = $this->qService->update($qID, $request->all());
+        QuestionEvent::dispatch($updated,Auth::user()->name,"Updated");
         return redirect()->route("questions.index", ["qbID" => $qbID]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($qbID, Request $request)
+    public function destroy($qbID,$qID, Request $request)
     {
-            $deleted = $this->qService->delete($request["qID"]);
-            if($deleted) {
-                $QB = $this->qbService->findOrFail($qbID,"id");
-                $labels = $this->lService->getAll(["questionbanks" => $qbID]);
-                $questions = $this->qService->getAllPaginated(["questionbanks" => $qbID]);
-            return Inertia::render("Questions/QuestionListPage", [
-                "QBank" => $QB,
-                "questions" => $questions,
-                "labels" => $labels,
-                "sublabels" => fn() => isset($request["labels"]) ? $this->lService->getAll(["parent" => $request->labels]) : []
-            ]);
+            $target = $this->qService->find(["id" => $qID])->first();
+            // dd($target);
+            $deleted = $this->qService->delete($target);
 
-        }
-        else {
-            abort(400);
-        }
+            if($deleted) {
+                // QuestionEvent::dispatch($target,Auth::user()->name,"Deleted");
+                return redirect()->route("questions.index", ["qbID" => $qbID]);
+            }
+            else {
+                abort(400);
+            }
     }
 }
