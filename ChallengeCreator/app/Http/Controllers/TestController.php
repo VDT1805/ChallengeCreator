@@ -59,7 +59,7 @@ class TestController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($qbID,Request $request,$testID=null)
+    public function store($qbID,Request $request)
     {
         //
         $inserted = $this->tService->create($request->all()+["question_bank_id" => $qbID]);
@@ -229,21 +229,21 @@ class TestController extends Controller
     public function randomStore($qbID,Request $request)
     {
         // dd($request);
-        // $name = $request["name"];
-        // unset($request["name"]);
+        $name = $request["name"];
+        unset($request["name"]);
         $questions = collect([]);
         $inserted = $this->tService->create(["question_bank_id" => $qbID, "name" => $name]);
+        $QB = $this->qbService->findOrFail($qbID,"id");
         if ($inserted) {
             foreach($request->all() as $key => $value) {
                 $questions_query = $this->qService->getAll(["randSublabels" => [$key,$value]]);
-                $questions->push($questions_query);
+                $questions = $questions->concat($questions_query);
             }
             // dd($questions);
             foreach($questions as $question) {
                 $inserted->questions()->attach($question);
-
             }
-            return redirect()->route("tests.index", ["qbID" => $qbID]);
+            return Inertia::render("Test/TestDetail",["QBank" => $QB, "test" => $inserted, "questions" => $questions]);
         }
     }
 

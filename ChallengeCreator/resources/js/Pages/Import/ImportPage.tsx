@@ -201,6 +201,7 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
     const { data, setData, setDefaults, post, processing, transform } = uF({
         questions: [],
     });
+    // console.log(formData.getAll("csv"))
     const delta = currentStep - previousStep;
     const {
         register,
@@ -472,7 +473,7 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                                     </div>
                                 )}
                             />
-                            {formData.getAll.length > 0 && <Button onClick={removeFile}>Remove uploaded file</Button>}
+                            {formData.getAll("csv").length > 0 && <Button onClick={removeFile}>Remove uploaded file</Button>}
                         </motion.div>
                     )}
 

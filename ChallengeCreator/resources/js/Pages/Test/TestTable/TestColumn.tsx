@@ -88,7 +88,7 @@ export const columns: ColumnDef<Question>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem><Link href={route('tests.show',[test.question_bank_id,test.id])}>Edit</Link></DropdownMenuItem>
+            {/* <DropdownMenuItem><Link href={route('tests.show',[test.question_bank_id,test.id])}>Edit</Link></DropdownMenuItem> */}
             <DropdownMenuItem className="text-red-500 font-bold">Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

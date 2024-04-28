@@ -30,7 +30,7 @@ import axios from "axios";
 export default function TestTable({ auth, QBank, test, questions }: PageProps<{ QBank: QB, test: Test, questions: Array<Question> }>) {
     // console.log(JSON.stringify(questions));
     const [loading, setLoading] = useState(false);
-
+    console.log(questions)
     // const handleDownloadPDF = async () => {
     //     setLoading(true);
     //     try {
@@ -179,10 +179,10 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                             <UpdateIcon className="mr-2" />
                                             <Link href={route('tests.indexQuestion', [QBank.id, test.id])}>Reuse from this question bank</Link>
                                         </DropdownMenuItem>
-                                        <DropdownMenuItem>
+                                        {/* <DropdownMenuItem>
                                             <ShuffleIcon className="mr-2" />
                                             <Link href={route('tests.randcreate', [QBank.id])}>Add random question</Link>
-                                        </DropdownMenuItem>
+                                        </DropdownMenuItem> */}
                                         {/* <DropdownMenuItem>
                                             <FilePlusIcon className="mr-2" />
                                             <Link href={route('importinstruction')}>Import file</Link>

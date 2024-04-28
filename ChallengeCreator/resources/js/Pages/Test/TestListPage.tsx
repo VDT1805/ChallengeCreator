@@ -18,7 +18,7 @@ import {
     CardTitle,
 } from "@/shadcn/ui/card"
 import { Input } from "@/shadcn/ui/input";
-import { FileIcon, PlusIcon } from "@radix-ui/react-icons";
+import { FileIcon, FilePlusIcon, PlusIcon, ShuffleIcon } from "@radix-ui/react-icons";
 import React, { useState } from "react";
 import {
     Select,
@@ -29,11 +29,17 @@ import {
 } from "@/shadcn/ui/select"
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/shadcn/ui/pagination";
 import { LabelType } from "../Label/LabelTable/LabelType";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shadcn/ui/dropdown-menu';
+import { PaginationProp } from "../pagination";
 
 export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{ QBank: QB, tests: any, labels: LabelType[] }>) {
-    // console.log(JSON.stringify(tests));
+    // console.log(tests.links.slice(1,-1));
     const [sortState, setSortState] = React.useState("Alphabetical")
     const [query, setQuery] = useState<Record<string, string>>({});
+    const [currentPage, setCurrentPage] = useState(tests.current_page);
+    const [itemsPerPage, setItemsPerPage] = useState(tests.per_page);
+    const lastItemIndex =  currentPage * itemsPerPage;
+    const firstItemIndex = lastItemIndex - itemsPerPage;
     const labelValueChange = (e: string) => {
         setQuery(prevQuery => ({
             ...prevQuery,
@@ -53,11 +59,28 @@ export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{
                     </CardHeader> */}
                     <CardContent>
                         <div className="flex justify-end">
-                            <Link href={route('tests.create', QBank.id)} >
+                            {/* <Link href={route('tests.create', QBank.id)} >
                                 <Button>
                                     <PlusIcon className="mr-3" /> Add test
                                 </Button>
-                            </Link>
+                            </Link> */}
+                            <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button><PlusIcon className="mr-3" />Create Test</Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                                <DropdownMenuItem>
+                                    <PlusIcon className="mr-2" />
+                                    <Link href={route('tests.create', QBank.id)}>
+                                        Create a new test
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                        <ShuffleIcon className="mr-2" />
+                                            <Link href={route('tests.randcreate', [QBank.id])}>Create test from random questions</Link>
+                                        </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                         </div>
                         <Separator className="mb-3 mt-2" />
                         <div className="flex items-center gap-2">
@@ -103,20 +126,17 @@ export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{
                                 <Separator className="mb-2 mt-2" />
                                 <div className="flex gap-4">
                                     <Link className='bg-bluegreen text-white font-bold rounded-t px-4 py-2' href={route('tests.show', [test.question_bank_id, test.id])} as="button">
-
                                             Edit test
                                     </Link>
                                     <Link className='bg-red-500 text-white font-bold rounded-t px-4 py-2' method = "delete" href={route('tests.destroy', [test.question_bank_id, test.id])} as="button">
-
                                             Delete test
-
                                     </Link>
                                 </div>
                             </AccordionContent>
                         </AccordionItem>
                     )
                     )}
-                    <Pagination className="bg-white mt-2">
+                    {/* <Pagination className="bg-white mt-2">
                         <PaginationContent>
                             <PaginationItem>
                                 <PaginationPrevious href={tests.prev_page_url} />
@@ -128,7 +148,16 @@ export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{
                                 <PaginationNext href={tests.next_page_url} />
                             </PaginationItem>
                         </PaginationContent>
-                    </Pagination>
+                    </Pagination> */}
+                    <PaginationProp
+                        totalPosts={tests.total}
+                        postsPerPage={itemsPerPage}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                        next_url={tests.next_page_url}
+                        prev_url={tests.prev_page_url}
+                        links={tests.links.slice(1,-1)}>
+                    </PaginationProp>
                 </Accordion>
             </div>
         </QBLayout>
