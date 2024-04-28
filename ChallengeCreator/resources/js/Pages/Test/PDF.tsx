@@ -1,61 +1,119 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Link, Head } from '@inertiajs/react';
+
+import { Button, buttonVariants } from "@/shadcn/ui/button"
+
+import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarShortcut, MenubarTrigger } from '@/shadcn/ui/menubar';
 import { PageProps } from '@/types';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/shadcn/ui/card"
-import { Input } from "@/shadcn/ui/input"
-import { Label } from "@/shadcn/ui/label"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/shadcn/ui/select"
-import { Button } from '@/shadcn/ui/button';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import { Textarea } from '@/shadcn/ui/textarea';
-import { Checkbox } from '@/shadcn/ui/checkbox';
-import React, { FormEventHandler } from 'react';
-import { Menu } from '../Menu';
-import { QB } from '../QuestionBank/QuestionBankType';
-import QBLayout from '@/Layouts/QBLayout';
-import axios from 'axios';
+import { FormEvent, FormEventHandler, useState } from 'react';
+import { MathJax, MathJaxContext } from 'better-react-mathjax';
+import { convertHtmlToReact } from '@hedgedoc/html-to-react';
 
-export default function PDFTest(this: any, { auth, QBank, pdf }: PageProps<{ QBank: QB, pdf: any }>) {
-  // console.log(pdf);
-  const [position, setPosition] = React.useState("bottom")
-  const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        // description: ''
-    });
+export default function PDF({ auth }: PageProps) {
+  const [value, setValue] = useState("");
 
-    const submit: FormEventHandler = (e) => {
-        e.preventDefault();
-        post(route('tests.store',QBank.id));
-    };
-    // axios({
-    //     url: route("tests.pdfGen"),
-    //     method: 'GET',
-    //     responseType: 'blob', // important
-    //     }).then((response) => {
-    //     const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
-    //     const link = document.createElement('a');
-    //     link.href = url;
-    //     link.setAttribute('download', 'Examen.pdf')
-    //     link.target = '_blank'
-    //     link.click();})
+  const doc = new jsPDF({
+    orientation: "portrait",
+    unit: "pt",
+  });
+
+  // autoTable(doc, {
+  //   body: [
+  //     [
+  //       {
+  //         content: "ChallengeCreator",
+  //         styles: {
+  //           halign: 'left',
+  //           fontSize: 20,
+  //           textColor: '#ffffff'
+  //         }
+  //       },
+  //       {
+  //         content: "ChallengeCreator",
+  //         styles: {
+  //           halign: 'left',
+  //           fontSize: 20,
+  //           textColor: '#ffffff'
+  //         }
+  //       }
+  //     ],
+  //   ],
+  //   theme: 'plain',
+  //   styles: {
+  //     fillColor: '#3366ff'
+  //   }
+  // })
+
+  var field = "<MathJaxContext><MathJax>" + value + "</MathJax></MathJaxContext>"
+
+  // const render = () => {
+  //   return <><MathJaxContext><MathJax>{convertHtmlToReact(field)}</MathJax></MathJaxContext></>;
+  // }
+
+  // render()
+
+  const htmlToPDF = () => {
+    doc.setFontSize(13)
+    var xOffset = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(value) * doc.getFontSize() / 2);
+    doc.text(value, xOffset + 10, 250);
+    doc.html(field, {
+      callback: function (doc) {
+        // doc.output('dataurlnewwindow');
+      },
+      width: 210,
+      windowWidth: 210,
+      html2canvas: {
+        backgroundColor: 'lightyellow',
+        width: 210,
+        height: 150
+      },
+      x: 10,
+      y: 50,
+    })
+    var iframe = document.createElement('iframe');
+    iframe.setAttribute('style','position:absolute;right:0; top:0; bottom:0; height:100%; width:650px; padding:20px;');
+    document.body.appendChild(iframe);
+    iframe.src = doc.output('datauristring');
+    // doc.html(value, {
+    //   callback: function (doc) {
+    //     doc.output('dataurlnewwindow')
+    //     // doc.save("output.pdf")
+    //   },
+    //   x: 0,
+    //   y: 0,
+    //   width: 170, //target width in the PDF document
+    //   windowWidth: 1000 //window width in CSS pixels
+    // })
+  };
+
+  const mathJaxConfig = {
+    loader: { load: ["[tex]/html"] },
+    tex: {
+      packages: { "[+]": ["html"] },
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      displayMath: [
+        ["$$", "$$"],
+        ["\\[", "\\]"]
+      ]
+    }
+  };
+
 
   return (
-    <QBLayout
-      user={auth.user}
-      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight"></h2>} QBank={QBank} CanEdit={true}>
-      <div className="mt-10 mb-10 max-w-7xl mx-auto sm:px-6 lg:px-8"></div>
-    </QBLayout>
-  );
+    <MathJaxContext version={3} config={mathJaxConfig}>
+      <div className="bg-auto w-screen h-screen bg-center">
+        <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
+          <Head title="Homepage" />
+          <Textarea className="txt" name="txt" onChange={(e) => setValue(e.target.value)} />
+          <Button onClick={() => { htmlToPDF() }}>Submit</Button>
+          Preview: <MathJax>{value}</MathJax>
+        </section>
+      </div>
+    </MathJaxContext>
+  )
 }

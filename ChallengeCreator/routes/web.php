@@ -153,6 +153,10 @@ Route::get('/qbs/{qbID}/tests/{testID}/pdf', [TestController::class,'pdfGenerate
 Route::get('/qbs/{qbID}/tests/{testID}/pdfStream', [TestController::class,'pdfStream'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('tests.pdfStream');
 
+Route::get('/pdf', function () {
+    return Inertia::render('Test/PDF');
+})->middleware(['auth', 'verified'])->name('pdf');
+
 ##################################################################
 
 Route::get('/qbs/{qbID}/labels',[LabelController::class,'index'])
