@@ -86,8 +86,6 @@ export default function Login({ status, canResetPassword }: { status?: string, c
                             Forgot your password?
                         </Link>
                     )}
-
-
                     <PrimaryButton className="ms-4" disabled={processing}>
                         Log in
                     </PrimaryButton>
@@ -96,8 +94,7 @@ export default function Login({ status, canResetPassword }: { status?: string, c
                         href={route('register')}
                         className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-
-                        Don't have an account? Sign Up
+                        Don't have an account? Create one here.
                 </Link>
             </form>
         </GuestLayout>

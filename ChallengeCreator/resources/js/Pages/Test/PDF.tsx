@@ -57,7 +57,7 @@ export default function PDF({ auth }: PageProps) {
   const htmlToPDF = () => {
     doc.setFontSize(13)
     var xOffset = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(value) * doc.getFontSize() / 2);
-    doc.text(value, xOffset + 10, 250);
+    // doc.text(value, xOffset + 10, 250);
     doc.html(field, {
       callback: function (doc) {
         // doc.output('dataurlnewwindow');
