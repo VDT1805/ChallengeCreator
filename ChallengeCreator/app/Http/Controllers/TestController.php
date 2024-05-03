@@ -10,6 +10,7 @@ use App\Http\Services\QuestionService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Services\LabelService;
 use Exception;
+use FontLib\TrueType\Collection;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\File;
 use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf;
@@ -58,7 +59,7 @@ class TestController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($qbID,Request $request,$testID=null)
+    public function store($qbID,Request $request)
     {
         //
         $inserted = $this->tService->create($request->all()+["question_bank_id" => $qbID]);
@@ -104,9 +105,19 @@ class TestController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Test $test)
+    public function destroy($qbID,$tID, Request $request)
     {
         //
+        $target = $this->tService->find(["id" => $tID])->first();
+        // dd($target);
+        $deleted = $this->tService->delete($target);
+        if($deleted) {
+            return redirect()->route("tests.index", ["qbID" => $qbID]);
+        }
+        else {
+            abort(400);
+        }
+
     }
 
     // public function createQuestion($qbID, $testID, Request $request)
@@ -207,8 +218,6 @@ class TestController extends Controller
 
     public function randomCreate($qbID)
     {
-        //
-        // dd($request);
         $QB = $this->qbService->findOrFail($qbID,"id");
         $labels = $this->lService->getAll(["all" => $qbID]);
         return Inertia::render("Test/AddRandomTestQuestion",["QBank" => $QB, "labels" => $labels]);
@@ -219,12 +228,22 @@ class TestController extends Controller
      */
     public function randomStore($qbID,Request $request)
     {
-        //
-
-        $inserted = $this->tService->create($request->all()+["question_bank_id" => $qbID]);
+        // dd($request);
+        $name = $request["name"];
+        unset($request["name"]);
+        $questions = collect([]);
+        $inserted = $this->tService->create(["question_bank_id" => $qbID, "name" => $name]);
+        $QB = $this->qbService->findOrFail($qbID,"id");
         if ($inserted) {
-            $questions = $this->qService->getAll(["randSublabels" => [$request["sublabels"],$request["count"]]]);
-            return redirect()->route("tests.index", ["qbID" => $qbID]);
+            foreach($request->all() as $key => $value) {
+                $questions_query = $this->qService->getAll(["randSublabels" => [$key,$value]]);
+                $questions = $questions->concat($questions_query);
+            }
+            // dd($questions);
+            foreach($questions as $question) {
+                $inserted->questions()->attach($question);
+            }
+            return Inertia::render("Test/TestDetail",["QBank" => $QB, "test" => $inserted, "questions" => $questions]);
         }
     }
 

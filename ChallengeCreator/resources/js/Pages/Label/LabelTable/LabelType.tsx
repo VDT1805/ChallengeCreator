@@ -21,6 +21,8 @@ export interface LabelPage {
     updated_at: any
     description: string
     question_bank_id: number
+    sublabels?: Array<LabelType>
+    questions_count?: number
     label_id: any
   }
 

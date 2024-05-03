@@ -52,22 +52,6 @@ class MemberController extends Controller
      */
     public function create($qbID, Request $request)
     {
-        //
-        // $QB = $this->qbService->findOrFail($qbID,"id");
-
-        // if (!$QB) {
-        //     abort(404);
-        // }
-        // $inviteURL = URL::temporarySignedRoute(
-        //     'members.store', now()->addMinutes($request["time"])
-        //     ,["qbID" => $qbID,"role" => $request["role"]]
-        //     ,absolute:true
-        // );
-        // return Inertia::render("Member/InviteMemberForm", [
-        //     "QBank" => $QB,
-        //     "inviteURL" => $inviteURL
-        // ]);
-        //
         if (! $request->hasValidSignature()) {
             abort(403);
         }
@@ -141,7 +125,7 @@ class MemberController extends Controller
         // dd($request);
         // dd($request["user"],$this->mService->getAll(["id"=>$request["user"]])->first());
         $QB = $this->qbService->findOrFail($qbID,"id");
-        $members = $this->mService->getAllPaginated($request->all() + ["questionbanks" => $qbID]);
+
         $editorURL = URL::temporarySignedRoute(
             'members.store', now()->addMinutes(60)
             ,["qbID" => $qbID,"role" => "editor"]
@@ -154,11 +138,14 @@ class MemberController extends Controller
         );
         $this->mService->delete($request["user"],["role" => $request["role"], "team" => $request["team"]]);
         MemberOut::dispatch($this->mService->findOrFail($request["user"],"id"),$request["team"]);
-        return Inertia::render("Member/MemberIndexTest", [
-            "QBank" => $QB,
-            "members" => $members,
-            "editorURL" => $editorURL,
-            "viewerURL" => $viewerURL
-        ]);
+        // $members = $this->mService->getAllPaginated($request->all() + ["questionbanks" => $qbID]);
+        // return Inertia::render("Member/MemberIndexTest", [
+        //     "QBank" => $QB,
+        //     "members" => $members,
+        //     "editorURL" => $editorURL,
+        //     "viewerURL" => $viewerURL
+        // ]);
+        return redirect()->back();
+
     }
 }

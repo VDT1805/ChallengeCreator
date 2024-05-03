@@ -21,7 +21,7 @@ class QuestionEvent implements ShouldBroadcast
     public string $author;
     public Question $question;
     public string $type;
-    public function __construct( Question $question,string $author,string $type)
+    public function __construct(Question $question,string $author,string $type)
     {
         $this->author = $author;
         $this->question = $question;

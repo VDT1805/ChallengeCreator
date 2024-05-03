@@ -57,6 +57,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/shadcn/ui/table"
+import { PaginationProp } from '../pagination';
 
 function EventTable({changeLog}: {changeLog: QuestionEvent[]}) {
     return (
@@ -110,7 +111,7 @@ function UpdateDialog(changeLog: QuestionEvent[]) {
           <DialogHeader>
             <DialogTitle>Update Log</DialogTitle>
             <DialogDescription>
-              Logs of every update made to the question.
+              Logs of every update made to the question bank by users.
             </DialogDescription>
           </DialogHeader>
           <div className="flex items-center space-x-2">
@@ -131,7 +132,12 @@ function UpdateDialog(changeLog: QuestionEvent[]) {
   }
 
 export default function QuestionList({ auth, QBank, questions, labels, sublabels }: PageProps<{ QBank: QB, questions: QPage, labels: LabelType[], sublabels: LabelType[] }>) {
+  console.log(questions)
   const [query, setQuery] = useState<Record<string, string>>({});
+  const [currentPage, setCurrentPage] = useState(questions.current_page);
+  const [itemsPerPage, setItemsPerPage] = useState(questions.per_page);
+  const lastItemIndex =  currentPage * itemsPerPage;
+  const firstItemIndex = lastItemIndex - itemsPerPage;
   const filter: FormEventHandler = (e) => {
     e.preventDefault();
     router.get(route('questions.index', QBank.id), query, { preserveState: true, preserveScroll: true });
@@ -301,16 +307,21 @@ return (
                                         }
                                         <Separator className="mb-2 mt-2" />
                                         <div className="flex gap-4">
-                                            <Link href={route('questions.edit', [question.question_bank_id, question.id])} method="get">
+                                            <Link href={route('questions.edit', [question.question_bank_id, question.id])} method="get" as="button">
                                                 <Button className='bg-bluegreen text-white font-bold rounded-t px-4 py-2'>
                                                     Edit question
                                                 </Button>
                                             </Link>
-                                            <Link href={route('questions.destroy', [question.question_bank_id])} method='delete' data={{ qID: question.id }}>
+                                            <Link href={route('questions.destroy', [question.question_bank_id])} method='delete' data={{ qID: question.id }} as="button">
                                                 <Button className='bg-red-500 text-white font-bold rounded-t px-4 py-2'>
                                                     Delete question
                                                 </Button>
                                             </Link>
+                                            {/* <Link href={route('questions.destroy', [question.question_bank_id,question.id])} method='delete' as="button">
+                                                <Button className='bg-red-500 text-white font-bold rounded-t px-4 py-2'>
+                                                    Delete question
+                                                </Button>
+                                            </Link> */}
                                         </div>
                                     </AccordionContent>
                                 </AccordionItem>
@@ -318,7 +329,7 @@ return (
                         );
                     }
                     )}
-                <Pagination className="bg-white mt-2">
+                {/* <Pagination className="bg-white mt-2">
                     <PaginationContent>
                         <PaginationItem>
                             <PaginationPrevious href={questions.prev_page_url} />
@@ -330,7 +341,15 @@ return (
                             <PaginationNext href={questions.next_page_url} />
                         </PaginationItem>
                     </PaginationContent>
-                </Pagination>
+                </Pagination> */}
+                <PaginationProp
+                totalPosts={questions.total}
+                postsPerPage={itemsPerPage}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                next_url={questions.next_page_url}
+                prev_url={questions.prev_page_url}
+                links={questions.links.slice(1,-1)}/>
             </Accordion>
         </div>
     </QBLayout>

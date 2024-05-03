@@ -26,18 +26,18 @@ import { Menu } from '../Menu';
 import { QB } from '../QuestionBank/QuestionBankType';
 import QBLayout from '@/Layouts/QBLayout';
 import { LabelType } from '../Label/LabelTable/LabelType';
+import InputError from '@/Components/InputError';
 
 export default function AddRandomTestQuestion({ auth, QBank, labels }: PageProps<{ QBank: QB, labels: LabelType[] }>) {
-  // console.log(labels);
+  console.log(labels[0].sublabels);
   const [position, setPosition] = React.useState("bottom")
-  const { data, setData, post, processing, errors, reset } = useForm({
-    name: '',
-    // description: ''
+  const { data, setData, post, processing, errors, reset, transform } = useForm({
+    name: ""
   });
 
   const submit: FormEventHandler = (e) => {
     e.preventDefault();
-    post(route('tests.store', QBank.id));
+    post(route('tests.randstore', QBank.id));
   };
 
   return (
@@ -52,47 +52,52 @@ export default function AddRandomTestQuestion({ auth, QBank, labels }: PageProps
           </CardHeader>
           <CardContent>
             <form onSubmit={submit}>
+            <div className="grid w-full items-center gap-2">
+                                    <Label htmlFor="name" className="text-xl font-bold">Test name</Label>
+                                    <Input id="name"
+                                        type="name"
+                                        name="name"
+                                        value={data.name}
+                                        onChange={(e) => setData('name', e.target.value)}
+                                        placeholder="Name of your test"
+                                        className="mb-5" />
+                                    {errors.name && <InputError message={errors.name}></InputError>}
+               </div>
               <div className="flex flex-col space-y-1.5 mb-5 mb-3">
 
-                <Label htmlFor="name" className="text-xl font-bold">Generic Parent &gt; Label 1</Label>
-                <div className="flex items-center space-x-2">
-                  <Select>
-                    <SelectTrigger className="w-[180px]" >
-                      <SelectValue placeholder="Number of questions" />
-                    </SelectTrigger >
-                    <SelectContent className="SelectContent">
-                      {
-                        Array.from(Array(3), (e, i) => {
-                          return <SelectItem key={i + 1} value={(i + 1).toString()}>
-                            {i + 1}
-                          </SelectItem>
-                        })
-                      }
-                    </SelectContent>
-                  </Select>
-                  <Label> 3 available </Label>
-                </div>
+                {labels.map((label) => (
+                        <div>
+                        {label.sublabels!.map((sublabel) => (
+                            <div className="flex items-center space-x-2">
+                            <Label htmlFor="name" className="text-xl font-bold">{label.name} &gt; {sublabel.name}</Label>
+                            <Input
+                                type='number'
+                                max={sublabel.questions_count}
+                                min={0}
+                                inputMode='numeric'
+                                onChange={(e) => {
+                                    const value = Number(e.target.value); // Convert value to a number
+                                    if (value > Number(sublabel.questions_count)) {
+                                        e.target.value = sublabel.questions_count!.toString();
+                                    }
+                                    if (value != 0) {
+                                        console.log("FDSK");
+                                        transform((data) => ({
+                                            ...data,
+                                            [sublabel.id]: e.target.value
+                                        }))
+                                    }
+                                }}
+                                placeholder="Number of questions"
+                            />
+                            <Label> {sublabel.questions_count} available </Label>
+                        </div>
+                        ))}
+                    </div>
 
-                <Label htmlFor="name" className="text-xl font-bold">Generic Parent &gt; Label 2</Label>
-                <div className="flex items-center space-x-2">
-                  <Select>
-                    <SelectTrigger className="w-[180px]" >
-                      <SelectValue placeholder="Number of questions" />
-                    </SelectTrigger >
-                    <SelectContent className="SelectContent">
-                      {
-                        Array.from(Array(4), (e, i) => {
-                          return <SelectItem key={i + 1} value={(i + 1).toString()}>
-                            {i + 1}
-                          </SelectItem>
-                        })
-                      }
-                    </SelectContent>
-                  </Select>
-                  <Label> 4 available </Label>
-                </div>
+                ))}
 
-                <Label htmlFor="name" className="text-xl font-bold">Order</Label>
+                {/* <Label htmlFor="name" className="text-xl font-bold">Order</Label>
                 <Select>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Order of random" />
@@ -111,7 +116,7 @@ export default function AddRandomTestQuestion({ auth, QBank, labels }: PageProps
                       <SelectItem value="teststart">At the start of the test</SelectItem>
                       <SelectItem value="testend">At the end of the test</SelectItem>
                   </SelectContent>
-                </Select>
+                </Select> */}
 
               </div>
               <Button type='submit'>

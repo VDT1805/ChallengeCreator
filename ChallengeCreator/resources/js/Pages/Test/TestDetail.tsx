@@ -30,7 +30,7 @@ import axios from "axios";
 export default function TestTable({ auth, QBank, test, questions }: PageProps<{ QBank: QB, test: Test, questions: Array<Question> }>) {
     // console.log(JSON.stringify(questions));
     const [loading, setLoading] = useState(false);
-
+    console.log(questions)
     // const handleDownloadPDF = async () => {
     //     setLoading(true);
     //     try {
@@ -140,10 +140,12 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                         Print
                                     </Button>
                                     <Separator orientation="vertical" className="border-2 border-bluegreen" /> */}
-                                    <Button variant="ghost" className="flex gap-3">
-                                        <Trash2Icon className="ml-2 h-4 w-4 mt-1" />
-                                        Delete
-                                    </Button>
+                                    <Link method="delete" href={route('tests.destroy', [test.question_bank_id, test.id])}>
+                                        <Button variant="ghost" className="flex gap-3">
+                                            <Trash2Icon className="ml-2 h-4 w-4 mt-1" />
+                                            Delete
+                                        </Button>
+                                    </Link>
                                 </div>
                                 <div className="flex gap-2">
                                     {/* <Button className="bg-bluegreen flex gap-3 hover:bg-bluegreen-dark">
@@ -177,10 +179,10 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                             <UpdateIcon className="mr-2" />
                                             <Link href={route('tests.indexQuestion', [QBank.id, test.id])}>Reuse from this question bank</Link>
                                         </DropdownMenuItem>
-                                        <DropdownMenuItem>
+                                        {/* <DropdownMenuItem>
                                             <ShuffleIcon className="mr-2" />
                                             <Link href={route('tests.randcreate', [QBank.id])}>Add random question</Link>
-                                        </DropdownMenuItem>
+                                        </DropdownMenuItem> */}
                                         {/* <DropdownMenuItem>
                                             <FilePlusIcon className="mr-2" />
                                             <Link href={route('importinstruction')}>Import file</Link>
