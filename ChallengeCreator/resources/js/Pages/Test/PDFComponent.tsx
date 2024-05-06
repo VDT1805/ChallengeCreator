@@ -3,7 +3,6 @@ import React, { useRef } from 'react';
 
 export function PDFContainer(props: any) {
   const bodyRef = useRef<HTMLDivElement>(null);
-  // console.log(bodyRef)
   const createPdf = () => props.createPdf(bodyRef.current);
   const test = () => props.test();
 

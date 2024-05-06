@@ -6,7 +6,7 @@ export const data = [
       {
         _id: '601f85091d54480ac8edc70e',
         question_data:
-          'The tune period of a particle in simple harmonic motion is 8 seconds. At $t = 0$, it is at the mean position. The ratio of the distances travelled by it in the first and second seconds is:',
+          '<p class="MsoNormal" style=\'text-align:justify\'><span lang="EN-IN" style=\'font-size:12.0pt;line-height:107%;\'>The\r\n  tune period of a particle in simple harmonic motion is 8 seconds. At $t = 0$, it is at the mean position. The ratio of the distances travelled by it in the\r\n  first and second seconds is:</span></p>',
         ans_list: [
           {
             answer_data:
