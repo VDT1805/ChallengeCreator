@@ -14,8 +14,9 @@ use FontLib\TrueType\Collection;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\File;
 use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf;
-
-
+use Gotenberg\Gotenberg;
+use Gotenberg\Stream;
+use Gotenberg\Exceptions\GotenbergApiErrored;
 class TestController extends Controller
 {
     private TestService $tService;
@@ -183,23 +184,41 @@ class TestController extends Controller
         $detachmentResult = $test->questions()->detach($question);
     }
 
-    public function pdfGenerate($qbID, $testID) {
+    public function pdfGenerate($qbID, $testID, Request $request) {
         $QB = $this->qbService->findOrFail($qbID,"id");
         $test = $this->tService->find(["questionbanks" => $qbID, "id" => $testID])->first();
         if(!$test) {
             abort(404);
         }
+        $settings = $request->all();
         $questions = $this->qService->find(["question_test"=>$testID]);
+        $questions_bags = [];
+        if($settings["quesmix"]) {
+            for($i = 0; $i < $settings["numcopies"]; $i++) {
+                $newbag = $questions->shuffle();
+                $questions_bags[] = $newbag;
+            }
+        }
         $data = [
             "test" => $test,
-            "questions" => $questions
+            "questions_bag" => $questions_bags,
+            "settings" => $settings
         ];
-        // dd($questions);
-        $pdf = PDF::loadView('exampdf',$data);
-        return $pdf->download($test->name.'.pdf');
+
+        $html = view('exampdf',$data)->render();
+        // dd($html);
+        $request = Gotenberg::chromium("http://localhost:3000/")
+        ->pdf()->html(Stream::string('index.html',$html));
+        $client = new \Http\Adapter\Guzzle7\Client;
+        try {
+            $response = $client->sendRequest($request);
+            return $response->getBody();
+        } catch (GotenbergApiErrored $e) {
+            dd($e->getMessage());
+        }
     }
 
-    public function pdfStream($qbID, $testID)
+    public function pdfSettings($qbID, $testID)
     {
         $QB = $this->qbService->findOrFail($qbID,"id");
         $test = $this->tService->find(["questionbanks" => $qbID, "id" => $testID])->first();

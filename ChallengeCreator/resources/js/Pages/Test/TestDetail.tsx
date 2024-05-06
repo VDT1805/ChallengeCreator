@@ -23,38 +23,64 @@ import {
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@/shadcn/ui/select"
+} from "@/shadcn/ui/select";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+  } from "@/shadcn/ui/dialog";
 import { useState } from "react";
 import axios from "axios";
+import { Label } from "@/shadcn/ui/label";
+import { Checkbox } from "@/shadcn/ui/checkbox";
 
 export default function TestTable({ auth, QBank, test, questions }: PageProps<{ QBank: QB, test: Test, questions: Array<Question> }>) {
     // console.log(JSON.stringify(questions));
     const [loading, setLoading] = useState(false);
-    console.log(questions)
-    // const handleDownloadPDF = async () => {
-    //     setLoading(true);
-    //     try {
-    //         const response = await axios.get(route("tests.pdfGen",{qbID: QBank.id, testID: test.id}));
-    //         console.log(response);
-    //             // Extract the file name from the response headers
-    //     const contentDisposition = response.headers['content-disposition'];
-    //     const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
-    //     const fileName = fileNameMatch ? fileNameMatch[1] : 'sample.pdf';
+    const [numCopies, setNumCopies] = useState(1);
+    const [isQuesOrdMixed, setIsQuesOrdMixed] = useState(false);
+    const [isChoiceOrdMixed, setIsChoiceOrdMixed] = useState(false);
 
-    //     // Handle the PDF download
-    //     const blob = new Blob([response.data], { type: 'application/pdf' });
-    //     const url = window.URL.createObjectURL(blob);
-    //     const a = document.createElement('a');
-    //     a.href = url;
-    //     a.download = fileName;
-    //     a.click();
-    //     window.URL.revokeObjectURL(url);
-    //     } catch (error) {
-    //         // Handle error
-    //         console.log(error);
-    //     }
-    //     setLoading(false);
-    // };
+    const handleNumCopiesChange = (event: any) => {
+        setNumCopies(event.target.value);
+    };
+
+    const handleQuesOrdChange = (event: any) => {
+        setIsQuesOrdMixed(!isQuesOrdMixed);
+    };
+
+    const handleChoiceOrdChange = (event: any) => {
+        setIsChoiceOrdMixed(!isChoiceOrdMixed);
+    };
+    console.log(questions)
+    const handleDownloadPDF = async () => {
+        setLoading(true);
+        try {
+            const response = await axios.get(route("tests.pdfGen",{qbID: QBank.id, testID: test.id}));
+            console.log(response);
+                // Extract the file name from the response headers
+        const contentDisposition = response.headers['content-disposition'];
+        const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
+        const fileName = fileNameMatch ? fileNameMatch[1] : 'sample.pdf';
+
+        // Handle the PDF download
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        } catch (error) {
+            // Handle error
+            console.log(error);
+        }
+        setLoading(false);
+    };
 
     //     const invoice = async() => {
     //         axios({
@@ -85,9 +111,11 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
         setLoading(true);
         axios({
             url: route("tests.pdfGen", { qbID: QBank.id, testID: test.id }),
+            params: {quesmix: isQuesOrdMixed, choicemix: isChoiceOrdMixed, numcopies: numCopies},
             method: 'GET',
             responseType: 'blob', // important
         }).then((response) => {
+            console.log("kfsd")
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
             link.href = url;
@@ -148,9 +176,65 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                     </Link>
                                 </div>
                                 <div className="flex gap-2">
-                                    {/* <Button className="bg-bluegreen flex gap-3 hover:bg-bluegreen-dark">
-                                        <Link href={route('tests.pdfGen', [QBank.id, test.id]) } method = "get">Preview</Link>
-                                    </Button> */}
+                                    <Button className="bg-bluegreen flex gap-3 hover:bg-bluegreen-dark">
+                                        <Link href={route('tests.pdfGen', [QBank.id, test.id,{quesmix: isQuesOrdMixed, choicemix: isChoiceOrdMixed, numcopies: numCopies}]) } method = "get">Preview</Link>
+                                    </Button>
+
+                                    {/* <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button>
+                                            <PlusIcon className="mr-3" />Export PDF
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent>
+                                        <DropdownMenuItem onClick={dl}>
+                                            <PlusIcon className="mr-2" />
+                                                Export one
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            <UpdateIcon className="mr-2" />
+                                            <Link href={route('tests.pdfSettings', [QBank.id, test.id])}>
+                                                Export multiple
+                                            </Link>
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu> */}
+                                <Dialog>
+                                    <DialogTrigger asChild>
+                                        <Button variant="outline">Edit Profile</Button>
+                                    </DialogTrigger>
+                                    <DialogContent className="sm:max-w-[425px]">
+                                        <DialogHeader>
+                                        <DialogTitle>Export Settings</DialogTitle>
+                                        <DialogDescription>
+                                            Choose settings to export your PDF.
+                                        </DialogDescription>
+                                        </DialogHeader>
+                                        <div className="grid gap-4 py-4">
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <Label htmlFor="numcopies" className="text-right">
+                                                Number of copies
+                                                </Label>
+                                                <Input id="numcopies" type="number" min="1" className="col-span-3" value={numCopies} onChange={handleNumCopiesChange} />
+                                            </div>
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <Label htmlFor="quesord" className="text-right">
+                                                Mixing question order
+                                                </Label>
+                                                <Checkbox id="quesord" className="col-span-3" checked={isQuesOrdMixed} onClick={handleQuesOrdChange} />
+                                            </div>
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <Label htmlFor="choiceord" className="text-right">
+                                                Mixing choices order
+                                                </Label>
+                                                <Checkbox id="choiceord" className="col-span-3" checked={isChoiceOrdMixed} onClick={handleChoiceOrdChange} />
+                                            </div>
+                                        </div>
+                                        <DialogFooter>
+                                        <Button onClick={dl}>Export</Button>
+                                        </DialogFooter>
+                                    </DialogContent>`
+                                </Dialog>
                                     <Button className="bg-indianred flex gap-3 hover:bg-indianred-dark" onClick={view} disabled={loading}>
                                         {loading ? 'Generating PDF...' : 'View PDF'}
                                     </Button>
@@ -168,7 +252,9 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                             <div className="flex justify-end">
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
-                                        <Button> <PlusIcon className="mr-3" />Add question</Button>
+                                        <Button>
+                                            <PlusIcon className="mr-3" />Add question
+                                        </Button>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent>
                                         <DropdownMenuItem>
@@ -179,14 +265,6 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                             <UpdateIcon className="mr-2" />
                                             <Link href={route('tests.indexQuestion', [QBank.id, test.id])}>Reuse from this question bank</Link>
                                         </DropdownMenuItem>
-                                        {/* <DropdownMenuItem>
-                                            <ShuffleIcon className="mr-2" />
-                                            <Link href={route('tests.randcreate', [QBank.id])}>Add random question</Link>
-                                        </DropdownMenuItem> */}
-                                        {/* <DropdownMenuItem>
-                                            <FilePlusIcon className="mr-2" />
-                                            <Link href={route('importinstruction')}>Import file</Link>
-                                        </DropdownMenuItem> */}
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </div>

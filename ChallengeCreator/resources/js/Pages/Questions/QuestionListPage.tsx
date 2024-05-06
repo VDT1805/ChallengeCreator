@@ -195,6 +195,12 @@ return (
                                         Import file
                                     </Link>
                                 </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <PlusIcon className="mr-2" />
+                                    <Link href={route('questions.aicreate', [QBank.id])}>
+                                        Add questions using AI!
+                                    </Link>
+                                </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>
@@ -207,12 +213,6 @@ return (
                             }))}
                             placeholder="Search for a question..."
                             className="border-2 border-blue-500 border-solid" />
-                        {/* <MathJaxContext>
-                            <h2>Basic MathJax example with Latex</h2>
-                            <MathJax>
-                                {"\\(\\frac{10}{4x} \\approx 2^{12}\\)"}
-                            </MathJax>
-                        </MathJaxContext> */}
                         <Select>
                             <SelectTrigger className="w-[180px]">
                                 <SelectValue placeholder="Sort by" />
@@ -284,15 +284,6 @@ return (
                                         <p>Created at: {question.created_at}</p>
                                         <p>Updated at: {question.updated_at}</p>
                                         <Separator className="mb-2 mt-2" />
-                                        {/* <p>Answer 1: {question.ans1}</p>
-                                <p>Answer 2: {question.ans2}</p>
-                                <p>Answer 3: {question.ans3}</p>
-                                <p className="flex gap-2 font-bold items-center text-green-500">Answer 4: {question.ans4} <CheckCircledIcon /> </p>
-                                <p>Answer 5: {question.ans5}</p>
-                                <p>Answer 6: {question.ans6}</p> */}
-                                        {/* {answers && answers.map((answer, index) => (
-                                            answer && <p key={index}>Answer {index + 1}: {answer}</p>
-                                        ))} */}
                                         {
                                             answers && answers.map((ans, idx) => {
                                                 var correct = question.correct;

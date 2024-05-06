@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\LabelService;
 use App\Http\Services\QuestionService;
 use App\Http\Services\QuestionBankService;
 use App\Models\Question;
@@ -18,13 +19,16 @@ class CSVController extends Controller
 {
     private QuestionService $qService;
     private QuestionBankService $qbService;
-    public function __construct(QuestionService $qService, QuestionBankService $qbService)
+    private LabelService $lService;
+    public function __construct(QuestionService $qService, QuestionBankService $qbService, LabelService $lService)
     {
         $this->qService = $qService;
         $this->qbService = $qbService;
+        $this->lService = $lService;
     }
     public function importForm($qbID)
     {
+        // dd($this->lService->find(["questionbanks" => $qbID])[0]->sublabels);
         $QB = $this->qbService->findOrFail($qbID,"id");
         $template_url = Storage::get("template.csv");
         // Storage::download("template.csv");
@@ -54,7 +58,7 @@ class CSVController extends Controller
             $fileExtension = $file->getClientOriginalExtension();
             $path = $request->file('csv')->store("public");
             $rules = [
-                'id' => 'required|string',
+                // 'id' => 'required|string',
                 'question' => 'required|string',
                 'ans1' => 'string',
                 'ans2' => 'string',
@@ -62,17 +66,31 @@ class CSVController extends Controller
                 'ans4' => 'string',
                 'ans5' => 'string',
                 'ans6' => 'string',
-                'correct' => 'required|numeric',
+                'correct' => 'required|numeric|between:1,6',
                 'label' => 'string',
                 'sublabel' => 'string'
             ];
             $filtered = [];
             $violators = [];
+            $labels = $this->lService->find(["questionbanks" => $qbID]);
             SimpleExcelReader::create(storage_path('app/') . $path, 'csv')->getRows()->
-            each(function($row) use ($rules, &$filtered, &$violators) {
+            each(function($row) use ($rules, &$filtered, &$violators, $labels) {
                 $validator = Validator::make($row, $rules);
                 if ($validator->passes()) {
-                    $filtered[] = $row;
+                    $label = $labels->where("name", $row['label'])->first();
+                    if ($label) {
+                        // dd($label->sublabels->array_where($array, function ($key, $value) {
+                        //     return $value
+                        // }););
+                        $filtered[] = $row;
+                            return;
+                        // if($label->sublabels->where("name", $row['label'])->first()) {
+                        //     $filtered[] = $row;
+                        //     return;
+                        // }
+                    }
+                    $violators[] = $row;
+                    return;
                 } else {
                     $violators[] = $row;
                 }

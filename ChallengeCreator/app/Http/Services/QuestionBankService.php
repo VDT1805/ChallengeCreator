@@ -27,6 +27,13 @@ class QuestionBankService implements BaseCrudServiceInterface
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
+    public const NAME = "QBService";
+
+    public function getName(): string
+    {
+        return self::NAME;
+    }
+
     public function getAllPaginated(array $search = [], int $pageSize = 15): LengthAwarePaginator
     {
         $search["users"] = Auth::user()->id;

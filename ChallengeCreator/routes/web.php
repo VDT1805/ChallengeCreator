@@ -82,6 +82,12 @@ Route::delete('/qbs/{qbID}/questions', [QuestionController::class,'destroy'])
 Route::get('/qbs/{qbID}/questions/create/', [QuestionController::class,'create'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.create');
 
+Route::get('/qbs/{qbID}/questions/aicreate/',[QuestionController::class,'AIcreate'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.aicreate');
+
+Route::post('/qbs/{qbID}/questions/aicreate/',[QuestionController::class,'AIstore'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.aistore');
+
 Route::post('/qbs/{qbID}/questions/create', [QuestionController::class,'store'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.store');
 
@@ -102,6 +108,7 @@ Route::put('/qbs/{qbID}/questions/{qID}/edit', [QuestionController::class,'updat
 
 Route::get('/qbs/{qbID}/questions/templatedownload',[CSVController::class,'downloadTemplate'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.downloadTemplate');
+
 
 ##################################################################
 
@@ -150,8 +157,8 @@ Route::put('/qbs/{qbID}/tests/{testID}/addques', [TestController::class,'detachQ
 Route::get('/qbs/{qbID}/tests/{testID}/pdf', [TestController::class,'pdfGenerate'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('tests.pdfGen');
 
-Route::get('/qbs/{qbID}/tests/{testID}/pdfStream', [TestController::class,'pdfStream'])
-->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('tests.pdfStream');
+Route::get('/qbs/{qbID}/tests/{testID}/pdfSettings', [TestController::class,'pdfSettings'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('tests.pdfSettings');
 
 Route::get('/pdf', function () {
     return Inertia::render('Test/PDF');

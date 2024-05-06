@@ -16,8 +16,8 @@ export interface QPage {
 
   export interface Question {
     id: number
-    created_at: any
-    updated_at: any
+    created_at?: any
+    updated_at?: any
     question: string
     ans1: string
     ans2: string

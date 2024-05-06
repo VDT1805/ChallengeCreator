@@ -19,19 +19,8 @@ class LabelFilter extends ModelFilter
         return $this->where("id", '=', $id);
     }
     public function questionbanks($id) {
-        return $this->where("question_bank_id", '=', $id)->whereNull("label_id");
+        return $this->where("question_bank_id", '=', $id)->whereNull("label_id")->with("sublabels");
     }
-
-
-    // public function all($qbid) {
-    //     return $this->select('labels.*', 'child.*')
-    //     ->join('labels as child', function ($join) use ($qbid) {
-    //         $join->on('labels.id', '=', 'child.label_id');
-
-    //     })
-    //     ->where('labels.question_bank_id', $qbid)
-    //     ->get();
-    // }
 
     public function all($qbid) {
         return $this->where("question_bank_id", '=', $qbid)->whereNull("label_id")

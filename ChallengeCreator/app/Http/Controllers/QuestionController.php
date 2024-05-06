@@ -9,12 +9,12 @@ use App\Http\Services\QuestionBankService;
 use App\Http\Services\QuestionService;
 use App\Http\Services\TestService;
 use App\Models\Question;
-use App\Models\QuestionBank;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use App\Events\QuestionEvent;
 use App\Http\Requests\QuestionFormRequest;
+use App\Http\Services\HTTPService;
 
 class QuestionController extends Controller
 {
@@ -22,12 +22,20 @@ class QuestionController extends Controller
     private QuestionBankService $qbService;
     private TestService $tService;
     private LabelService $lService;
-    public function __construct(QuestionService $qService,TestService $tService, QuestionBankService $qbService,LabelService $lService)
+    private HTTPService $aiService;
+
+    public function __construct(
+    QuestionService $qService,
+    TestService $tService,
+    QuestionBankService $qbService,
+    LabelService $lService,
+    HTTPService $aiService)
     {
         $this->qService = $qService;
         $this->tService = $tService;
         $this->qbService = $qbService;
         $this->lService = $lService;
+        $this->aiService = $aiService->setBaseUrl("http://localhost:5000");
     }
     /**
      * Display a listing of the resource.
@@ -78,7 +86,7 @@ class QuestionController extends Controller
             }
             if ($inserted) {
                 $attachmentResult = $test->questions()->attach($inserted);
-                QuestionEvent::dispatch($inserted,Auth::user()->name,"Created");
+                // QuestionEvent::dispatch($inserted,Auth::user()->name,"Created");
                 return redirect()->route("questions.index", ["qbID" => $qbID]);
             }
         }
@@ -146,5 +154,30 @@ class QuestionController extends Controller
             else {
                 abort(400);
             }
+    }
+
+    public function AIcreate($qbID) {
+        $QB = $this->qbService->findOrFail($qbID,"id");
+        return Inertia::render("Questions/AddAIQuestion",["QBank" => $QB]);
+    }
+
+    public function AIstore($qbID, Request $request) {
+        // dd($request->all());
+        $QB = $this->qbService->findOrFail($qbID,"id");
+        $response = $this->aiService->
+        setContentType(HttpService::CONTENT_TYPE_JSON)
+        ->post('/genqa',[
+            "answers" => (collect($request["answers"]))->map(function($answer) {
+                return $answer["text"];
+            }) ,
+            "context" => $request["context"],
+            "num_of_q" => $request["numberofquestions"]
+        ]);
+        $data =  $response->getData();
+        dd($data[0]["question"]);
+        $questions = [];
+        return Inertia::render("Questions/AddAIQuestion",
+        ["QBank" => $QB,
+        "questions" => $data]);
     }
 }

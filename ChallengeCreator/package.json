@@ -55,6 +55,7 @@
         "react-dropzone": "^14.2.3",
         "react-hook-form": "^7.51.0",
         "react-latex-next": "^3.0.0",
+        "react-text-annotate-blend": "^1.2.0",
         "tailwind-merge": "^2.2.0",
         "tailwindcss-animate": "^1.0.7",
         "zod": "^3.22.4"

@@ -1,7 +1,7 @@
 import { Button } from '@/shadcn/ui/button';
 import React, { useRef } from 'react';
 
-export function PDFContainer(props: any) {
+export default function PDFContainer(props: any) {
   const bodyRef = useRef<HTMLDivElement>(null);
   const createPdf = () => props.createPdf(bodyRef.current);
   const test = () => props.test();
