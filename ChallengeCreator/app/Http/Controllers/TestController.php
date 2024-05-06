@@ -199,6 +199,9 @@ class TestController extends Controller
                 $questions_bags[] = $newbag;
             }
         }
+        else {
+            $questions_bags[] = $questions;
+        }
         $data = [
             "test" => $test,
             "questions_bag" => $questions_bags,
