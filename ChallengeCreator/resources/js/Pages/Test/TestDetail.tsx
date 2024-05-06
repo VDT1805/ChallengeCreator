@@ -176,9 +176,9 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                     </Link>
                                 </div>
                                 <div className="flex gap-2">
-                                    <Button className="bg-bluegreen flex gap-3 hover:bg-bluegreen-dark">
+                                    {/* <Button className="bg-bluegreen flex gap-3 hover:bg-bluegreen-dark">
                                         <Link href={route('tests.pdfGen', [QBank.id, test.id,{quesmix: isQuesOrdMixed, choicemix: isChoiceOrdMixed, numcopies: numCopies}]) } method = "get">Preview</Link>
-                                    </Button>
+                                    </Button> */}
 
                                     {/* <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
@@ -201,7 +201,7 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                 </DropdownMenu> */}
                                 <Dialog>
                                     <DialogTrigger asChild>
-                                        <Button variant="outline">Edit Profile</Button>
+                                        <Button variant="outline">Export PDF</Button>
                                     </DialogTrigger>
                                     <DialogContent className="sm:max-w-[425px]">
                                         <DialogHeader>
