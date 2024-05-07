@@ -592,7 +592,7 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                                 Complete
                             </h2>
                             <p className='mt-1 text-sm leading-6 text-gray-600'>
-                                Thank you for your submission.
+                                 <Link href={route("questions.index",[QBank.id])}>Go back to Question Page.</Link>
                             </p>
                         </motion.div>
                     )}

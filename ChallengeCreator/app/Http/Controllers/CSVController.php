@@ -67,36 +67,31 @@ class CSVController extends Controller
                 'ans5' => 'string',
                 'ans6' => 'string',
                 'correct' => 'required|numeric|between:1,6',
-                'label' => 'string',
-                'sublabel' => 'string'
+                'label' => 'string|required',
+                'sublabel' => 'string|required'
             ];
             $filtered = [];
             $violators = [];
-            $labels = $this->lService->find(["questionbanks" => $qbID]);
+            // $labels = $this->lService->find(["questionbanks" => $qbID]);
             SimpleExcelReader::create(storage_path('app/') . $path, 'csv')->getRows()->
-            each(function($row) use ($rules, &$filtered, &$violators, $labels) {
+            each(function($row) use ($rules, &$filtered, &$violators, $qbID) {
                 $validator = Validator::make($row, $rules);
                 if ($validator->passes()) {
-                    $label = $labels->where("name", $row['label'])->first();
-                    if ($label) {
-                        // dd($label->sublabels->array_where($array, function ($key, $value) {
-                        //     return $value
-                        // }););
-                        $filtered[] = $row;
-                            return;
-                        // if($label->sublabels->where("name", $row['label'])->first()) {
-                        //     $filtered[] = $row;
-                        //     return;
-                        // }
+                    $label = $this->lService->find(["sublabel" => [$row["label"],$row["sublabel"],$qbID]])->first();
+                    if (!$label) {
+                        $violators[] = $row;
+                        return;
                     }
-                    $violators[] = $row;
-                    return;
+                    $row["label_id"] = $label->id;
+                    $row["question_bank_id"] = $qbID;
+                    unset($row["label"],$row["sublabel"]);
+                    $filtered[] = $row;
                 } else {
                     $violators[] = $row;
                 }
             });
-
-            // $this->qService->createMany($filtered);
+            // dd($filtered);
+            $this->qService->createMany($filtered);
 
             return Inertia::render(
                 "Import/ImportPage",[

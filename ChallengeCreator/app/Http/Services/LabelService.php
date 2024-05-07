@@ -74,6 +74,7 @@ class LabelService implements BaseCrudServiceInterface
      */
     public function find(array $attributes): Collection
     {
+        // dd(Label::filter($attributes)->toSql());
         return Label::filter($attributes)->get();
     }
 
