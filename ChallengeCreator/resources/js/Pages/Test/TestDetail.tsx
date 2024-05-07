@@ -217,18 +217,24 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                                 </Label>
                                                 <Input id="numcopies" type="number" min="1" className="col-span-3" value={numCopies} onChange={handleNumCopiesChange} />
                                             </div>
-                                            <div className="grid grid-cols-4 items-center gap-4">
-                                                <Label htmlFor="quesord" className="text-right">
-                                                Mixing question order
-                                                </Label>
-                                                <Checkbox id="quesord" className="col-span-3" checked={isQuesOrdMixed} onClick={handleQuesOrdChange} />
-                                            </div>
-                                            <div className="grid grid-cols-4 items-center gap-4">
-                                                <Label htmlFor="choiceord" className="text-right">
-                                                Mixing choices order
-                                                </Label>
-                                                <Checkbox id="choiceord" className="col-span-3" checked={isChoiceOrdMixed} onClick={handleChoiceOrdChange} />
-                                            </div>
+                                            {
+                                                numCopies > 1 &&
+                                                <div>
+                                                        <div className="grid grid-cols-4 items-center gap-4">
+                                                            <Label htmlFor="quesord" className="text-right">
+                                                            Mixing question order
+                                                            </Label>
+                                                            <Checkbox id="quesord" className="col-span-3" checked={isQuesOrdMixed} onClick={handleQuesOrdChange} />
+                                                        </div>
+                                                        <div className="grid grid-cols-4 items-center gap-4">
+                                                            <Label htmlFor="choiceord" className="text-right">
+                                                            Mixing choices order
+                                                            </Label>
+                                                            <Checkbox id="choiceord" className="col-span-3" checked={isChoiceOrdMixed} onClick={handleChoiceOrdChange} />
+                                                        </div>
+                                                </div>
+                                            }
+
                                         </div>
                                         <DialogFooter>
                                         <Button onClick={dl}>Export</Button>

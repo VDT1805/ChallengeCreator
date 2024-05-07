@@ -26,19 +26,9 @@ import QBLayout from '@/Layouts/QBLayout';
 import { LabelType } from '../Label/LabelTable/LabelType';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import InputError from '@/Components/InputError';
+import { ToastAction } from "@/shadcn/ui/toast";
+import { toast, useToast } from "@/shadcn/ui/use-toast";
 
-// type QRows = {
-//     question: string,
-//     ans1: string,
-//     ans2: string,
-//     ans3: string,
-//     ans4: string,
-//     ans5: string,
-//     ans6: string,
-//     correct: number,
-//     label_id: string,
-//     testid : null | string
-//   };
 
 export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProps<{ QBank: QB, labels: LabelType[], sublabels: LabelType[] }>) {
   const [position, setPosition] = useState("bottom")
@@ -55,19 +45,20 @@ export default function AddQuestion({ auth, QBank, labels, sublabels }: PageProp
     correct: 1,
     label_id: ""
   });
-  const { errors } = usePage().props
-  console.log(errors)
+const { errors,flash } = usePage().props;
+// const { flash } = usePage().props.flash as { flash: {Error: string} };
+console.log(flash)
 
-  const submit: FormEventHandler = (e) => {
+const submit: FormEventHandler = (e) => {
     e.preventDefault();
     if (params.has("testid")) {
-      transform((data) => ({
-        ...data,
-        testid: params.get("testid")
-      }))
+        transform((data) => ({
+            ...data,
+            testid: params.get("testid")
+        }))
     }
     post(route('questions.store', QBank.id));
-  };
+};
 
   const labelValueChange = (e: string) => {
     router.reload({ only: ['sublabels'], data: { labels: e } })
@@ -103,7 +94,11 @@ return (
           <form onSubmit={submit}>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5 mb-5">
-
+                {flash.Error && toast({
+                    title: "Uh oh! Something went wrong.",
+                    description: "There was a problem with your request.",
+                    })
+                }
                 <Label htmlFor="question" className="text-xl font-bold">Enter your question</Label>
                 <MathJaxContext version={3} config={config}>
                 <Textarea

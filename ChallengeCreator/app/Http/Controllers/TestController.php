@@ -209,7 +209,6 @@ class TestController extends Controller
         ];
 
         $html = view('exampdf',$data)->render();
-        // dd($html);
         $request = Gotenberg::chromium("http://localhost:3000/")
         ->pdf()->html(Stream::string('index.html',$html));
         $client = new \Http\Adapter\Guzzle7\Client;

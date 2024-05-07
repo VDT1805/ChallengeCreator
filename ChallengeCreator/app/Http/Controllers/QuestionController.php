@@ -63,6 +63,15 @@ class QuestionController extends Controller
     {
         // dd($request);
         $QB = $this->qbService->findOrFail($qbID,"id");
+        $testid = $request["testid"];
+        if ($testid)
+        {
+            $test = $this->tService->find(["questionbanks" => $qbID,"id" => (string) $testid])->first();
+            // dd($test);
+            if (!$test) {
+                abort(404);
+            }
+        }
         $labels = $this->lService->getAll(["questionbanks" => $qbID]);
         return Inertia::render("Questions/AddQuestion",["QBank" => $QB,
         "labels" => $labels,
@@ -87,7 +96,7 @@ class QuestionController extends Controller
             if ($inserted) {
                 $attachmentResult = $test->questions()->attach($inserted);
                 // QuestionEvent::dispatch($inserted,Auth::user()->name,"Created");
-                return redirect()->route("questions.index", ["qbID" => $qbID]);
+                return redirect()->route("tests.show", ["qbID" => $qbID, "testID" => $testid]);
             }
         }
         if ($inserted) {
@@ -141,9 +150,9 @@ class QuestionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($qbID,$qID, Request $request)
+    public function destroy($qbID,Request $request)
     {
-            $target = $this->qService->find(["id" => $qID])->first();
+            $target = $this->qService->find(["id" => $request["qID"]])->first();
             // dd($target);
             $deleted = $this->qService->delete($target);
 

@@ -303,7 +303,7 @@ return (
                                                     Edit question
                                                 </Button>
                                             </Link>
-                                            <Link href={route('questions.destroy', [question.question_bank_id])} method='delete' data={{ qID: question.id }} as="button">
+                                            <Link href={route('questions.destroy', [question.question_bank_id])} method='delete' data={{qID: question.id }} as="button">
                                                 <Button className='bg-red-500 text-white font-bold rounded-t px-4 py-2'>
                                                     Delete question
                                                 </Button>

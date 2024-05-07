@@ -28,6 +28,7 @@ import {
   AlertTitle,
 } from "@/shadcn/ui/alert"
 import { Button } from '@/shadcn/ui/button';
+import { Toaster } from '@/shadcn/ui/toaster';
 
 
 
@@ -210,6 +211,7 @@ export default function QBLayout({ user, header, children, QBank, CanEdit }: Pro
             )}
 
             <main>{children}</main>
+            <Toaster />
             <AlertDialog open={openAlert} onOpenChange={setOpenAlert}>
                         <AlertDialogContent>
                             <AlertDialogHeader>
