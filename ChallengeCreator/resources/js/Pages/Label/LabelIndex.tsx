@@ -32,14 +32,14 @@ export default function LabelIndex({ auth, QBank, labels }: PageProps<{ QBank: Q
                             </Link>
                         </div>
                         <Separator className="mb-3 mt-2" />
-                        <div className="flex items-center gap-2">
+                        {/* <div className="flex items-center gap-2">
                             <Input
                                 placeholder="Search for a label..."
                                 className="border-2 border-indianred border-solid" />
                             <Button>
                                 Filter
                             </Button>
-                        </div>
+                        </div> */}
                     </CardContent>
                     <Accordion type="single" collapsible className="w-full bg-white rounded">
                         {labels.data.map((label: LabelType) => (
@@ -70,7 +70,7 @@ export default function LabelIndex({ auth, QBank, labels }: PageProps<{ QBank: Q
                     </Accordion>
                 </Card>
 
-                <Card className="mb-5 md:col-start-10 col-span-1 pt-2 shadow-2xl">
+                {/* <Card className="mb-5 md:col-start-10 col-span-1 pt-2 shadow-2xl">
                     <CardHeader>
                         <CardTitle className="text-3xl font-bold">All sublabels</CardTitle>
                     </CardHeader>
@@ -119,7 +119,7 @@ export default function LabelIndex({ auth, QBank, labels }: PageProps<{ QBank: Q
                             </PaginationContent>
                         </Pagination>
                     </Accordion>
-                </Card>
+                </Card> */}
             </div>
         </QBLayout>
     );

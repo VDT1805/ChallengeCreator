@@ -170,9 +170,10 @@ class QuestionController extends Controller
         return Inertia::render("Questions/AddAIQuestion",["QBank" => $QB]);
     }
 
-    public function AIstore($qbID, Request $request) {
+    public function AIgen($qbID, Request $request) {
         // dd($request->all());
         $QB = $this->qbService->findOrFail($qbID,"id");
+        $label = $this->lService->find(["sublabel" => ["Generic Parent","Generic",$qbID]])->first();
         $response = $this->aiService->
         setContentType(HttpService::CONTENT_TYPE_JSON)
         ->post('/genqa',[
@@ -183,10 +184,33 @@ class QuestionController extends Controller
             "num_of_q" => $request["numberofquestions"]
         ]);
         $data =  $response->getData();
-        dd($data[0]["question"]);
+        // dd($data);
         $questions = [];
+        foreach ($data as $question) {
+            $questions[] = new Question([
+                "question" => $question["question"],
+                "ans1" => $question["ans1"],
+                "ans2" => "",
+                "ans3" => "",
+                "ans4" => "",
+                "ans5" => "",
+                "ans6" => "",
+                "question_bank_id" => $qbID,
+                "correct" => 1,
+                "label_id" => $label['id']
+            ]);
+        }
         return Inertia::render("Questions/AddAIQuestion",
         ["QBank" => $QB,
-        "questions" => $data]);
+        "questions" => $questions]);
+    }
+
+    public function AIstore($qbID, Request $request) {
+        $questions = $request["questions"];
+        // dd($questions);
+        $inserted = $this->qService->createMany($questions);
+        if ($inserted) {
+            return redirect()->route("questions.index", ["qbID" => $qbID]);
+        }
     }
 }

@@ -29,16 +29,19 @@ import InputError from '@/Components/InputError';
 import { TextAnnotate } from "react-text-annotate-blend";
 import { Check } from 'lucide-react';
 import { Question } from './QuestionType';
+import QuestionCard from './QuestionsCard';
 
-export default function AddAIQuestion({ auth, QBank, questions }: PageProps<{ QBank: QB, questions:Question[] }>) {
+export default function AddAIQuestion({ auth, QBank, questions }: PageProps<{ QBank: QB, questions:Array<Question> }>) {
   const [position, setPosition] = useState("bottom")
   const params = new URLSearchParams(window.location.search)
+  console.log(questions)
 
   const { data, setData, post, setDefaults , processing, reset, transform } = useForm<{context: string,answers: Array<{}|null>,numberofquestions: number}>({
     context: "",
     answers: [],
     numberofquestions: 1,
   });
+
 
   const [isChecked, setIsChecked] = useState(false);
 
@@ -83,7 +86,7 @@ const submit: FormEventHandler = (e) => {
         testid: params.get("testid")
       }))
     }
-    post(route('questions.aistore', QBank.id));
+    post(route('questions.aigen', QBank.id));
   };
 
     const [tag, setTag] = React.useState("AnswerCandidate");
@@ -94,7 +97,7 @@ const submit: FormEventHandler = (e) => {
 return (
   <QBLayout
     user={auth.user}
-    header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Question Generator Powered by AI!!!</h2>} QBank={QBank} CanEdit={true}>
+    header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Question Generator Powered by T5 Model</h2>} QBank={QBank} CanEdit={true}>
     <Head title="Create question using AI!" />
             <Card>
             <form onSubmit={submit}>
@@ -120,6 +123,7 @@ return (
             }} /> :
             <div>
             <h4>Highlight the answer candidates in the context</h4>
+            <br></br>
             <TextAnnotate
                 style={{
                 fontSize: "1.2rem",
@@ -133,20 +137,23 @@ return (
                 }
                 value={data.answers as { start: number; end: number; tag: string; text: string; }[]}
                 getSpan={(span) => ({
-                ...span,
-                tag: tag,
-                color: COLORS[tag as keyof typeof COLORS],
+                    ...span,
+                    tag: tag,
+                    color: COLORS[tag as keyof typeof COLORS],
                 })}
             />
             </div>
             }
             <Button type='submit'>
-              Add question
+              Generate question
             </Button>
             </form>
-            <pre style={{ fontSize: 12, lineHeight: 1.2 }}>
+            {/* <pre style={{ fontSize: 12, lineHeight: 1.2 }}>
                 {JSON.stringify(data, null, 2)}
-            </pre>
+            </pre> */}
+            {
+            questions && <QuestionCard QBank={QBank} MCQs={questions}></QuestionCard>
+            }
             </Card>
   </QBLayout>
 );

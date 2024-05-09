@@ -64,7 +64,6 @@ class MemberController extends Controller
             else {
                 abort(404);
             }
-
         }
         catch (\Throwable $e) {
             abort(400, $e->getMessage());

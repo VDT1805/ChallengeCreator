@@ -37,7 +37,6 @@ class LabelService implements BaseCrudServiceInterface
      */
     public function getAll(array $search = []): EloquentCollection
     {
-        // dd(Label::filter($search)->toSql());
         return Label::filter($search)->get();
     }
 

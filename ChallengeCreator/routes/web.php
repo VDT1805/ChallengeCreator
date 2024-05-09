@@ -85,8 +85,8 @@ Route::get('/qbs/{qbID}/questions/create/', [QuestionController::class,'create']
 Route::get('/qbs/{qbID}/questions/aicreate/',[QuestionController::class,'AIcreate'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.aicreate');
 
-Route::post('/qbs/{qbID}/questions/aicreate/',[QuestionController::class,'AIstore'])
-->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.aistore');
+Route::post('/qbs/{qbID}/questions/aicreate/',[QuestionController::class,'AIgen'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.aigen');
 
 Route::post('/qbs/{qbID}/questions/create', [QuestionController::class,'store'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.store');
@@ -109,6 +109,8 @@ Route::put('/qbs/{qbID}/questions/{qID}/edit', [QuestionController::class,'updat
 Route::get('/qbs/{qbID}/questions/templatedownload',[CSVController::class,'downloadTemplate'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.downloadTemplate');
 
+Route::post('/qbs/{qbID}/questions/aistore',[QuestionController::class,'AIstore'])
+->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questions.aistore');
 
 ##################################################################
 
@@ -159,6 +161,7 @@ Route::get('/qbs/{qbID}/tests/{testID}/pdf', [TestController::class,'pdfGenerate
 
 // Route::get('/qbs/{qbID}/tests/{testID}/pdfSettings', [TestController::class,'pdfSettings'])
 // ->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('tests.pdfSettings');
+
 
 Route::get('/pdf', function () {
     return Inertia::render('Test/PDF');
