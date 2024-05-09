@@ -58,6 +58,7 @@ import {
   TableRow,
 } from "@/shadcn/ui/table"
 import { PaginationProp } from '../pagination';
+import { SparkleIcon, Sparkles } from 'lucide-react';
 
 function EventTable({changeLog}: {changeLog: QuestionEvent[]}) {
     return (
@@ -196,9 +197,9 @@ return (
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
-                                    <PlusIcon className="mr-2" />
+                                    <Sparkles className="mr-2" />
                                     <Link href={route('questions.aicreate', [QBank.id])}>
-                                        Add questions using AI!
+                                        Add questions using AI
                                     </Link>
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
