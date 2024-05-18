@@ -40,6 +40,8 @@ import {
 } from "@/shadcn/ui/collapsible"
 import { FilePlusIcon, PlusIcon, ShuffleIcon, UpdateIcon } from "@radix-ui/react-icons"
 import { QB } from "@/Pages/QuestionBank/QuestionBankType"
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/shadcn/ui/pagination';
+
 
 
 
@@ -73,8 +75,8 @@ export function MemberTable<TData, TValue>({
   })
 
   return (
-    <div>
-      <div className="flex items-center justify-around gap-4 py-4">
+    <>
+      {/* <div className="flex items-center justify-around gap-4 py-4">
         <div className="grid grid-cols-3 gap-4">
           <Input
             placeholder="Search member..."
@@ -98,9 +100,9 @@ export function MemberTable<TData, TValue>({
           </DropdownMenu>
           </div>
         </div>
+      </div> */}
 
-      </div>
-      <div className="rounded-md border bg-white">
+      <div className="rounded-md border bg-white w-full">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -145,26 +147,19 @@ export function MemberTable<TData, TValue>({
         </Table>
       </div>
 
-
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
-      </div>
-
-    </div>
+      <Pagination className="bg-white rounded shadow-2xl">
+        <PaginationContent className="rounded">
+          <PaginationItem>
+            <PaginationPrevious />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink>1</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </>
   )
 }

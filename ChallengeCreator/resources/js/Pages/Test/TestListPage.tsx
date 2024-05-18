@@ -34,7 +34,7 @@ import { PaginationProp } from "../pagination";
 
 export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{ QBank: QB, tests: any, labels: LabelType[] }>) {
     // console.log(tests.links.slice(1,-1));
-    const [sortState, setSortState] = React.useState("Alphabetical")
+    // const [sortState, setSortState] = React.useState("Alphabetical")
     const [query, setQuery] = useState<Record<string, string>>({});
     const [currentPage, setCurrentPage] = useState(tests.current_page);
     const [itemsPerPage, setItemsPerPage] = useState(tests.per_page);
@@ -86,8 +86,8 @@ export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{
                         <div className="flex items-center gap-2">
                             <Input
                                 placeholder="Search for a test..."
-                                className="border-2 border-indianred border-solid focus:border-indianred" />
-                            <Select>
+                                className="border-2 border-blue-500 border-solid focus:border-blue-500" />
+                            {/* <Select>
                                 <SelectTrigger className="w-[180px]">
                                     <SelectValue placeholder="Sort by" />
                                 </SelectTrigger>
@@ -95,7 +95,7 @@ export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{
                                     <SelectItem onClick={() => { setSortState("Alphabetical"); }} value="Alphabetical">Alphabetical</SelectItem>
                                     <SelectItem onClick={() => { setSortState("Last Updated") }} value="Last Updated">Last Updated</SelectItem>
                                 </SelectContent>
-                            </Select>
+                            </Select> */}
                             <Select onValueChange={(e) => labelValueChange(e)}>
                                 <SelectTrigger className="w-[180px]" >
                                     <SelectValue placeholder="Labels" />

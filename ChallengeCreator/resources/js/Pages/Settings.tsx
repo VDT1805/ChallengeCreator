@@ -37,12 +37,12 @@ export default function Settings({ auth, QBank, CanEdit, members }: PageProps<{ 
             <div className="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <Card>
                     <CardHeader>
-                        <CardTitle className="text-3xl font-bold">Owner</CardTitle>
+                        <CardTitle className="text-3xl font-bold">Owner Information</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="flex flex-col gap-5">
-                            <p>John Doe</p>
-                            <p>johndoe@gmail.com</p>
+                        <div className="flex flex-col gap-3">
+                            <p>{auth.user.name}</p>
+                            <p>{auth.user.email}</p>
                         </div>
                     </CardContent>
                 </Card>
@@ -77,7 +77,7 @@ export default function Settings({ auth, QBank, CanEdit, members }: PageProps<{ 
             <div className="mt-10 mb-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <Card>
                     <CardHeader>
-                        <CardTitle className="text-3xl font-bold">Danger Zone</CardTitle>
+                        <CardTitle className="text-3xl font-bold text-red-500">The Danger Zone</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="flex justify-between justify-center items-center content-center space-y-1.5 mb-5">

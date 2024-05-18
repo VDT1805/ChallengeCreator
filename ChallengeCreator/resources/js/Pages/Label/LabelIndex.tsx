@@ -18,10 +18,7 @@ export default function LabelIndex({ auth, QBank, labels }: PageProps<{ QBank: Q
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">All Labels/Sublabels</h2>} QBank={QBank} CanEdit={true}>
             <Head title="Labels/Sublabels" />
             <div className="py-12 container mx-auto">
-                <Card className="mb-5 md:col-start-10 col-span-1 pt-5 shadow-2xl">
-                    {/* <CardHeader>
-                        <CardTitle className="text-3xl font-bold">All labels</CardTitle>
-                    </CardHeader> */}
+                {/* <Card className="mb-5 md:col-start-10 col-span-1 pt-5 shadow-2xl">
                     <CardContent>
                         <div className="flex justify-end">
                             <Link href={route('labels.create', [QBank.id])}>
@@ -32,43 +29,73 @@ export default function LabelIndex({ auth, QBank, labels }: PageProps<{ QBank: Q
                             </Link>
                         </div>
                         <Separator className="mb-3 mt-2" />
-                        {/* <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2">
                             <Input
                                 placeholder="Search for a label..."
                                 className="border-2 border-indianred border-solid" />
                             <Button>
                                 Filter
                             </Button>
-                        </div> */}
+                        </div>
                     </CardContent>
-                    <Accordion type="single" collapsible className="w-full bg-white rounded">
-                        {labels.data.map((label: LabelType) => (
-                            <AccordionItem value={label.id as unknown as string}>
-                                <AccordionTrigger className="hover:bg-blue-100 bg-white px-3 rounded">
-                                    <div className="flex gap-2 items-center"><FileIcon />{label.name as string}</div>
-                                </AccordionTrigger>
-                                <AccordionContent className="bg-white px-3 rounded">
-                                    {/* <Separator className="mb-2 mt-2" /> */}
-                                    {label.description}
-                                </AccordionContent>
-                            </AccordionItem>
-                        )
-                        )}
-                        <Pagination className="bg-white mt-2 rounded">
-                            <PaginationContent className="rounded">
-                                <PaginationItem>
-                                    <PaginationPrevious href={labels.prev_page_url} />
-                                </PaginationItem>
-                                <PaginationItem>
-                                    <PaginationLink href={labels.first_page_url}>1</PaginationLink>
-                                </PaginationItem>
-                                <PaginationItem>
-                                    <PaginationNext href={labels.next_page_url} />
-                                </PaginationItem>
-                            </PaginationContent>
-                        </Pagination>
-                    </Accordion>
+                </Card> */}
+                <Card className="mb-5 md:col-start-10 col-span-1 pt-5">
+                    <CardContent>
+                        {/* <div className="flex justify-end">
+                            {
+                                changeLog.length > 0 &&
+                                UpdateDialog(changeLog)
+                            }
+                        </div> */}
+                        <div className="flex justify-end">
+                            <Link href={route('labels.create', [QBank.id])}>
+                                <Button>
+                                    <PlusIcon className="mr-2" />
+                                    Add label
+                                </Button>
+                            </Link>
+                        </div>
+                        <Separator className="mb-3 mt-2" />
+                        <div className="flex items-center gap-2">
+                            <Input
+                                // onChange={(e) => setQuery(prevQuery => ({
+                                //     ...prevQuery,
+                                //     ["keyword"]: e.target.value
+                                // }))}
+                                placeholder="Search for a label..."
+                                className="border-2 border-blue-500 border-solid" />
+                            <Button>Search</Button>
+                            <Button variant={"destructive"}>Clear search</Button>
+                        </div>
+                    </CardContent>
                 </Card>
+                <Accordion type="single" collapsible className="w-full bg-white rounded">
+                    {labels.data.map((label: LabelType) => (
+                        <AccordionItem value={label.id as unknown as string}>
+                            <AccordionTrigger className="hover:bg-blue-100 bg-white px-3 rounded">
+                                <div className="flex gap-2 items-center"><FileIcon />{label.name as string}</div>
+                            </AccordionTrigger>
+                            <AccordionContent className="bg-white px-3 rounded">
+                                {/* <Separator className="mb-2 mt-2" /> */}
+                                {label.description}
+                            </AccordionContent>
+                        </AccordionItem>
+                    )
+                    )}
+                    <Pagination className="bg-white mt-2 rounded shadow-2xl">
+                        <PaginationContent className="rounded">
+                            <PaginationItem>
+                                <PaginationPrevious href={labels.prev_page_url} />
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationLink href={labels.first_page_url}>1</PaginationLink>
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationNext href={labels.next_page_url} />
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
+                </Accordion>
 
                 {/* <Card className="mb-5 md:col-start-10 col-span-1 pt-2 shadow-2xl">
                     <CardHeader>
@@ -118,8 +145,7 @@ export default function LabelIndex({ auth, QBank, labels }: PageProps<{ QBank: Q
                                 </PaginationItem>
                             </PaginationContent>
                         </Pagination>
-                    </Accordion>
-                </Card> */}
+                    </Accordion> */}
             </div>
         </QBLayout>
     );

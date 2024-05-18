@@ -163,9 +163,9 @@ Route::get('/qbs/{qbID}/tests/{testID}/pdf', [TestController::class,'pdfGenerate
 // ->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('tests.pdfSettings');
 
 
-Route::get('/pdf', function () {
-    return Inertia::render('Test/PDF');
-})->middleware(['auth', 'verified'])->name('pdf');
+// Route::get('/pdf', function () {
+//     return Inertia::render('Test/PDF');
+// })->middleware(['auth', 'verified'])->name('pdf');
 
 ##################################################################
 

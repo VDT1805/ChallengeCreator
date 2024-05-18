@@ -58,7 +58,7 @@ export default function MemberIndex({ auth, QBank, members, editorURL, viewerURL
                                             </Label> */}
                                         <Input className="focus:border-bluegreen border-2" defaultValue={viewerURL} readOnly />
                                         {/*</div>*/}
-                                        <Button type="submit" size="sm" className="px-3" onClick={() => { navigator.clipboard.writeText(viewerURL); alert("Link has been copied to clipboard!") }}>
+                                        <Button type="submit" size="sm" className="px-3" onClick={() => { navigator.clipboard.writeText(viewerURL); alert("Copied link to clipboard!") }}>
                                             <span className="sr-only">Copy</span>
                                             <Copy className="h-4 w-4" />
                                         </Button>
@@ -76,7 +76,7 @@ export default function MemberIndex({ auth, QBank, members, editorURL, viewerURL
                                             </Label> */}
                                         <Input className="focus:border-indianred border-2" defaultValue={editorURL} readOnly />
                                         {/* </div> */}
-                                        <Button type="submit" size="sm" className="px-3" onClick={() => { navigator.clipboard.writeText(editorURL); alert("Link has been copied to clipboard!") }}>
+                                        <Button type="submit" size="sm" className="px-3" onClick={() => { navigator.clipboard.writeText(editorURL); alert("Copied link to clipboard!") }}>
                                             <span className="sr-only">Copy</span>
                                             <Copy className="h-4 w-4" />
                                         </Button>

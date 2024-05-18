@@ -280,7 +280,7 @@ export default function QuestionForm({ auth, QBank, labels, sublabels, currLabel
                 <br></br>
               </div>
               <Button type='submit'>
-                Save edited question
+                Save question
               </Button>
             </form>
           </CardContent>

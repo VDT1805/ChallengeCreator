@@ -41,6 +41,15 @@ export const MemberColumns = (QBank:QB): ColumnDef<MemberType>[] => [
       >Name</div>)
   },
   {
+    accessorKey: "email",
+    header: () => (
+      <div
+        style={{
+          textAlign: "center"
+        }}
+      >Email</div>)
+  },
+  {
     accessorKey: "role_name",
     header: () => (
       <div
