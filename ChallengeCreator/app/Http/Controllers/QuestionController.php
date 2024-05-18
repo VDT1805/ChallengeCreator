@@ -22,20 +22,17 @@ class QuestionController extends Controller
     private QuestionBankService $qbService;
     private TestService $tService;
     private LabelService $lService;
-    private HTTPService $aiService;
 
     public function __construct(
     QuestionService $qService,
     TestService $tService,
     QuestionBankService $qbService,
-    LabelService $lService,
-    HTTPService $aiService)
+    LabelService $lService)
     {
         $this->qService = $qService;
         $this->tService = $tService;
         $this->qbService = $qbService;
         $this->lService = $lService;
-        $this->aiService = $aiService->setBaseUrl("http://localhost:5000");
     }
     /**
      * Display a listing of the resource.
@@ -177,35 +174,43 @@ class QuestionController extends Controller
         // dd($request->all());
         $QB = $this->qbService->findOrFail($qbID,"id");
         $label = $this->lService->find(["sublabel" => ["Generic Parent","Generic",$qbID]])->first();
-        $response = $this->aiService->
-        setContentType(HttpService::CONTENT_TYPE_JSON)
-        ->post('/genqa',[
-            "answers" => (collect($request["answers"]))->map(function($answer) {
-                return $answer["text"];
-            }) ,
-            "context" => $request["context"],
-            "num_of_q" => $request["numberofquestions"]
-        ]);
-        $data =  $response->getData();
-        // dd($data);
-        if (!$response->isSuccessful()) {
-            abort(403,"Failed to reach API");
-        }
-        $questions = [];
-        foreach ($data as $question) {
-            $questions[] = new Question([
-                "question" => $question["question"],
-                "ans1" => $question["ans1"],
-                "ans2" => "",
-                "ans3" => "",
-                "ans4" => "",
-                "ans5" => "",
-                "ans6" => "",
-                "question_bank_id" => $qbID,
-                "correct" => 1,
-                "label_id" => $label['id']
-            ]);
-        }
+        // $response = $this->aiService->
+        // setContentType(HttpService::CONTENT_TYPE_JSON)
+        // ->post('/genqa',[
+        //     "answers" => (collect($request["answers"]))->map(function($answer) {
+        //         return $answer["text"];
+        //     }) ,
+        //     "context" => $request["context"],
+        //     "num_of_q" => $request["numberofquestions"]
+        // ]);
+        // $data =  $response->getData();
+        // // dd($data);
+        // if (!$response->isSuccessful()) {
+        //     abort(403,"Failed to reach API");
+        // }
+        // $questions = [];
+        // foreach ($data as $question) {
+        //     $questions[] = new Question([
+        //         "question" => $question["question"],
+        //         "ans1" => $question["ans1"],
+        //         "ans2" => "",
+        //         "ans3" => "",
+        //         "ans4" => "",
+        //         "ans5" => "",
+        //         "ans6" => "",
+        //         "question_bank_id" => $qbID,
+        //         "correct" => 1,
+        //         "label_id" => $label['id']
+        //     ]);
+        // }
+        $rq = [
+                "answers" => (collect($request["answers"]))->map(function($answer) {
+                    return $answer["text"];
+                }) ,
+                "context" => $request["context"],
+                "num_of_q" => $request["numberofquestions"]
+            ];
+        $questions = $this->qService->AIgenerate($rq,$qbID,$label['id']);
         return Inertia::render("Questions/AddAIQuestion",
         ["QBank" => $QB,
         "questions" => $questions]);

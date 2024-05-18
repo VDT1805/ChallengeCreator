@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Http\Services\ClientResponse;
+use App\Http\Services\HTTPService;
 use App\Http\Services\QuestionBankService;
 use App\Http\Services\QuestionService;
 use Tests\TestCase;
@@ -17,8 +19,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Inertia\Testing\AssertableInertia as Assert;
 use Illuminate\Support\Facades\Event;
-
-
+use Illuminate\Support\Facades\Http;
+use Mockery;
 class QuestionControllerTest extends TestCase
 {
     use RefreshDatabase;
@@ -32,7 +34,16 @@ class QuestionControllerTest extends TestCase
         parent::setUp();
         $this->user = User::factory()->create();
         $this->qbservice = new QuestionBankService();
-        $this->service = new QuestionService();
+        $this->service = $this->partialMock(QuestionService::class,function ($mock) {
+            $mock->shouldReceive('AIgenerate')->andReturn(
+                new Collection([
+                    new Question([
+                        'question' => 'Generated Question 1',
+                        'ans1' => 'Generated Answer 1',
+                    ]),
+                ])
+            );
+        });
         $this->actingAs($this->user);
         $this->seed();
         $this->questionBank = $this->qbservice->create(["name" => "Test Question Bank"]);
@@ -254,24 +265,70 @@ class QuestionControllerTest extends TestCase
 
     public function test_ai_gen(): void
     {
+
+
+        // Here we can use the same HTTP Facade to "catch" the request to the external endpoint and return our own "mocked" response
+        // Http::fake([
+        //     'http://localhost:3000/genqa' => Http::response([
+        //         'data' => [
+        //             'question' => "Question1",
+        //             'answer' => 'Tiger Nixon',
+        //         ],
+        //     ], 200)
+        // ]);
+
+
+
+        // $this->createMock(HTTPService::class, function ($mock) {
+        //     $mock->shouldReceive('request')->once()->andReturn(new Question([
+        //         'question' => 'Question1',
+        //         'ans1' => 'Tiger Nixon',
+        //     ]));
+        // });
+
+        // $httpservice = $this->createMock(QuestionService::class);
+
+        // $this->service->expects($this->once())->method('AIgenerate')->willReturn(
+        //     new Collection([
+        //         Question([
+        //         'question' => 'Question1',
+        //         'ans1' => 'Tiger Nixon',
+        //     ]),
+
+        //     ])
+        // );
+
         $response = $this->post(route('questions.aigen', ['qbID' => $this->questionBank->id]), [
             'answers' => [
                 ['text' => 'Answer 1'],
-                ['text' => 'Answer 2'],
-                ['text' => 'Answer 3'],
             ],
             'context' => 'Test Context',
-            'numberofquestions' => 3,
+            'numberofquestions' => 1,
         ]);
 
         $response->assertStatus(200);
         $response->assertInertia(
             fn (Assert $page) =>
             $page->component('Questions/AddAIQuestion')->has(
-                'questions', 3
+                'questions', 1
             )
         );
+
+        // $responseJson = [
+        //     [
+        //         'question' => 'Generated Question 1',
+        //         'ans1' => 'Generated Answer 1',
+        //     ],
+        //     [
+        //         'question' => 'Generated Question 2',
+        //         'ans1' => 'Generated Answer 2',
+        //     ],
+        // ];
+
+
     }
+
+
 
     public function test_ai_store(): void
     {

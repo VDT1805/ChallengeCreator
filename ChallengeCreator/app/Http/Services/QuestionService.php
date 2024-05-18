@@ -14,9 +14,56 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Question;
 use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Services\HTTPService;
+use Illuminate\Contracts\Config\Repository as ConfigContract;
 
 class QuestionService implements BaseCrudServiceInterface
 {
+    private string $apiKey;
+
+    public function __construct(private HTTPService $apiClient, ConfigContract $config)
+    {
+        $this->apiClient->setBaseUrl($config->get('aiclient.base_url'));
+        $this->apiKey = $config->get('aiclient.client_secret');
+    }
+
+    /**
+     * Generate questions
+     *
+     * @param UploadedFile $file
+     * @param User $user
+     *
+     * @return Image|null
+     *
+     * @link https://localhost:3000/genqa
+     */
+    public function AIgenerate(array $request, $qbID, $label_id): Collection
+    {
+        $response = $this->apiClient->
+        setContentType(HttpService::CONTENT_TYPE_JSON)
+        ->post('/genqa', $request);
+        $data =  $response->getData();
+
+        if (!$response->isSuccessful()) {
+            abort(403,"Failed to reach API");
+        }
+        $questions = new Collection();
+        foreach ($data as $question) {
+            $questions[] = new Question([
+                "question" => $question["question"],
+                "ans1" => $question["ans1"],
+                "ans2" => "",
+                "ans3" => "",
+                "ans4" => "",
+                "ans5" => "",
+                "ans6" => "",
+                "question_bank_id" => $qbID,
+                "correct" => 1,
+                "label_id" => $label_id
+            ]);
+        }
+        return $questions;
+    }
 
     /**
      * Get filtered results
@@ -27,6 +74,7 @@ class QuestionService implements BaseCrudServiceInterface
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
+
     public function getAllPaginated(array $search = [], int $pageSize = 15): LengthAwarePaginator
     {
         // dd(Question::filter($search)->toSql());
