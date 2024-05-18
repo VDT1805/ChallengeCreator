@@ -38,7 +38,6 @@ class MemberController extends Controller
             ,["qbID" => $qbID,"role" => "viewer"]
             ,absolute:true
         );
-        // dd($members);
         return Inertia::render("Member/MemberIndexTest", [
             "QBank" => $QB,
             "members" => $members,
@@ -47,9 +46,6 @@ class MemberController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create($qbID, Request $request)
     {
         if (! $request->hasValidSignature()) {

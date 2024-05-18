@@ -1,6 +1,4 @@
-
-
-  export interface QBPage {
+export interface QBPage {
     current_page: number
     data: QB[]
     first_page_url: string

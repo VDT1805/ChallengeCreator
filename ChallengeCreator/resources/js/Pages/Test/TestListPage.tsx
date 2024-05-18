@@ -136,19 +136,6 @@ export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{
                         </AccordionItem>
                     )
                     )}
-                    {/* <Pagination className="bg-white mt-2">
-                        <PaginationContent>
-                            <PaginationItem>
-                                <PaginationPrevious href={tests.prev_page_url} />
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationLink href={tests.first_page_url}>1</PaginationLink>
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationNext href={tests.next_page_url} />
-                            </PaginationItem>
-                        </PaginationContent>
-                    </Pagination> */}
                     <PaginationProp
                         totalPosts={tests.total}
                         postsPerPage={itemsPerPage}

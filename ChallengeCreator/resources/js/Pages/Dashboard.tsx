@@ -26,16 +26,6 @@ import { DotFilledIcon, PlusIcon } from '@radix-ui/react-icons';
 import { Separator } from '@radix-ui/react-menubar';
 
 export default function Dashboard({ auth, QBS }: PageProps<{ QBS: QBPage }>) {
-    // const [hex, setHex] = useState("#ffffff")
-    // const randomizedHex = () => {
-    //     const randomColor = '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6)
-    //     setHex(randomColor)
-    //     console.log(hex)
-    // }
-    // useEffect(() => {
-    //     randomizedHex()
-    // }, [])
-    // console.log(JSON.stringify(QBS));
     return (
         <AuthenticatedLayout
             user={auth.user}

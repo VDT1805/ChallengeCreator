@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Models\Label;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -37,7 +38,6 @@ class QuestionBankService implements BaseCrudServiceInterface
     public function getAllPaginated(array $search = [], int $pageSize = 15): LengthAwarePaginator
     {
         $search["users"] = Auth::user()->id;
-        // dd(QuestionBank::filter($search)->toSql());
         return QuestionBank::filter($search)->paginateFilter($pageSize);
     }
 
@@ -119,6 +119,14 @@ class QuestionBankService implements BaseCrudServiceInterface
         }
         else {
             Auth::user()->addRole($owner, $model);
+            $parent = Label::create(["name" => "Generic Parent","description" => "Generic default","question_bank_id" => $model->id]);
+            Label::create(
+            [
+                "name" => "Generic",
+                "description" => "Generic sublabel",
+                "label_id" => $parent->id,
+                "question_bank_id" => $model->id
+            ]);
         }
 
         if (!is_array($model->getKey())) {
@@ -197,7 +205,6 @@ class QuestionBankService implements BaseCrudServiceInterface
     public function update($keyOrModel, array $data): ?Model
     {
         $qb = QuestionBank::find($keyOrModel);
-        // dd($data);
         $qb -> name = $data["name"];
         $qb -> save();
         return $qb;
@@ -212,7 +219,10 @@ class QuestionBankService implements BaseCrudServiceInterface
      */
     public function delete($keyOrModel): bool
     {
-        return QuestionBank::where("id",$keyOrModel)->delete();
+        if (is_int($keyOrModel)||is_string($keyOrModel)) {
+            return QuestionBank::where("id",$keyOrModel)->delete();
+        }
+        return $keyOrModel->delete();
     }
 
     /**

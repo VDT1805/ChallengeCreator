@@ -68,7 +68,7 @@ Route::get('/qbs/{qbID}/settings', [QuestionBankController::class,'edit'])
 Route::put('/qbs/{qbID}/settings', [QuestionBankController::class,'update'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('questionbanks.update');
 
-Route::delete('/qbs/{qbID}/settings', [QuestionBankController::class,'destroy'])
+Route::delete('/qbs/{qbID}/delete', [QuestionBankController::class,'destroy'])
 ->middleware(['auth', 'verified','dynamicrole:owner'])->name('questionbanks.destroy');
 
 ##################################################################

@@ -16,16 +16,15 @@ use Illuminate\Support\Facades\Auth;
 class QuestionBankController extends Controller
 {
     private QuestionBankService $qbService;
-    private LabelService $lService;
-    public function __construct(QuestionBankService $qbService,LabelService $lService)
+    public function __construct(QuestionBankService $qbService)
     {
         $this->qbService = $qbService;
-        $this->lService = $lService;
+        // $this->lService = $lService;
     }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $filterRequest)
     {
         //
         $QBS =  $this->qbService->getAllPaginated();
@@ -50,25 +49,12 @@ class QuestionBankController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateQBRequest $request):RedirectResponse
+    public function store(CreateQBRequest $request)
     {
         //
         $inserted = $this->qbService->create($request->all());
         if ($inserted) {
-            $parent = $this->lService->create(
-            [
-                "name" => "Generic Parent",
-                "description" => "Generic default",
-                "question_bank_id" => $inserted->id
-            ]);
-            $child = $this->lService->create(
-            [
-                    "name" => "Generic",
-                    "description" => "Generic sublabel",
-                    "label_id" => $parent->id,
-                    "question_bank_id" => $inserted->id
-            ]);
-            return redirect()->route("questionbanks.show", ["qbID"=>$inserted->id]);
+            return Inertia::render("QuestionBank/QuestionBankPage", ["QBank" => $inserted]);
         }
     }
 
@@ -120,6 +106,6 @@ class QuestionBankController extends Controller
         if($deleted) {
             return redirect()->route("questionbanks.index");
         }
-        else{dd("Error");}
+        else{abort(403,"Error");}
     }
 }

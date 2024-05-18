@@ -10,6 +10,9 @@ use App\Models\QuestionBank;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
 class QuestionBankServiceTest extends TestCase
 {
@@ -24,6 +27,8 @@ class QuestionBankServiceTest extends TestCase
         parent::setUp();
         $this->user = User::factory()->create();
         $this->service = new QuestionBankService();
+        $this->actingAs($this->user);
+        $this->seed();
     }
 
     public function testGetServiceName()
@@ -41,16 +46,11 @@ class QuestionBankServiceTest extends TestCase
             "name" => $this->faker->name
         ];
 
-        $role = Role::create(['name' => 'owner']);
-
-        $user = User::factory()->create();
-        $this->actingAs($user);
-
         $model = $this->service->create($data);
 
         $this->assertInstanceOf(QuestionBank::class, $model);
         $this->assertDatabaseHas('question_banks', $data);
-        $this->assertTrue($user->hasRole('owner', $model));
+        $this->assertTrue($this->user->hasRole('owner', $model));
     }
 
     public function testUpdate()
@@ -78,8 +78,87 @@ class QuestionBankServiceTest extends TestCase
         $this->assertEquals($updatedData['name'], $updated->name);
     }
 
-    public function test_example(): void
+
+    public function testGetAllPaginated()
     {
-        $this->assertTrue(true);
+        $this->actingAs($this->user);
+
+        $search = [
+        ];
+
+        $pageSize = 15;
+
+        $response = $this->service->getAllPaginated($search, $pageSize);
+
+        $this->assertInstanceOf(LengthAwarePaginator::class, $response);
     }
+
+    public function testGetAll()
+    {
+        $this->actingAs($this->user);
+
+        $search = [
+            // Add your search criteria here
+        ];
+
+        $response = $this->service->getAll($search);
+
+        $this->assertInstanceOf(Collection::class, $response);
+    }
+
+    public function testCount()
+    {
+        $search = [
+            // Add your search criteria here
+        ];
+
+        $count = $this->service->count($search);
+
+        $this->assertIsInt($count);
+    }
+
+    public function testFindOrFail()
+    {
+        $key = 1;
+        $column = 'id';
+
+        $model = $this->service->findOrFail($key, $column);
+
+        $this->assertInstanceOf(Model::class, $model);
+    }
+
+    public function testFind()
+    {
+        $attributes = [
+            // Add your attributes here
+        ];
+
+        $response = $this->service->find($attributes);
+
+        $this->assertInstanceOf(Collection::class, $response);
+    }
+
+    public function testInsert()
+    {
+        $data = [
+            "name" => $this->faker->name
+        ];
+
+        $saved = $this->service->insert($data);
+
+        $this->assertTrue($saved);
+    }
+
+    public function testDelete()
+    {
+        $qb = $this->service->create([
+            "name" => $this->faker->name
+        ]);
+
+        $deleted = $this->service->delete($qb);
+
+        $this->assertTrue($deleted);
+    }
+
 }
+

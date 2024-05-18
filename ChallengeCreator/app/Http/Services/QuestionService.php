@@ -122,6 +122,7 @@ class QuestionService implements BaseCrudServiceInterface
         $qb -> ans6 = $data["ans6"];
         $qb -> correct = $data["correct"];
         $qb -> question_bank_id = $data["question_bank_id"];
+        $qb -> label_id = $data["label_id"];
         $saved = $qb->save();
         return $saved;
     }

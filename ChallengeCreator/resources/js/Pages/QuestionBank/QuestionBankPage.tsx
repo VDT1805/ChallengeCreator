@@ -30,6 +30,7 @@ export default function QuestionBankPage({ auth, QBank, CanEdit }: PageProps<{ Q
                         Welcome to your question bank
                     </h1>
                     <Separator className="mt-5 mb-5 bg-indianred"/>
+                    <p>A quick get started</p>
                     <p className="text-xl font-bold mb-2 text-bluegreen">Tests</p> - see all your tests from this Bank
                     <p className="text-xl font-bold mt-2 mb-2 text-bluegreen">Questions</p> - see all your questions in this Bank
                     <p className="text-xl font-bold mt-2 mb-2 text-bluegreen">Categories</p> - see all the categories & subcategories for this Bank

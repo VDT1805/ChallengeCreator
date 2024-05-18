@@ -95,13 +95,16 @@ class QuestionController extends Controller
             }
             if ($inserted) {
                 $attachmentResult = $test->questions()->attach($inserted);
-                // QuestionEvent::dispatch($inserted,Auth::user()->name,"Created");
+                QuestionEvent::dispatch($inserted,Auth::user()->name,"Created");
                 return redirect()->route("tests.show", ["qbID" => $qbID, "testID" => $testid]);
             }
         }
         if ($inserted) {
             QuestionEvent::dispatch($inserted,Auth::user()->name,"Created");
             return redirect()->route("questions.index", ["qbID" => $qbID]);
+        }
+        else {
+            abort(400, "Cannot save this question");
         }
     }
 
@@ -185,6 +188,9 @@ class QuestionController extends Controller
         ]);
         $data =  $response->getData();
         // dd($data);
+        if (!$response->isSuccessful()) {
+            abort(403,"Failed to reach API");
+        }
         $questions = [];
         foreach ($data as $question) {
             $questions[] = new Question([
