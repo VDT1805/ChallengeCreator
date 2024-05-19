@@ -266,38 +266,6 @@ class QuestionControllerTest extends TestCase
     public function test_ai_gen(): void
     {
 
-
-        // Here we can use the same HTTP Facade to "catch" the request to the external endpoint and return our own "mocked" response
-        // Http::fake([
-        //     'http://localhost:3000/genqa' => Http::response([
-        //         'data' => [
-        //             'question' => "Question1",
-        //             'answer' => 'Tiger Nixon',
-        //         ],
-        //     ], 200)
-        // ]);
-
-
-
-        // $this->createMock(HTTPService::class, function ($mock) {
-        //     $mock->shouldReceive('request')->once()->andReturn(new Question([
-        //         'question' => 'Question1',
-        //         'ans1' => 'Tiger Nixon',
-        //     ]));
-        // });
-
-        // $httpservice = $this->createMock(QuestionService::class);
-
-        // $this->service->expects($this->once())->method('AIgenerate')->willReturn(
-        //     new Collection([
-        //         Question([
-        //         'question' => 'Question1',
-        //         'ans1' => 'Tiger Nixon',
-        //     ]),
-
-        //     ])
-        // );
-
         $response = $this->post(route('questions.aigen', ['qbID' => $this->questionBank->id]), [
             'answers' => [
                 ['text' => 'Answer 1'],
@@ -312,20 +280,7 @@ class QuestionControllerTest extends TestCase
             $page->component('Questions/AddAIQuestion')->has(
                 'questions', 1
             )
-        );
-
-        // $responseJson = [
-        //     [
-        //         'question' => 'Generated Question 1',
-        //         'ans1' => 'Generated Answer 1',
-        //     ],
-        //     [
-        //         'question' => 'Generated Question 2',
-        //         'ans1' => 'Generated Answer 2',
-        //     ],
-        // ];
-
-
+            );
     }
 
 

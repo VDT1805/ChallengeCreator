@@ -30,10 +30,10 @@ class QuestionService implements BaseCrudServiceInterface
     /**
      * Generate questions
      *
-     * @param UploadedFile $file
-     * @param User $user
+     * @param array $rq
+     * @param string $qbID, $label_id
      *
-     * @return Image|null
+     * @return Collection
      *
      * @link https://localhost:3000/genqa
      */

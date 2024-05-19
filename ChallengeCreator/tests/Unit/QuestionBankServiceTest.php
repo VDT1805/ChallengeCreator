@@ -41,15 +41,19 @@ class QuestionBankServiceTest extends TestCase
 
     public function testCreate()
     {
-
         $data = [
             "name" => $this->faker->name
         ];
 
         $model = $this->service->create($data);
 
+        // Assert the instance type
         $this->assertInstanceOf(QuestionBank::class, $model);
+
+        // Assert the database has the new record
         $this->assertDatabaseHas('question_banks', $data);
+
+        // Assert the user has the 'owner' role for the created question bank
         $this->assertTrue($this->user->hasRole('owner', $model));
     }
 
@@ -59,23 +63,21 @@ class QuestionBankServiceTest extends TestCase
             'name' => 'Test Question Bank',
         ];
 
-        $user = User::factory()->create();
-        $role = Role::create(['name' => 'owner']);
-        Auth::login($user);
+        $model = $this->service->create($data);
 
-        $saved = $this->service->insert($data);
-
-        $this->assertTrue($saved);
         $this->assertDatabaseHas('question_banks', $data);
 
         $updatedData = [
             'name' => 'Updated Question Bank',
         ];
 
-        $updated = $this->service->update(QuestionBank::first()->id, $updatedData);
+        $updated = $this->service->update($model->id, $updatedData);
 
+        // Assert the instance type
         $this->assertInstanceOf(QuestionBank::class, $updated);
-        $this->assertEquals($updatedData['name'], $updated->name);
+
+        // Assert the database has the updated record
+        $this->assertDatabaseHas('question_banks', $updatedData);
     }
 
 
@@ -119,10 +121,13 @@ class QuestionBankServiceTest extends TestCase
 
     public function testFindOrFail()
     {
-        $key = 1;
-        $column = 'id';
+        $data = [
+            "name" => $this->faker->name
+        ];
 
-        $model = $this->service->findOrFail($key, $column);
+        $newqb = $this->service->create($data);
+
+        $model = $this->service->findOrFail($newqb->id, "id");
 
         $this->assertInstanceOf(Model::class, $model);
     }
@@ -146,7 +151,11 @@ class QuestionBankServiceTest extends TestCase
 
         $saved = $this->service->insert($data);
 
+        // Assert that the record was successfully inserted
         $this->assertTrue($saved);
+
+        // Assert the database has the new record
+        $this->assertDatabaseHas('question_banks', $data);
     }
 
     public function testDelete()
@@ -157,7 +166,11 @@ class QuestionBankServiceTest extends TestCase
 
         $deleted = $this->service->delete($qb);
 
+        // Assert that the record was successfully deleted
         $this->assertTrue($deleted);
+
+        // Assert the database no longer has the deleted record
+        $this->assertDatabaseMissing('question_banks', ['id' => $qb->id]);
     }
 
 }

@@ -37,7 +37,7 @@ class QuestionBankControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertInertia(
             fn (AssertableInertia $page) =>
-            $page->component('Dashboard') -> has('QBS')
+            $page->component('Dashboard') -> has('QBS.data',0)
         );
     }
 
@@ -62,9 +62,18 @@ class QuestionBankControllerTest extends TestCase
         );
     }
 
+    public function test_store_question_bank_missing_field(): void
+    {
+        $data = [];
+
+        $response = $this->post('/qbs/create', $data);
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors('name');
+    }
+
     public function test_show_question_bank_unauthorized(): void
     {
-        $questionBankId = 1; // Provide the ID of the question bank to be shown
+        $questionBankId = 1; // Provide random ID of the question bank to be shown
 
         $response = $this->get('/qbs/' . $questionBankId);
         $response->assertStatus(403);
