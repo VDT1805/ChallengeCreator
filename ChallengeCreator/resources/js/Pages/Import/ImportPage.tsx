@@ -473,7 +473,13 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                                     </div>
                                 )}
                             />
-                            {formData.getAll("csv").length > 0 && <Button onClick={removeFile}>Remove uploaded file</Button>}
+                            {formData.getAll("csv").length > 0 && <Button onClick={removeFile} style={{
+        backgroundColor: 'transparent',
+        color: 'red',
+        position: 'absolute',
+        left: '50%',
+        transform: 'translateX(-50%)'
+    }} >Remove uploaded file</Button>}
                         </motion.div>
                     )}
 
