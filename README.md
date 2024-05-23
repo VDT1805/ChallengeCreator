@@ -22,4 +22,5 @@ Sau đó mở `localhost` trong trình duyệt web
 6. npm run build
 6. php artisan migrate:seed
 7. Go to localhost:8989
-Done!
+- Done!
+- CONNECTION_REFUSED error: just delete the public/hot file
