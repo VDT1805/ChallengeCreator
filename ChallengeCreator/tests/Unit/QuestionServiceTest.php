@@ -17,7 +17,7 @@ use Tests\TestCase;
 use App\Http\Services\QuestionBankService;
 use App\Models\Question;
 use App\Models\Role;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+
 class QuestionServiceTest extends TestCase
 {
     use withFaker,RefreshDatabase;

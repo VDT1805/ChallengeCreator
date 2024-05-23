@@ -70,6 +70,14 @@ services:
             - '${SOKETI_METRICS_SERVER_PORT:-9601}:9601'
         networks:
             - laravel
+        
+    gotenberg:
+        container_name: gotenberg
+        image: gotenberg/gotenberg:8
+        ports:
+        - "3000:3000"
+        networks:
+            - laravel
 networks:
     laravel:
         driver: bridge
