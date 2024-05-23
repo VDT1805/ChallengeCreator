@@ -94,11 +94,11 @@ return (
           <form onSubmit={submit}>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5 mb-5">
-                {flash.Error && toast({
+                {/* {flash.Error && toast({
                     title: "Uh oh! Something went wrong.",
                     description: "There was a problem with your request.",
                     })
-                }
+                } */}
                 <Label htmlFor="question" className="text-xl font-bold">Enter your question</Label>
                 <MathJaxContext version={3} config={config}>
                 <Textarea
