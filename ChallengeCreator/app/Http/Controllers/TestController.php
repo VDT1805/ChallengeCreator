@@ -185,6 +185,8 @@ class TestController extends Controller
     }
 
     public function pdfGenerate($qbID, $testID, Request $request) {
+        // dd($request,env('GOTENBERG_API_URL'));
+        // return response(403)->json(env('GOTENBERG_API_URL'));
         $QB = $this->qbService->findOrFail($qbID,"id");
         $test = $this->tService->find(["questionbanks" => $qbID, "id" => $testID])->first();
         if(!$test) {
@@ -209,7 +211,7 @@ class TestController extends Controller
         ];
 
         $html = view('exampdf',$data)->render();
-        $request = Gotenberg::chromium("http://localhost:3000/")
+        $request = Gotenberg::chromium(env('GOTENBERG_API_URL'))
         ->pdf()->html(Stream::string('index.html',$html));
         $client = new \Http\Adapter\Guzzle7\Client;
         try {
@@ -249,7 +251,7 @@ class TestController extends Controller
      */
     public function randomStore($qbID,Request $request)
     {
-        // dd($request);
+        dd($request);
         $name = $request["name"];
         unset($request["name"]);
         $questions = collect([]);

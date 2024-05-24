@@ -35,92 +35,92 @@ class TestServiceTest extends TestCase
         $this->assertTrue(true);
     }
 
-    // public function testGetAllPaginated(): void
-    // {
-    //     $testService = new TestService();
-    //     $result = $testService->getAllPaginated();
+    public function testGetAllPaginated(): void
+    {
+        $testService = new TestService();
+        $result = $testService->getAllPaginated();
         
-    //     $this->assertInstanceOf(LengthAwarePaginator::class, $result);
-    // }
+        $this->assertInstanceOf(LengthAwarePaginator::class, $result);
+    }
     
-    // public function testGetAll(): void
-    // {
-    //     $testService = new TestService();
-    //     $result = $testService->getAll();
+    public function testGetAll(): void
+    {
+        $testService = new TestService();
+        $result = $testService->getAll();
         
-    //     $this->assertInstanceOf(Collection::class, $result);
-    // }
+        $this->assertInstanceOf(Collection::class, $result);
+    }
     
-    // public function testCount(): void
-    // {
-    //     $testService = new TestService();
-    //     $result = $testService->count();
+    public function testCount(): void
+    {
+        $testService = new TestService();
+        $result = $testService->count();
         
-    //     $this->assertIsInt($result);
-    // }
+        $this->assertIsInt($result);
+    }
     
-    // public function testFindOrFail(): void
-    // {
-    //     $testService = new TestService();
-    //     $result = $testService->findOrFail(1);
+    public function testFindOrFail(): void
+    {
+        $testService = new TestService();
+        $result = $testService->findOrFail(1);
         
-    //     $this->assertInstanceOf(Model::class, $result);
-    // }
+        $this->assertInstanceOf(Model::class, $result);
+    }
     
-    // public function testFind(): void
-    // {
-    //     $testService = new TestService();
-    //     $result = $testService->find(['name' => 'Test']);
+    public function testFind(): void
+    {
+        $testService = new TestService();
+        $result = $testService->find(['name' => 'Test']);
         
-    //     $this->assertInstanceOf(Collection::class, $result);
-    // }
+        $this->assertInstanceOf(Collection::class, $result);
+    }
     
-    // public function testCreate(): void
-    // {
-    //     $testService = new TestService();
-    //     $result = $testService->create(['name' => 'Test']);
+    public function testCreate(): void
+    {
+        $testService = new TestService();
+        $result = $testService->create(['name' => 'Test']);
         
-    //     $this->assertInstanceOf(Model::class, $result);
-    // }
+        $this->assertInstanceOf(Model::class, $result);
+    }
     
-    // public function testInsert(): void
-    // {
-    //     $testService = new TestService();
-    //     $result = $testService->insert(['name' => 'Test', 'question_bank_id' => 1]);
+    public function testInsert(): void
+    {
+        $testService = new TestService();
+        $result = $testService->insert(['name' => 'Test', 'question_bank_id' => 1]);
         
-    //     $this->assertTrue($result);
-    // }
+        $this->assertTrue($result);
+    }
     
-    // public function testCreateMany(): void
-    // {
-    //     $testService = new TestService();
-    //     $result = $testService->createMany([['name' => 'Test1'], ['name' => 'Test2']]);
+    public function testCreateMany(): void
+    {
+        $testService = new TestService();
+        $result = $testService->createMany([['name' => 'Test1'], ['name' => 'Test2']]);
         
-    //     $this->assertInstanceOf(Collection::class, $result);
-    // }
+        $this->assertInstanceOf(Collection::class, $result);
+    }
     
-    // public function testUpdateOrCreate(): void
-    // {
-    //     $testService = new TestService();
-    //     $result = $testService->updateOrCreate(['name' => 'Test'], ['name' => 'Updated Test']);
+    public function testUpdateOrCreate(): void
+    {
+        $testService = new TestService();
+        $result = $testService->updateOrCreate(['name' => 'Test'], ['name' => 'Updated Test']);
         
-    //     $this->assertInstanceOf(Model::class, $result);
-    // }
+        $this->assertInstanceOf(Model::class, $result);
+    }
     
-    // public function testUpdate(): void
-    // {
-    //     $testService = new TestService();
-    //     $result = $testService->update(1, ['name' => 'Updated Test']);
+    public function testUpdate(): void
+    {
+        $testService = new TestService();
+        $result = $testService->update(1, ['name' => 'Updated Test']);
         
-    //     $this->assertInstanceOf(Model::class, $result);
-    // }
+        $this->assertInstanceOf(Model::class, $result);
+    }
     
-    // public function testDelete(): void
-    // {
-    //     $testService = new TestService();
-    //     $result = $testService->delete(1);
+    public function testDelete(): void
+    {
+        $testService = new TestService();
+        $result = $testService->delete(1);
         
-    //     $this->assertTrue($result);
-    // }
+        $this->assertTrue($result);
+    }
     
 }
