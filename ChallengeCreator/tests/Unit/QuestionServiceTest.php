@@ -42,19 +42,54 @@ class QuestionServiceTest extends TestCase
     }
     public function testGetAllPaginated(): void
     {
+        $qs = [];
+                for ($i = 1; $i <= 20; $i++) {
+                    $qs[] = [
+                        "question" => "question ".$i,
+                        "ans1" => $this->faker->name,
+                        "ans2" => $this->faker->name,
+                        "ans3" => $this->faker->name,
+                        "ans4" => $this->faker->name,
+                        "ans5" => $this->faker->name,
+                        "ans6" => $this->faker->name,
+                        "correct" => 1,
+                        "question_bank_id" => $this->qb->id,
+                        "label_id" => $this->qb->labels()->first()->id
+                    ];
+                }
+                
+        $result = $this->service->createMany($qs);
         $search = [];
         $pageSize = 15;
         $result = $this->service->getAllPaginated($search, $pageSize);
 
         $this->assertInstanceOf(LengthAwarePaginator::class, $result);
+        $this->assertEquals(15, $result->perPage());
     }
 
     public function testGetAll(): void
     {
+        $qs = [];
+                for ($i = 1; $i <= 20; $i++) {
+                    $qs[] = [
+                        "question" => "question ".$i,
+                        "ans1" => $this->faker->name,
+                        "ans2" => $this->faker->name,
+                        "ans3" => $this->faker->name,
+                        "ans4" => $this->faker->name,
+                        "ans5" => $this->faker->name,
+                        "ans6" => $this->faker->name,
+                        "correct" => 1,
+                        "question_bank_id" => $this->qb->id,
+                        "label_id" => $this->qb->labels()->first()->id
+                    ];
+                }
+        $res = $this->service->createMany($qs);
         $search = [];
         $result = $this->service->getAll($search);
 
         $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(20, $result->count());
     }
 
     public function testCount(): void
@@ -85,20 +120,37 @@ class QuestionServiceTest extends TestCase
         $result = $this->service->findOrFail($key, $column);
 
         $this->assertInstanceOf(Model::class, $result);
+        $this->assertEquals($key, $result->id);
     }
 
     public function testFind(): void
     {
-        $attributes = [];
+        $qs = [];
+                for ($i = 1; $i <= 20; $i++) {
+                    $qs[] = [
+                        "question" => "question ".$i,
+                        "ans1" => $this->faker->name,
+                        "ans2" => $this->faker->name,
+                        "ans3" => $this->faker->name,
+                        "ans4" => $this->faker->name,
+                        "ans5" => $this->faker->name,
+                        "ans6" => $this->faker->name,
+                        "correct" => 1,
+                        "question_bank_id" => $this->qb->id,
+                        "label_id" => $this->qb->labels()->first()->id
+                    ];
+                }
+        $attributes = ["question_bank_id" => $this->qb->id, "question" => "question 1"];
         $result = $this->qbservice->find($attributes);
 
         $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(1, $result->count());
     }
 
     public function testCreate(): void
     {
         $data = [
-            "question" => $this->faker->name,
+            "question" => "question",
             "ans1" => $this->faker->name,
             "ans2" => $this->faker->name,
             "ans3" => $this->faker->name,
@@ -112,6 +164,8 @@ class QuestionServiceTest extends TestCase
         $result = $this->service->create($data);
 
         $this->assertInstanceOf(Model::class, $result);
+        $this->assertDatabaseHas('questions', $data);
+
     }
 
     public function testInsert(): void
@@ -131,6 +185,7 @@ class QuestionServiceTest extends TestCase
         $result = $this->service->insert($data);
 
         $this->assertTrue($result);
+        $this->assertDatabaseHas('questions', $data);
     }
 
     public function testCreateMany(): void
@@ -164,7 +219,7 @@ class QuestionServiceTest extends TestCase
         $result = $this->service->createMany($attributes);
         $this->assertEquals(2, $result->count());
         $this->assertInstanceOf(Collection::class, $result);
-
+        $this->assertDatabaseHas('questions', ["question" => $attributes[0]['question'], "question_bank_id" => $attributes[0]['question_bank_id']]);
     }
 
     public function testUpdate(): void

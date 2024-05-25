@@ -69,8 +69,6 @@ class TestService implements BaseCrudServiceInterface
         $search = [
             $column => $key
         ];
-        dd($search);
-        dd(Test::filter($search)->toSql());
         return Test::filter($search)->first();
     }
 

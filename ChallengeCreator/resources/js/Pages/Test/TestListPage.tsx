@@ -126,7 +126,7 @@ export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{
                                 <Separator className="mb-2 mt-2" />
                                 <div className="flex gap-4">
                                     <Link className='bg-bluegreen text-white font-bold rounded-t px-4 py-2' href={route('tests.show', [test.question_bank_id, test.id])} as="button">
-                                            Edit test
+                                            Show test
                                     </Link>
                                     <Link className='bg-red-500 text-white font-bold rounded-t px-4 py-2' method = "delete" href={route('tests.destroy', [test.question_bank_id, test.id])} as="button">
                                             Delete test
