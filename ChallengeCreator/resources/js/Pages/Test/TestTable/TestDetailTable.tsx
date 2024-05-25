@@ -41,6 +41,7 @@ import {
 import { FilePlusIcon, PlusIcon, ShuffleIcon, UpdateIcon } from "@radix-ui/react-icons"
 import { QB } from "@/Pages/QuestionBank/QuestionBankType"
 import { Test } from "./TestType"
+import { MathJax, MathJaxContext } from "better-react-mathjax"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -136,7 +137,10 @@ export function TestDetailTable<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      <MathJaxContext>
+                        <MathJax>{flexRender(cell.column.columnDef.cell, cell.getContext())}</MathJax>
+                      </MathJaxContext>
+                      
                     </TableCell>
                   ))}
                 </TableRow>

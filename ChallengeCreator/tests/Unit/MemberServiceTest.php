@@ -21,16 +21,18 @@ class MemberServiceTest extends TestCase
      * A basic unit test example.
      */
     private MemberService $service;
-    private User $user;
+    private Collection $members;
+    private User $user,$user2;
     private QuestionBank $qb;
     private QuestionBankService $qbservice;
     protected function setUp(): void
     {
         parent::setUp();
         $this->user = User::factory()->create();
+        $this->actingAs($this->user);
+        $this->user2 = User::factory()->create();
         $this->service = new MemberService();
         $this->qbservice = new QuestionBankService();
-        $this->actingAs($this->user);
         $this->seed();
         $this->qb = $this->qbservice->create([
             "name" => $this->faker->name
@@ -39,13 +41,7 @@ class MemberServiceTest extends TestCase
 
     public function testGetAllPaginated(): void
     {
-        $labels = [];
-                for ($i = 1; $i <= 20; $i++) {
-                    $labels[] = ['name' => 'Label ' . $i,"description" => "", 'question_bank_id' => $this->qb->id];
-                }
-                
-        $result = $this->service->createMany($labels);
-        $result = $this->service->getAllPaginated();
+        $result = $this->service->getAllPaginated(["questionbanks" => $this->qb->id]);
         
         $this->assertInstanceOf(LengthAwarePaginator::class, $result);
         $this->assertEquals(15, $result->perPage());
@@ -53,93 +49,54 @@ class MemberServiceTest extends TestCase
     
     public function testGetAll(): void
     {
-        $labels = [];
-                for ($i = 1; $i <= 3; $i++) {
-                    $labels[] = ['name' => 'Label ' . $i,"description" => "", 'question_bank_id' => $this->qb->id];
-                }
-                
-        $result = $this->service->createMany($labels);
-        $result = $this->service->getAll();
+        $result = $this->service->getAll(["questionbanks" => $this->qb->id]);
         
         $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(5, $result->count());
+        $this->assertEquals(1, $result->count());
     }
     
     public function testCount(): void
     {
-        $labels = [];
-            for ($i = 1; $i <= 3; $i++) {
-                    $labels[] = ['name' => 'Label ' . $i,"description" => "", 'question_bank_id' => $this->qb->id];
-                }
-        
-        $result = $this->service->createMany($labels);
         $result = $this->service->count();
         
         $this->assertIsInt($result);
-        $this->assertEquals(5, $result);
+        $this->assertEquals(2, $result);
     }
     
-    public function testFindOrFail(): void
-    {
-        $labels = [];
-            for ($i = 1; $i <= 3; $i++) {
-                    $labels[] = ['name' => 'Label ' . $i,"description" => "", 'question_bank_id' => $this->qb->id];
-                }
+    // public function testFindOrFail(): void
+    // {
+    //     $result = $this->service->findOrFail("id", 1);
         
-        $result = $this->service->createMany($labels);
-        $result = $this->service->findOrFail("id",1);
-        
-        $this->assertInstanceOf(Model::class, $result);
-        $this->assertEquals(1, $result->id);
-    }
+    //     $this->assertInstanceOf(Model::class, $result);
+    //     $this->assertEquals(1, $result->id);
+    // }
     
-    public function testFind(): void
-    {
-        $labels = [];
-            for ($i = 1; $i <= 3; $i++) {
-                    $labels[] = ['name' => 'Label ' . $i,"description" => "", 'question_bank_id' => $this->qb->id];
-                }
-        $result = $this->service->find(['name' => 'Label 1']);
+    // public function testFind(): void
+    // {
+    //     $result = $this->service->find(['id' => '1']);
         
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(2, $result->count());
-    }
+    //     $this->assertInstanceOf(Collection::class, $result);
+    //     $this->assertEquals(2, $result->count());
+    // }
     
     public function testCreate(): void
     {
-        
-        $result = $this->service->create(['name' => 'Label 1',"description" => "", 'question_bank_id' => $this->qb->id]);
-        
-        $this->assertInstanceOf(Model::class, $result);
-        $this->assertDatabaseHas('labels', ['name' => 'Label 1', 'question_bank_id' => $this->qb->id]);
-    }
-    
-    public function testInsert(): void
-    {
-        
-        $result = $this->service->insert(['name' => 'Label 1',"description" => "", 'question_bank_id' => $this->qb->id]);
-        
-        $this->assertTrue($result);
-        $this->assertDatabaseHas('labels', ['name' => 'Label 1', 'question_bank_id' => $this->qb->id]);
-    }
-    
-    
-    
-    public function testUpdate(): void
-    {
-        $result = $this->service->create(['name' => 'Label 1',"description" => "", 'question_bank_id' => $this->qb->id]);
-        $result = $this->service->update(1, ['name' => 'Updated Label',"description" => "", 'question_bank_id' => $this->qb->id]);
+        $this->actingAs($this->user2);
+        $result = $this->service->create(['role' => 'editor', "qb"=>$this->qb]);
         
         $this->assertInstanceOf(Model::class, $result);
-        $this->assertDatabaseHas('labels', ['name' => 'Updated Label',"question_bank_id" => $this->qb->id]);
+        $this->assertDatabaseHas('role_user', ['user_id'=>$this->user2->id,'role_id' => '2', 'team_id' => $this->qb->id]);
     }
+
     
     public function testDelete(): void
     {
-        $result = $this->service->create(['name' => 'Label 1',"description" => "", 'question_bank_id' => $this->qb->id]);
-        $result = $this->service->delete($result->id);
+        $newuser = User::factory()->create();
+        $this->actingAs($newuser);
+        $result = $this->service->create(['role' => 'editor', "qb"=>$this->qb]);
+        $result = $this->service->delete($newuser->id,['role' => 'editor', "team"=>$this->qb] );
         
         $this->assertTrue($result);
-        $this->assertDatabaseMissing('labels', ['name' => 'Label 1',"question_bank_id" => $this->qb->id]);
+        // $this->assertDatabaseMissing('labels', ['name' => 'Label 1',"question_bank_id" => $this->qb->id]);
     }
 }

@@ -76,8 +76,31 @@ export default function LabelIndex({ auth, QBank, labels }: PageProps<{ QBank: Q
                                 <div className="flex gap-2 items-center"><FileIcon />{label.name as string}</div>
                             </AccordionTrigger>
                             <AccordionContent className="bg-white px-3 rounded">
-                                {/* <Separator className="mb-2 mt-2" /> */}
-                                {label.description}
+                                <Link className='text-red-500 underline text-center font-bold rounded-t px-4 py-2' method = "delete" href={""} >
+                                        Delete label
+                                </Link>
+                                <Separator className="mb-2 mt-2" />
+                                <Accordion type="single" collapsible className="w-full bg-white rounded">
+                                    {label.sublabels?.map((sublabel: LabelType) => {
+                                        return (
+                                            <AccordionItem value={sublabel.id as unknown as string}>
+                                                <AccordionTrigger className="hover:bg-blue-100 bg-white px-3 rounded">
+                                                    <div className="flex gap-2 items-center"><FileIcon />{sublabel.name as string}</div>
+                                                </AccordionTrigger>
+                                                <AccordionContent>
+                                                    {/* {sublabel.name as string} */}
+                                                    <div className="flex gap-4">
+                                                        <Link className='text-red-500 underline text-center font-bold rounded-t px-4 py-2' method = "delete" href={""} >
+                                                                Delete sublabel
+                                                        </Link>
+                                                    </div>
+                                                </AccordionContent>
+                                            </AccordionItem>
+                                        )
+                                    })}
+                                </Accordion>
+
+                                
                             </AccordionContent>
                         </AccordionItem>
                     )

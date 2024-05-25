@@ -81,7 +81,6 @@ export default function AddRandomTestQuestion({ auth, QBank, labels }: PageProps
                                         e.target.value = sublabel.questions_count!.toString();
                                     }
                                     if (value != 0) {
-                                        console.log("FDSK");
                                         transform((data) => ({
                                             ...data,
                                             [sublabel.id]: e.target.value

@@ -48,7 +48,8 @@ class QuestionController extends Controller
             "QBank" => $QB,
             "questions" => $questions,
             "labels" => $labels,
-            "sublabels" => fn() => $parentid ? $this->lService->getAll(["parent" => $parentid]) : []
+            "sublabels" => fn() => $parentid ? $this->lService->getAll(["parent" => $parentid]) : [],
+            "CanCreate" => Auth::user()->hasPermission('question-create',$qbID)
         ]);
 
     }

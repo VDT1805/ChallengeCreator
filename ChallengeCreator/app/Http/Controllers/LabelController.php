@@ -24,10 +24,10 @@ class LabelController extends Controller
     {
         //
         $QB = $this->qbService->findOrFail($qbID,"id");
-        $label = $this->lService->getAllPaginated(["questionbanks" => $qbID]);
+        $labels = $this->lService->getAllPaginated(["questionbanks" => $qbID]);
         return Inertia::render("Label/LabelIndex", [
             "QBank" => $QB,
-            "labels" => $label
+            "labels" => $labels
         ]);
     }
 

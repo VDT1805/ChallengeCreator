@@ -59,6 +59,7 @@ import {
 } from "@/shadcn/ui/table"
 import { PaginationProp } from '../pagination';
 import { SparkleIcon, Sparkles } from 'lucide-react';
+import { formatTime } from './formatTime';
 
 function EventTable({ changeLog }: { changeLog: QuestionEvent[] }) {
     return (
@@ -96,17 +97,13 @@ function EventTable({ changeLog }: { changeLog: QuestionEvent[] }) {
         </Card>
     )
 }
-function formatTime(time: string): string {
-    const date = new Date(time);
-    return date.toLocaleString();
-}
 function UpdateDialog(changeLog: QuestionEvent[]) {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <p className="text-start">
-                    Updated at: {changeLog[changeLog.length - 1].question.created_at}
-                </p>
+            <h4 className="text-start text-gray-500 underline self-end text-left">
+                    Updated at: {formatTime(changeLog[changeLog.length - 1].question.created_at)}
+                </h4>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
@@ -132,7 +129,7 @@ function UpdateDialog(changeLog: QuestionEvent[]) {
     )
 }
 
-export default function QuestionList({ auth, QBank, questions, labels, sublabels }: PageProps<{ QBank: QB, questions: QPage, labels: LabelType[], sublabels: LabelType[] }>) {
+export default function QuestionList({ auth, QBank, questions, labels, sublabels, CanCreate }: PageProps<{ QBank: QB, questions: QPage, labels: LabelType[], sublabels: LabelType[], CanCreate: boolean }>) {
     console.log(questions)
     const [query, setQuery] = useState<Record<string, string>>({});
     const [currentPage, setCurrentPage] = useState(questions.current_page);
@@ -177,11 +174,13 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                         <div className="flex justify-end">
                             {
                                 changeLog.length > 0 &&
-                                UpdateDialog(changeLog)
+                                <div className="mr-4">
+                                {UpdateDialog(changeLog)}
+                                </div>
                             }
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                    <Button><PlusIcon className="mr-3" />Add question</Button>
+                                    <Button disabled={!CanCreate}><PlusIcon className="mr-3" />Add question</Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent>
                                     <DropdownMenuItem>
@@ -282,8 +281,8 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                                             </div>
                                         </AccordionTrigger>
                                         <AccordionContent className="bg-white px-3">
-                                            <p>Created at: {question.created_at}</p>
-                                            <p>Updated at: {question.updated_at}</p>
+                                            <p>Created at: {formatTime(question.created_at)}</p>
+                                            <p>Updated at: {formatTime(question.updated_at)}</p>
                                             <Separator className="mb-2 mt-2" />
                                             {
                                                 answers && answers.map((ans, idx) => {
@@ -299,13 +298,13 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                                             }
                                             <Separator className="mb-2 mt-2" />
                                             <div className="flex gap-4">
-                                                <Link href={route('questions.edit', [question.question_bank_id, question.id])} method="get" as="button">
-                                                    <Button className='bg-bluegreen text-white font-bold rounded-t px-4 py-2'>
+                                                <Link disabled = {!CanCreate} href={route('questions.edit', [question.question_bank_id, question.id])} method="get" as="button">
+                                                    <Button disabled = {!CanCreate} className='bg-bluegreen text-white font-bold rounded-t px-4 py-2'>
                                                         Edit question
                                                     </Button>
                                                 </Link>
-                                                <Link href={route('questions.destroy', [question.question_bank_id])} method='delete' data={{ qID: question.id }} as="button">
-                                                    <Button className='bg-red-500 text-white font-bold rounded-t px-4 py-2'>
+                                                <Link disabled = {!CanCreate} href={route('questions.destroy', [question.question_bank_id])} method='delete' data={{ qID: question.id }} as="button">
+                                                    <Button disabled = {!CanCreate} className='bg-red-500 text-white font-bold rounded-t px-4 py-2'>
                                                         Delete question
                                                     </Button>
                                                 </Link>
