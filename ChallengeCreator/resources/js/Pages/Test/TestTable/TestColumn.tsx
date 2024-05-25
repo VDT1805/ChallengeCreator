@@ -76,8 +76,8 @@ export const columns: ColumnDef<Question>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
-      const test = row.original
+    cell: ({ row, table }) => {
+      const question = row.original
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -89,7 +89,11 @@ export const columns: ColumnDef<Question>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             {/* <DropdownMenuItem><Link href={route('tests.show',[test.question_bank_id,test.id])}>Edit</Link></DropdownMenuItem> */}
-            <DropdownMenuItem className="text-red-500 font-bold">Delete</DropdownMenuItem>
+            <DropdownMenuItem className="text-red-500 font-bold">
+              <Link href={route('tests.detachQuestion', [question.question_bank_id, (table.options.meta as any)?.test.id])} method="put" data={{qID: question.id}}>
+                        <p className="text-lg font-bold underline text-indianred">Delete from test</p>
+                        </Link>
+              </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

@@ -329,7 +329,7 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                     </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu> */}
-                    <TestDetailTable columns={columns} data={questions} />
+                    <TestDetailTable columns={columns} data={questions} QBank={QBank} test = {test} />
                 </div>
             </div>
         </QBLayout>
