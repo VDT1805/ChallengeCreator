@@ -19,7 +19,7 @@ import {
 } from "@/shadcn/ui/card"
 import { Input } from "@/shadcn/ui/input";
 import { FileIcon, FilePlusIcon, PlusIcon, ShuffleIcon } from "@radix-ui/react-icons";
-import React, { useState } from "react";
+import React, { FormEventHandler, useState } from "react";
 import {
     Select,
     SelectContent,
@@ -31,6 +31,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 import { LabelType } from "../Label/LabelTable/LabelType";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shadcn/ui/dropdown-menu';
 import { PaginationProp } from "../pagination";
+import { formatTime } from "../Questions/formatTime";
 
 export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{ QBank: QB, tests: any, labels: LabelType[] }>) {
     // console.log(tests.links.slice(1,-1));
@@ -40,6 +41,7 @@ export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{
     const [itemsPerPage, setItemsPerPage] = useState(tests.per_page);
     const lastItemIndex =  currentPage * itemsPerPage;
     const firstItemIndex = lastItemIndex - itemsPerPage;
+    const [isFiltered, setIsFiltered] = useState(false);
     const labelValueChange = (e: string) => {
         setQuery(prevQuery => ({
             ...prevQuery,
@@ -47,6 +49,20 @@ export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{
         }));
         router.reload({ only: ['sublabels'], data: { labels: e } })
     }
+
+    const setSortState = (sort: string) => {
+        setQuery(prevQuery => ({
+            ...prevQuery,
+            ["sort"]: sort
+        }));
+    }
+
+
+    const filter: FormEventHandler = (e) => {
+        e.preventDefault();
+        router.get(route('tests.index', QBank.id), query, { preserveState: true, preserveScroll: true });
+        setIsFiltered(true);
+    };
     return (
         <QBLayout
             user={auth.user}
@@ -87,7 +103,7 @@ export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{
                             <Input
                                 placeholder="Search for a test..."
                                 className="border-2 border-blue-500 border-solid focus:border-blue-500" />
-                            {/* <Select>
+                            <Select>
                                 <SelectTrigger className="w-[180px]">
                                     <SelectValue placeholder="Sort by" />
                                 </SelectTrigger>
@@ -95,8 +111,8 @@ export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{
                                     <SelectItem onClick={() => { setSortState("Alphabetical"); }} value="Alphabetical">Alphabetical</SelectItem>
                                     <SelectItem onClick={() => { setSortState("Last Updated") }} value="Last Updated">Last Updated</SelectItem>
                                 </SelectContent>
-                            </Select> */}
-                            <Select onValueChange={(e) => labelValueChange(e)}>
+                            </Select>
+                            {/* <Select onValueChange={(e) => labelValueChange(e)}>
                                 <SelectTrigger className="w-[180px]" >
                                     <SelectValue placeholder="Labels" />
                                 </SelectTrigger >
@@ -107,9 +123,11 @@ export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
-                            </Select>
-                            <Button>Filter</Button>
-                            <Button variant={"destructive"}>Clear filters</Button>
+                            </Select> */}
+                            <Button onClick={filter}>Filter</Button>
+                            <Button variant={"destructive"} onClick={()=>{router.get(route('tests.index', QBank.id))
+                            setIsFiltered(false)}
+                            }>Clear filters</Button>
                         </div>
                     </CardContent>
                 </Card>
@@ -121,8 +139,8 @@ export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{
                                 </div>
                             </AccordionTrigger>
                             <AccordionContent className="bg-white px-3">
-                                <p>Created at: {test.created_at}</p>
-                                <p>Updated at: {test.created_at}</p>
+                                <p>Created at: {formatTime(test.created_at)}</p>
+                                <p>Updated at: {formatTime(test.created_at)}</p>
                                 <Separator className="mb-2 mt-2" />
                                 <div className="flex gap-4">
                                     <Link className='bg-bluegreen text-white font-bold rounded-t px-4 py-2' href={route('tests.show', [test.question_bank_id, test.id])} as="button">

@@ -251,7 +251,7 @@ class TestController extends Controller
      */
     public function randomStore($qbID,Request $request)
     {
-        dd($request);
+        // dd($request);
         $name = $request["name"];
         unset($request["name"]);
         $questions = collect([]);
@@ -259,10 +259,10 @@ class TestController extends Controller
         $QB = $this->qbService->findOrFail($qbID,"id");
         if ($inserted) {
             foreach($request->all() as $key => $value) {
-                $questions_query = $this->qService->getAll(["randSublabels" => [$key,$value]]);
+                $questions_query = $this->qService->getAll(["question_bank_id" => $qbID,"randSublabels" => [$key,$value]]);
+                // dd($questions_query);
                 $questions = $questions->concat($questions_query);
             }
-            // dd($questions);
             foreach($questions as $question) {
                 $inserted->questions()->attach($question);
             }

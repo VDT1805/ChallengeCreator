@@ -64,10 +64,6 @@ import { formatTime } from './formatTime';
 function EventTable({ changeLog }: { changeLog: QuestionEvent[] }) {
     return (
         <Card>
-            {/* <CardHeader className="px-7">
-                <CardTitle>Orders</CardTitle>
-                <CardDescription>Recent orders from your store.</CardDescription>
-            </CardHeader> */}
             <CardContent>
                 <div className="overflow-auto">
                     <Table>
@@ -136,9 +132,11 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
     const [itemsPerPage, setItemsPerPage] = useState(questions.per_page);
     const lastItemIndex = currentPage * itemsPerPage;
     const firstItemIndex = lastItemIndex - itemsPerPage;
+    const [isFiltered, setIsFiltered] = useState(false);
     const filter: FormEventHandler = (e) => {
         e.preventDefault();
         router.get(route('questions.index', QBank.id), query, { preserveState: true, preserveScroll: true });
+        setIsFiltered(true);
     };
     const [selectedValue, setSelectedValue] = useState(Array<LabelType>);
 
@@ -237,7 +235,7 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                             </Select>
 
                             {
-                                sublabels && (
+                                sublabels.length > 0 && (
                                     <Select onValueChange={(e) => setQuery(prevQuery => ({
                                         ...prevQuery,
                                         ["sublabels"]: e
@@ -255,8 +253,15 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                                     </Select>
                                 )
                             }
-                            <Button>Filter</Button>
-                            <Button variant={"destructive"}>Clear filters</Button>
+                            <Button onClick={filter}>Filter</Button>
+                            {
+                                isFiltered &&
+                                <Button variant={"destructive"} onClick={() => {
+                                    router.get(route('questions.index', QBank.id))
+                                setIsFiltered(false);
+                                }}>Clear filters</Button>
+                            }
+                        
                         </div>
                     </CardContent>
                 </Card>

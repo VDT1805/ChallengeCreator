@@ -55,12 +55,13 @@ class QuestionFilter extends ModelFilter
         return $this->where("questions.label_id", '=', $id);
     }
 
-    public function randSublabels($id, $limit = null) {
-        $query = $this->where("questions.label_id", '=', $id)->inRandomOrder();
-        if ($limit) {
-            $query->limit($limit);
+    public function randSublabels($keyval) {
+        $query = $this->where("questions.label_id", '=', $keyval[0])->inRandomOrder();
+        if ($keyval[1]) {
+            $query->limit($keyval[1]);
         }
-        return $query;
+        $results = $query->get();
+        return $results;
     }
 
     public function keyword($keyword) {

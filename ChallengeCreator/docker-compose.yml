@@ -12,6 +12,8 @@ services:
             - ./:/var/www
         networks:
             - laravel
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
 
     # nginx
     nginx:
@@ -34,13 +36,13 @@ services:
     db:
         image: mysql:latest
         container_name: mysql_db
-        # hostname: mysql
+        command: ["mysqld", "--mysql-native-password=ON"]
         restart: unless-stopped
         environment:
             MYSQL_DATABASE: ${DB_DATABASE}
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
             MYSQL_PASSWORD: ${DB_PASSWORD}
-            MYSQL_USER: test
+            MYSQL_USER: ${DB_USERNAME}
         volumes:
             - ./.docker/mysql/dbdata:/var/lib/mysql
         ports:
