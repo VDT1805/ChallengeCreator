@@ -127,7 +127,7 @@ class TestControllerTest extends TestCase
         $response = $this->post(route('tests.store', ['qbID' => $this->questionBank->id]), $data);
 
         $response->assertStatus(302);
-        // $response->assertSessionHasErrors('tests');
+        $response->assertSessionHasErrors('name');
     }
 
     // public function testEdit(): void

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Requests\LabelFormRequest;
 use App\Http\Services\QuestionBankService;
 use App\Http\Services\LabelService;
 use App\Models\Label;
@@ -48,7 +50,7 @@ class LabelController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($qbID,Request $request)
+    public function store($qbID,LabelFormRequest $request)
     {
         //
         $inserted = $this->lService->create($request->all()+["question_bank_id" => $qbID]);

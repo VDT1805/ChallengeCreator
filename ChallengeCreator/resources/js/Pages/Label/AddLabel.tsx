@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import {
   Card,
@@ -36,11 +36,12 @@ import React, { FormEventHandler } from 'react';
 import { LabelType } from './LabelTable/LabelType';
 import { QB } from '../QuestionBank/QuestionBankType';
 import QBLayout from '@/Layouts/QBLayout';
+import InputError from '@/Components/InputError';
 
 
 export default function Dashboard({ auth, QBank, labels }: PageProps<{ QBank: QB, labels: LabelType[] }>) {
   const [position, setPosition] = React.useState("bottom")
-  const { data, setData, setDefaults, post, processing, errors, reset } = useForm({
+  const { data, setData, setDefaults, post, processing, reset } = useForm({
     name: "",
     description: "",
     label_id: ""
@@ -49,6 +50,8 @@ export default function Dashboard({ auth, QBank, labels }: PageProps<{ QBank: QB
     e.preventDefault();
     post(route('labels.store', QBank.id));
   };
+  const { errors,flash } = usePage().props;
+
   return (
     <QBLayout
       user={auth.user}
@@ -70,6 +73,8 @@ export default function Dashboard({ auth, QBank, labels }: PageProps<{ QBank: QB
                   onChange={(e) => setData('name', e.target.value)}
                   placeholder="Name of your label" />
                 </div>
+                <InputError message={errors.name}></InputError>
+
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="name" className="text-xl font-bold">Description</Label>
                   <Textarea id = "description"
@@ -78,6 +83,7 @@ export default function Dashboard({ auth, QBank, labels }: PageProps<{ QBank: QB
                   onChange={(e) => setData('description', e.target.value)}
                   placeholder="Description of your label" />
                 </div>
+                <InputError message={errors.description}></InputError>
               </div>
               <Button className='mt-5'>
                 Add label
@@ -115,6 +121,7 @@ export default function Dashboard({ auth, QBank, labels }: PageProps<{ QBank: QB
                   onChange={(e) => setData('name', e.target.value)}
                   placeholder="Name of your sublabel" />
                 </div>
+                <InputError message={errors.name}></InputError>
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="name" className="text-xl font-bold">Description of sublabel</Label>
                   <Textarea
@@ -123,6 +130,8 @@ export default function Dashboard({ auth, QBank, labels }: PageProps<{ QBank: QB
                   onChange={(e) => setData('description', e.target.value)}
                   placeholder="Description of your sublabel" />
                 </div>
+                <InputError message={errors.description}></InputError>
+
               </div>
               <Button className='mt-5'>
                 Add sublabel

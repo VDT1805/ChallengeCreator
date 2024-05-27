@@ -22,7 +22,9 @@ class LabelFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "name" =>  "required|string",
+            "description" => "required|string",
+            "label_id" => "nullable|exists:labels,id",
         ];
     }
 }
