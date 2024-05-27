@@ -13,6 +13,9 @@ use Psr\Container\NotFoundExceptionInterface;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Test;
 use App\Models\Role;
+use Gotenberg\Gotenberg;
+use Gotenberg\Stream;
+use Gotenberg\Exceptions\GotenbergApiErrored;
 use Illuminate\Support\Facades\Auth;
 
 class TestService implements BaseCrudServiceInterface
@@ -206,5 +209,34 @@ class TestService implements BaseCrudServiceInterface
                 $this->delete($keyOrModel);
             }
         });
+    }
+
+    public function generatePdf($questions, $test, $settings) {
+        $questions_bags = [];
+        if($settings["quesmix"]) {
+            for($i = 0; $i < $settings["numcopies"]; $i++) {
+                $newbag = $questions->shuffle();
+                $questions_bags[] = $newbag;
+            }
+        }
+        else {
+            $questions_bags[] = $questions;
+        }
+        $data = [
+            "test" => $test,
+            "questions_bag" => $questions_bags,
+            "settings" => $settings
+        ];
+
+        $html = view('exampdf',$data)->render();
+        $request = Gotenberg::chromium(env('GOTENBERG_API_URL'))
+        ->pdf()->html(Stream::string('index.html',$html));
+        $client = new \Http\Adapter\Guzzle7\Client;
+        try {
+            $response = $client->sendRequest($request);
+            return $response->getBody();
+        } catch (GotenbergApiErrored $e) {
+            dd($e->getMessage());
+        }
     }
 }

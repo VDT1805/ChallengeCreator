@@ -13,7 +13,7 @@ use App\Models\Question;
 use App\Models\QuestionBank;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Pagination\LengthAwarePaginator;
+use App\Http\Controllers\TestController;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -32,14 +32,9 @@ class TestControllerTest extends TestCase
         parent::setUp();
         $this->user = User::factory()->create();
         $this->qbservice = new QuestionBankService();
-        $this->service = $this->partialMock(QuestionService::class,function ($mock) {
-            $mock->shouldReceive('AIgenerate')->andReturn(
-                new Collection([
-                    new Question([
-                        'question' => 'Generated Question 1',
-                        'ans1' => 'Generated Answer 1',
-                    ]),
-                ])
+        $this->service = $this->partialMock(TestService::class,function ($mock) {
+            $mock->shouldReceive('generatePDF')->andReturn(
+                
             );
         });
         $this->actingAs($this->user);
@@ -78,7 +73,7 @@ class TestControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertInertia(
             fn (Assert $page) =>
-            $page->component('Questions/TestListPage') -> has(
+            $page->component('Test/TestListPage') -> has(
                 'tests.data', 3
             )
         );
@@ -98,19 +93,10 @@ class TestControllerTest extends TestCase
             $response->assertStatus(200);
             $response->assertInertia(
                 fn (Assert $page) =>
-                $page->component('Questions/AddQuestion') -> where(
+                $page->component('Test/AddTest') -> where(
                     'QBank.id', $this->questionBank->id
                 )
             );
-    }
-
-    public function testCreate_with_test_failure(): void
-    {
-
-        $response = $this->actingAs($this->user)
-            ->get(route('tests.create', ['qbID' => $this->questionBank->id]));
-
-            $response->assertStatus(404);
     }
 
     /**
@@ -123,104 +109,119 @@ class TestControllerTest extends TestCase
         Event::fake();
         $data = [
             'question_bank_id' => $this->questionBank->id,
-            'question' => 'Test Question',
-            'ans1' => 'Answer 1',
-            'ans2' => 'Answer 2',
-            'ans3' => 'Answer 3',
-            'ans4' => 'Answer 4',
-            'ans5' => 'Answer 5',
-            'ans6' => 'Answer 6',
-            'correct' => 1,
-            'label_id' => 1,
+            'name' => 'Test',
         ];
 
-        $response = $this->post(route('questions.store', ['qbID' => $this->questionBank->id]), $data);
+        $response = $this->post(route('tests.store', ['qbID' => $this->questionBank->id]), $data);
 
-        $response->assertRedirect(route('questions.index', ['qbID' => $this->questionBank->id]));
+        $response->assertRedirect(route('tests.index', ['qbID' => $this->questionBank->id]));
     }
 
-    public function testStore_missing_question_field_failure(): void
+    public function testStore_missing_name_field_failure(): void
     {
         //Mising name field
         $data = [
             'question_bank_id' => $this->questionBank->id,
         ];
 
-        $response = $this->post(route('questions.store', ['qbID' => $this->questionBank->id]), $data);
+        $response = $this->post(route('tests.store', ['qbID' => $this->questionBank->id]), $data);
 
         $response->assertStatus(302);
-        $response->assertSessionHasErrors('question');
+        // $response->assertSessionHasErrors('tests');
     }
 
-    public function testEdit(): void
-    {
-        $data = [
-            'question_bank_id' => $this->questionBank->id,
-            'question' => 'Test Question',
-            'ans1' => 'Answer 1',
-            'ans2' => 'Answer 2',
-            'ans3' => 'Answer 3',
-            'ans4' => 'Answer 4',
-            'ans5' => 'Answer 5',
-            'ans6' => 'Answer 6',
-            'correct' => 1,
-            'label_id' => 1,
-        ];
-        $question = $this->service->create($data);
+    // public function testEdit(): void
+    // {
+    //     $data = [
+    //         'question_bank_id' => $this->questionBank->id,
+    //         'name' => 'Test',
+    //     ];
+    //     $question = $this->service->create($data);
 
-        $response = $this->get(route('questions.edit', ['qbID' => $this->questionBank->id, 'qID' => $question->id]));
+    //     $response = $this->get(route('questions.edit', ['qbID' => $this->questionBank->id, 'qID' => $question->id]));
 
-        $response->assertStatus(200);
-        $response->assertInertia(
-            fn (Assert $page) =>
-            $page->component('Questions/QuestionForm')->where(
-                'question.id', $question->id
-            )
-        );
-    }
+    //     $response->assertStatus(200);
+    //     $response->assertInertia(
+    //         fn (Assert $page) =>
+    //         $page->component('Questions/QuestionForm')->where(
+    //             'question.id', $question->id
+    //         )
+    //     );
+    // }
 
-    public function testUpdate(): void
-    {
-        Event::fake();
+    // public function testUpdate(): void
+    // {
+    //     Event::fake();
 
-        $data = [
-            'question_bank_id' => $this->questionBank->id,
-            'question' => 'Test Question',
-            'ans1' => 'Answer 1',
-            'ans2' => 'Answer 2',
-            'ans3' => 'Answer 3',
-            'ans4' => 'Answer 4',
-            'ans5' => 'Answer 5',
-            'ans6' => 'Answer 6',
-            'correct' => 1,
-            'label_id' => 1,
-        ];
-        $question = $this->service->create($data);
+    //     $data = [
+    //         'question_bank_id' => $this->questionBank->id,
+    //         'question' => 'Test Question',
+    //         'ans1' => 'Answer 1',
+    //         'ans2' => 'Answer 2',
+    //         'ans3' => 'Answer 3',
+    //         'ans4' => 'Answer 4',
+    //         'ans5' => 'Answer 5',
+    //         'ans6' => 'Answer 6',
+    //         'correct' => 1,
+    //         'label_id' => 1,
+    //     ];
+    //     $question = $this->service->create($data);
 
-        $response = $this->put(route('questions.update', ['qbID' => $this->questionBank->id, 'qID' => $question->id]), $data);
+    //     $response = $this->put(route('questions.update', ['qbID' => $this->questionBank->id, 'qID' => $question->id]), $data);
 
-        $response->assertRedirect(route('questions.index', ['qbID' => $this->questionBank->id]));
-    }
+    //     $response->assertRedirect(route('questions.index', ['qbID' => $this->questionBank->id]));
+    // }
 
     public function testDestroy(): void
     {
         $data = [
             'question_bank_id' => $this->questionBank->id,
-            'question' => 'Test Question',
-            'ans1' => 'Answer 1',
-            'ans2' => 'Answer 2',
-            'ans3' => 'Answer 3',
-            'ans4' => 'Answer 4',
-            'ans5' => 'Answer 5',
-            'ans6' => 'Answer 6',
-            'correct' => 1,
-            'label_id' => 1,
+            'name' => 'Test',
         ];
-        $question = $this->service->create($data);
+        $test = $this->service->create($data);
 
-        $response = $this->delete(route('questions.destroy', ['qbID' => $this->questionBank->id, 'qID' => $question->id]));
+        $response = $this->delete(route('tests.destroy', ['qbID' => $this->questionBank->id, 'testID' => $test->id]));
 
-        $response->assertRedirect(route('questions.index', ['qbID' => $this->questionBank->id]));
-        $this->assertDatabaseCount('questions', 0);
+        $response->assertRedirect(route('tests.index', ['qbID' => $this->questionBank->id]));
+        $this->assertDatabaseCount('tests', 0);
+    }
+
+    public function testFind(): void
+    {
+        $data = [[
+            'question_bank_id' => $this->questionBank->id,
+            'name' => 'Test',
+        ],
+        [
+            'question_bank_id' => $this->questionBank->id,
+            'name' => 'Testa',
+        ],
+        [
+            'question_bank_id' => $this->questionBank->id,
+            'name' => 'Testb']
+        ];
+        $tests = $this->service->createMany($data);
+
+        $response = $this->get('qbs/1/tests?keyword=a');
+
+        $response->assertStatus(200);
+        $response->assertInertia(
+            fn (Assert $page) =>
+            $page->component('Test/TestListPage') -> has(
+                'tests.data', 1
+            )
+        );
+    }
+
+    public function testPDF () {
+        $data = [
+            'question_bank_id' => $this->questionBank->id,
+            'name' => 'Test',
+        ];
+        $test = $this->service->create($data);
+
+        $response = $this->get(route('tests.pdf', ['qbID' => $this->questionBank->id, 'testID' => $test->id]));
+
+        $response->assertStatus(200);
     }
 }

@@ -50,10 +50,12 @@ export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{
         router.reload({ only: ['sublabels'], data: { labels: e } })
     }
 
-    const setSortState = (sort: string) => {
+    const setSortState = (tagsort: string) => {
+        var tag: string = tagsort.split(":")[0];
+        var sort: string = tagsort.split(":")[1];
         setQuery(prevQuery => ({
             ...prevQuery,
-            ["sort"]: sort
+            [tag]: sort
         }));
     }
 
@@ -100,16 +102,21 @@ export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{
                         </div>
                         <Separator className="mb-3 mt-2" />
                         <div className="flex items-center gap-2">
-                            <Input
+                        <Input
+                                onChange={(e) => setQuery(prevQuery => ({
+                                    ...prevQuery,
+                                    ["keyword"]: e.target.value
+                                }))}
                                 placeholder="Search for a test..."
-                                className="border-2 border-blue-500 border-solid focus:border-blue-500" />
-                            <Select>
+                                className="border-2 border-blue-500 border-solid" />
+                            <Select onValueChange={(e) => {setSortState(e); }}>
                                 <SelectTrigger className="w-[180px]">
                                     <SelectValue placeholder="Sort by" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem onClick={() => { setSortState("Alphabetical"); }} value="Alphabetical">Alphabetical</SelectItem>
-                                    <SelectItem onClick={() => { setSortState("Last Updated") }} value="Last Updated">Last Updated</SelectItem>
+                                    <SelectItem value="alphab:asc">Alphabetical A-Z</SelectItem>
+                                    <SelectItem value="alphab:desc">Alphabetical Z-A</SelectItem>
+                                    {/* <SelectItem onClick={() => { setSortState("Last Updated") }} value="Last Updated">Last Updated</SelectItem> */}
                                 </SelectContent>
                             </Select>
                             {/* <Select onValueChange={(e) => labelValueChange(e)}>
@@ -125,9 +132,15 @@ export default function TestListPage({ auth, QBank, tests, labels }: PageProps<{
                                 </SelectContent>
                             </Select> */}
                             <Button onClick={filter}>Filter</Button>
-                            <Button variant={"destructive"} onClick={()=>{router.get(route('tests.index', QBank.id))
-                            setIsFiltered(false)}
-                            }>Clear filters</Button>
+                            {
+                                isFiltered &&
+                                <Button variant={"destructive"} onClick={
+                                    ()=>{
+                                router.get(route('tests.index', QBank.id))
+                                setIsFiltered(false)}
+                                }>Clear filters</Button>
+                            }
+                            
                         </div>
                     </CardContent>
                 </Card>

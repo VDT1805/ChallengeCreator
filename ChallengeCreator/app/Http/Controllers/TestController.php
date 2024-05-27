@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TestFormRequest;
 use App\Models\Test;
 use Illuminate\Http\Request;
 use App\Http\Services\QuestionBankService;
@@ -36,7 +37,7 @@ class TestController extends Controller
     public function index($qbID, Request $request)
     {
         $QB = $this->qbService->findOrFail($qbID,"id");
-        $tests = $this->tService->getAllPaginated(["questionbanks" => $qbID]);
+        $tests = $this->tService->getAllPaginated(["questionbanks" => $qbID]+$request->all());
         $labels = $this->lService->getAll(["questionbanks" => $qbID]);
         return Inertia::render("Test/TestListPage", [
             "QBank" => $QB,
@@ -60,7 +61,7 @@ class TestController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($qbID,Request $request)
+    public function store($qbID,TestFormRequest $request)
     {
         //
         $inserted = $this->tService->create($request->all()+["question_bank_id" => $qbID]);
@@ -158,11 +159,13 @@ class TestController extends Controller
         if(!$test) {
             abort(404);
         }
+        $labels = $this->lService->getAll(["questionbanks" => $qbID]);
         $questions = $this->qService->getAllPaginated($request->all()+["questionbanks" => $qbID, "tests"=>["qb" => $qbID, "test"=>$testID]]);
         return Inertia::render("Test/TestQuestionListPage", [
             "QBank" => $QB,
             "test" => $test,
-            "questions" => $questions
+            "questions" => $questions,
+            "labels" => $labels,
         ]);
     }
 
@@ -194,32 +197,34 @@ class TestController extends Controller
         }
         $settings = $request->all();
         $questions = $this->qService->find(["question_test"=>$testID]);
-        $questions_bags = [];
-        if($settings["quesmix"]) {
-            for($i = 0; $i < $settings["numcopies"]; $i++) {
-                $newbag = $questions->shuffle();
-                $questions_bags[] = $newbag;
-            }
-        }
-        else {
-            $questions_bags[] = $questions;
-        }
-        $data = [
-            "test" => $test,
-            "questions_bag" => $questions_bags,
-            "settings" => $settings
-        ];
+        $pdf = $this->tService->generatePdf($questions, $test, $settings);
+        return $pdf;
+        // $questions_bags = [];
+        // if($settings["quesmix"]) {
+        //     for($i = 0; $i < $settings["numcopies"]; $i++) {
+        //         $newbag = $questions->shuffle();
+        //         $questions_bags[] = $newbag;
+        //     }
+        // }
+        // else {
+        //     $questions_bags[] = $questions;
+        // }
+        // $data = [
+        //     "test" => $test,
+        //     "questions_bag" => $questions_bags,
+        //     "settings" => $settings
+        // ];
 
-        $html = view('exampdf',$data)->render();
-        $request = Gotenberg::chromium(env('GOTENBERG_API_URL'))
-        ->pdf()->html(Stream::string('index.html',$html));
-        $client = new \Http\Adapter\Guzzle7\Client;
-        try {
-            $response = $client->sendRequest($request);
-            return $response->getBody();
-        } catch (GotenbergApiErrored $e) {
-            dd($e->getMessage());
-        }
+        // $html = view('exampdf',$data)->render();
+        // $request = Gotenberg::chromium(env('GOTENBERG_API_URL'))
+        // ->pdf()->html(Stream::string('index.html',$html));
+        // $client = new \Http\Adapter\Guzzle7\Client;
+        // try {
+        //     $response = $client->sendRequest($request);
+        //     return $response->getBody();
+        // } catch (GotenbergApiErrored $e) {
+        //     dd($e->getMessage());
+        // }
     }
 
     public function pdfSettings($qbID, $testID)

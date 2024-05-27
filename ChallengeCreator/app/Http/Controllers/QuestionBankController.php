@@ -27,7 +27,7 @@ class QuestionBankController extends Controller
     public function index(Request $filterRequest)
     {
         //
-        $QBS =  $this->qbService->getAllPaginated();
+        $QBS =  $this->qbService->getAllPaginated($filterRequest->all());
         // dd($QBS);
         return Inertia::render(
             "Dashboard",

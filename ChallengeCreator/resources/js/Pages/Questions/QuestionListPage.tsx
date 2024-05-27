@@ -125,31 +125,29 @@ function UpdateDialog(changeLog: QuestionEvent[]) {
     )
 }
 
-export default function QuestionList({ auth, QBank, questions, labels, sublabels, CanCreate }: PageProps<{ QBank: QB, questions: QPage, labels: LabelType[], sublabels: LabelType[], CanCreate: boolean }>) {
-    console.log(questions)
+export default function QuestionList({ auth, QBank, questions, labels, CanCreate }: PageProps<{ QBank: QB, questions: QPage, labels: LabelType[], sublabels: LabelType[], CanCreate: boolean }>) {
     const [query, setQuery] = useState<Record<string, string>>({});
     const [currentPage, setCurrentPage] = useState(questions.current_page);
     const [itemsPerPage, setItemsPerPage] = useState(questions.per_page);
     const lastItemIndex = currentPage * itemsPerPage;
     const firstItemIndex = lastItemIndex - itemsPerPage;
     const [isFiltered, setIsFiltered] = useState(false);
+    const [sublabels, setSublabels] = useState<LabelType[]>([]);
     const filter: FormEventHandler = (e) => {
         e.preventDefault();
         router.get(route('questions.index', QBank.id), query, { preserveState: true, preserveScroll: true });
         setIsFiltered(true);
     };
-    const [selectedValue, setSelectedValue] = useState(Array<LabelType>);
 
     const labelValueChange = (e: string) => {
         setQuery(prevQuery => ({
             ...prevQuery,
             ["labels"]: e
         }));
-        router.reload({ only: ['sublabels'], data: { labels: e } })
+        // router.reload({ only: ['sublabels'], data: { labels: e } })
     }
 
     const [changeLog, setChangeLog] = useState<QuestionEvent[]>([]);
-    var currentdate = new Date();
 
     useEffect(() => {
         const name = `qb.${QBank.id}.question`;
@@ -221,7 +219,11 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                                 </SelectContent>
                             </Select> */}
 
-                            <Select onValueChange={(e) => labelValueChange(e)}>
+                                <Select onValueChange={(e) => {
+                                const labelId = parseInt(e); // Convert e to a number
+                                labelValueChange(labelId.toString()); // Convert labelId back to a string
+                                setSublabels(labels.find((label) => label.id === labelId)?.sublabels || []);
+                                }}>                                
                                 <SelectTrigger className="w-[180px]" >
                                     <SelectValue placeholder="Labels" />
                                 </SelectTrigger >
