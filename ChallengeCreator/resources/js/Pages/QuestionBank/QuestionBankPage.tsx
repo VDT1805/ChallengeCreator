@@ -22,7 +22,6 @@ export default function QuestionBankPage({ auth, QBank, CanEdit }: PageProps<{ Q
             <Head title="Question Bank" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    {/* <Menu QBank={QBank} CanEdit={CanEdit}></Menu> */}
                     <h1
                         className="inline-block text-5xl uppercase font-black !bg-clip-text text-transparent !bg-cover !bg-center"
                         style={{ background: "linear-gradient(to top right,#24C6DC,#514A9D)" }}

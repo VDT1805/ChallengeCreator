@@ -209,15 +209,6 @@ export default function QuestionList({ auth, QBank, questions, labels, CanCreate
                                 }))}
                                 placeholder="Search for a question..."
                                 className="border-2 border-blue-500 border-solid" />
-                            {/* <Select>
-                                <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="Sort by" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="Oldest">Alphabetical</SelectItem>
-                                    <SelectItem value="Newest">Last Updated</SelectItem>
-                                </SelectContent>
-                            </Select> */}
 
                                 <Select onValueChange={(e) => {
                                 const labelId = parseInt(e); // Convert e to a number

@@ -94,7 +94,7 @@ export default function MemberIndex({ auth, QBank, members, editorURL, viewerURL
 
                         <Separator className="mb-3 mt-2" />
 
-                        <div className="flex items-center gap-2">
+                        {/* <div className="flex items-center gap-2">
                             <Input
                                 placeholder="Search for a member..."
                                 className="border-2 border-indianred border-solid" />
@@ -113,7 +113,7 @@ export default function MemberIndex({ auth, QBank, members, editorURL, viewerURL
                             <Button>
                                 Filter
                             </Button>
-                        </div>
+                        </div> */}
                     </CardContent>
                     <Accordion type="single" collapsible className="w-full bg-white rounded">
                         {members.data.map((member: MemberType) => (
