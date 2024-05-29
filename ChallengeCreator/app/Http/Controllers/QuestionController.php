@@ -41,12 +41,12 @@ class QuestionController extends Controller
     {
         $parentid = $request["labels"];
         $QB = $this->qbService->findOrFail($qbID,"id");
-        $questions = $this->qService->getAllPaginated($request->all()+["questionbanks" => $qbID]);
+        // $questions = $this->qService->getAllPaginated($request->all()+["questionbanks" => $qbID]);
         // dd($questions);
         $labels = $this->lService->getAll(["questionbanks" => $qbID]);
         return Inertia::render("Questions/QuestionListPage", [
             "QBank" => $QB,
-            "questions" => $questions,
+            "questions" => fn() => $this->qService->getAllPaginated($request->all()+["questionbanks" => $qbID]),
             "labels" => $labels,
             "sublabels" => fn() => $parentid ? $this->lService->getAll(["parent" => $parentid]) : [],
             "CanCreate" => Auth::user()->hasPermission('question-create',$qbID)

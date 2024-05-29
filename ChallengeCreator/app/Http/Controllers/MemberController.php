@@ -42,7 +42,8 @@ class MemberController extends Controller
             "QBank" => $QB,
             "members" => $members,
             "editorURL" => $editorURL,
-            "viewerURL" => $viewerURL
+            "viewerURL" => $viewerURL,
+            "isOwner" => Auth::user()->hasRole("owner",$qbID)
         ]);
     }
 

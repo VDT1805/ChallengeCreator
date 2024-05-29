@@ -172,6 +172,9 @@ export default function QuestionList({ auth, QBank, questions, labels, CanCreate
                                 changeLog.length > 0 &&
                                 <div className="mr-4">
                                 {UpdateDialog(changeLog)}
+                                <Button onClick={() => {
+                                        router.reload({ only: ['questions'] });
+                                    }} variant="destructive">Reload the list</Button>
                                 </div>
                             }
                             <DropdownMenu>

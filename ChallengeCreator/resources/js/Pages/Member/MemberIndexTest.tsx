@@ -18,12 +18,13 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/shadcn/ui/dialog"
-import { Copy } from "lucide-react";
+import { ArrowUpDown, Copy } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shadcn/ui/select";
 import { MemberTable } from './MemberTable/MemberTable';
 import { MemberColumns } from './MemberTable/MemberColumn';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shadcn/ui/dropdown-menu';
 
-export default function MemberIndex({ auth, QBank, members, editorURL, viewerURL }: PageProps<{ QBank: QB, members: MemberPage, editorURL: string, viewerURL: string }>) {
+export default function MemberIndex({ auth, QBank, members, editorURL, viewerURL, isOwner }: PageProps<{ QBank: QB, members: MemberPage, editorURL: string, viewerURL: string, isOwner: boolean }>) {
     // console.log(inviteURL);
     // console.log(JSON.stringify(members.data));
     return (
@@ -49,7 +50,8 @@ export default function MemberIndex({ auth, QBank, members, editorURL, viewerURL
                                             changeLog.length > 0 &&
                                             UpdateDialog(changeLog)
                                         } */}
-                                <Dialog>
+                                {
+                                    isOwner && <Dialog>
                                     <DialogTrigger asChild>
                                         <Button> <Share1Icon className="mr-2" /> Share </Button>
                                     </DialogTrigger>
@@ -82,11 +84,13 @@ export default function MemberIndex({ auth, QBank, members, editorURL, viewerURL
                                         </div>
                                     </DialogContent>
                                 </Dialog>
+                                }
+                                
                             </div>
 
                             <Separator className="mb-3 mt-2" />
 
-                            <div className="flex items-center gap-2">
+                            {/* <div className="flex items-center gap-2">
                                 <Input
                                     // onChange={(e) => setQuery(prevQuery => ({
                                     //     ...prevQuery,
@@ -94,25 +98,14 @@ export default function MemberIndex({ auth, QBank, members, editorURL, viewerURL
                                     // }))}
                                     placeholder="Search for a member..."
                                     className="border-2 border-blue-500 border-solid" />
-                                {/* <div className="flex items-center"><DropdownMenu>
-            <DropdownMenuTrigger className="flex gap-2">
-              <ArrowUpDown className="ml-2 h-4 w-4 mt-1" />
-              Sort By: {
-                sortState
-              }
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem onClick={() => { table.getColumn("questiontype")?.toggleSorting(table.getColumn("questiontype")?.getIsSorted() === "asc"); setSortState("Alphabetical") }}>Alphabetical</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          </div> */}
+                            
                                 <Button>Search</Button>
                                 <Button variant={"destructive"}>Clear search</Button>
-                            </div>
+                            </div> */}
                         </div>
                     </CardContent>
                 </Card>
-                <MemberTable columns={MemberColumns(QBank)} data={members.data}></MemberTable>
+                <MemberTable columns={MemberColumns(QBank,isOwner)} data={members.data}></MemberTable>
             </div>
         </QBLayout>
     );

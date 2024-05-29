@@ -21,7 +21,7 @@ import { QB } from "@/Pages/QuestionBank/QuestionBankType"
 //     members: MemberType[];
 //     extraId: string; // Additional ID prop
 // };
-export const MemberColumns = (QBank:QB): ColumnDef<MemberType>[] => [
+export const MemberColumns = (QBank:QB, isOwner: boolean): ColumnDef<MemberType>[] => [
   {
     accessorKey: "id",
     header: () => (
@@ -74,7 +74,7 @@ export const MemberColumns = (QBank:QB): ColumnDef<MemberType>[] => [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
+            {isOwner && <DropdownMenuItem
             onClick={() => router.visit(route("members.destroy",QBank.id),{
                 method: "delete",
                 data: {
@@ -83,7 +83,8 @@ export const MemberColumns = (QBank:QB): ColumnDef<MemberType>[] => [
                     team: QBank.id
                 }
             })}
-            >Delete</DropdownMenuItem>
+            >Delete</DropdownMenuItem>}
+            
           </DropdownMenuContent>
         </DropdownMenu>
       )

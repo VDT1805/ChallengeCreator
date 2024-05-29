@@ -21,10 +21,10 @@ import {
 import { Copy } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shadcn/ui/select";
 
-export default function MemberIndex({ auth, QBank, members, editorURL, viewerURL }: PageProps<{ QBank: QB, members: MemberPage, editorURL: string, viewerURL: string }>) {
+export default function MemberIndex({ auth, QBank, members, editorURL, viewerURL, isOwner }: PageProps<{ QBank: QB, members: MemberPage, editorURL: string, viewerURL: string, isOwner: boolean }>) {
     // console.log(inviteURL);
     // console.log(JSON.stringify(members));
-    console.log(viewerURL)
+    console.log(isOwner)
     return (
         <QBLayout
             user={auth.user}
@@ -41,7 +41,8 @@ export default function MemberIndex({ auth, QBank, members, editorURL, viewerURL
                                 <PlusIcon className="mr-2" />
                                 Share
                             </Button> */}
-                            <Dialog>
+                            {
+                                isOwner && <Dialog>
                                 <DialogTrigger asChild>
                                     <Button> <Share1Icon className="mr-2" /> Share </Button>
                                 </DialogTrigger>
@@ -70,26 +71,16 @@ export default function MemberIndex({ auth, QBank, members, editorURL, viewerURL
                                         </DialogDescription>
                                     </DialogHeader>
                                     <div className="flex items-center space-x-2 -my-2">
-                                        {/*<div className="grid flex-1 gap-2">
-                                             <Label htmlFor="link" className="sr-only">
-                                                Link
-                                            </Label> */}
                                         <Input className="focus:border-indianred border-2" defaultValue={editorURL} readOnly />
-                                        {/* </div> */}
                                         <Button type="submit" size="sm" className="px-3" onClick={() => { navigator.clipboard.writeText(editorURL); alert("Copied link to clipboard!") }}>
                                             <span className="sr-only">Copy</span>
                                             <Copy className="h-4 w-4" />
                                         </Button>
                                     </div>
-                                    {/* <DialogFooter className="sm:justify-start">
-                                        <DialogClose asChild>
-                                            <Button>
-                                                Close
-                                            </Button>
-                                        </DialogClose>
-                                    </DialogFooter> */}
                                 </DialogContent>
                             </Dialog>
+                            }
+                            
                         </div>
 
                         <Separator className="mb-3 mt-2" />
