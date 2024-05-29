@@ -34,7 +34,7 @@ class TestControllerTest extends TestCase
         $this->qbservice = new QuestionBankService();
         $this->service = $this->partialMock(TestService::class,function ($mock) {
             $mock->shouldReceive('generatePDF')->andReturn(
-                
+                new \Illuminate\Http\Response('%PDF-1.4...fake PDF content...', 200, ['Content-Type' => 'application/pdf'])
             );
         });
         $this->actingAs($this->user);
@@ -213,15 +213,16 @@ class TestControllerTest extends TestCase
         );
     }
 
-    public function testPDF () {
+    public function testPdf () {
         $data = [
             'question_bank_id' => $this->questionBank->id,
             'name' => 'Test',
         ];
         $test = $this->service->create($data);
 
-        $response = $this->get(route('tests.pdf', ['qbID' => $this->questionBank->id, 'testID' => $test->id]));
+        $response = $this->get(route('tests.pdfGen', ['qbID' => $this->questionBank->id, 'testID' => $test->id]));
 
         $response->assertStatus(200);
+        $response->assertHeader('Content-Type', 'application/pdf');
     }
 }

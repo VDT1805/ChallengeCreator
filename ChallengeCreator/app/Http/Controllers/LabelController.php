@@ -112,7 +112,7 @@ class LabelController extends Controller
             if($deleted) {
                 $QB = $this->qbService->findOrFail($qbID,"id");
                 $labels = $this->lService->getAllPaginated(["questionbanks" => $qbID]);
-            return Inertia::render("Questions/QuestionListPage", [
+            return Inertia::render("Label/LabelIndex", [
                 "QBank" => $QB,
                 "labels" => $labels
             ]);
