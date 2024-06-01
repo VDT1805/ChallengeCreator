@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-        if ($this->app->environment('production')) {
+        if (env('APP_ENV') == 'production') {
             URL::forceScheme('https');
         }
         LazyCollection::macro('validate_violate', function (array $rules) {
