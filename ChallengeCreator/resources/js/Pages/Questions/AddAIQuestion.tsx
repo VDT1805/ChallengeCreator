@@ -132,7 +132,9 @@ return (
                 onChange={
                     (value: { start: number; end: number; tag: string; text:string }[] | React.FormEvent<HTMLDivElement>) => {
                                 if (Array.isArray(value)) {
-                                    setData("answers", value);                     }
+                                    setData("answers", value);   
+                                    // console.log(TEXT.indexOf(value[0].text))                  
+                                  }
                             }
                 }
                 value={data.answers as { start: number; end: number; tag: string; text: string; }[]}
@@ -148,9 +150,9 @@ return (
               Generate question
             </Button>
             </form>
-            {/* <pre style={{ fontSize: 12, lineHeight: 1.2 }}>
+            <pre style={{ fontSize: 12, lineHeight: 1.2 }}>
                 {JSON.stringify(data, null, 2)}
-            </pre> */}
+            </pre>
             {
             questions && <QuestionCard QBank={QBank} MCQs={questions}></QuestionCard>
             }

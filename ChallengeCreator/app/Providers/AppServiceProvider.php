@@ -5,6 +5,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\LazyCollection;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
         LazyCollection::macro('validate_violate', function (array $rules) {
             /** @var $this Collection */
             return $this->filter(function ($array) use ($rules) {

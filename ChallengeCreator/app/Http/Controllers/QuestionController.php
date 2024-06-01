@@ -204,13 +204,15 @@ class QuestionController extends Controller
         //         "label_id" => $label['id']
         //     ]);
         // }
+        // dd($request->all());
         $rq = [
                 "answers" => (collect($request["answers"]))->map(function($answer) {
-                    return $answer["text"];
+                    return [$answer["text"],$answer["start"],$answer["end"]];
                 }) ,
                 "context" => $request["context"],
                 "num_of_q" => $request["numberofquestions"]
             ];
+        // dd($rq);
         $questions = $this->qService->AIgenerate($rq,$qbID,$label['id']);
         return Inertia::render("Questions/AddAIQuestion",
         ["QBank" => $QB,
