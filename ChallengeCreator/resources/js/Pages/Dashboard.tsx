@@ -39,7 +39,6 @@ export default function Dashboard({ auth, QBS }: PageProps<{ QBS: QBPage }>) {
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}>
             <Head title="Dashboard" />
-            <div className="py-12">
                 <div className='py-12 container mx-auto'>
                     <div className="flex justify-end">
                     
@@ -74,9 +73,8 @@ export default function Dashboard({ auth, QBS }: PageProps<{ QBS: QBPage }>) {
                     
                 </div>
                     
-                </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-5 max-w-7xl mx-auto px-8">
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto px-8">
                     {QBS.data.map(item => (
                         <Link href={route('questionbanks.show', item.id)}>
                             <Card>

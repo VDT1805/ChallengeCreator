@@ -112,6 +112,7 @@ return (
                   </MathJaxContext>
               </div>
             </div>
+            
             <div className="flex flex-col space-y-1.5 mb-5 mb-3">
               <Label htmlFor="name" className="text-xl font-bold">Add your multiple choice answer options</Label>
               <div className="flex items-center space-x-2">
