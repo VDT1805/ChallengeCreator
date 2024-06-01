@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="GV cộng tác" id="t8Teq_oMgi5YN7fvB1jG">
-        <mxGraphModel dx="1564" dy="591" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="939" dy="355" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="WiwW6T4yUcQlJP7RKSxs-0"/>
                 <mxCell id="WiwW6T4yUcQlJP7RKSxs-1" parent="WiwW6T4yUcQlJP7RKSxs-0"/>
@@ -13,13 +13,7 @@
                 <mxCell id="WiwW6T4yUcQlJP7RKSxs-5" value="Xóa thành viên" style="ellipse;whiteSpace=wrap;html=1;fontSize=16;" parent="WiwW6T4yUcQlJP7RKSxs-2" vertex="1">
                     <mxGeometry x="244" y="281" width="120" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="WiwW6T4yUcQlJP7RKSxs-7" value="Sửa vai trò thành viên" style="ellipse;whiteSpace=wrap;html=1;fontSize=16;" parent="WiwW6T4yUcQlJP7RKSxs-2" vertex="1">
-                    <mxGeometry x="244" y="156" width="120" height="80" as="geometry"/>
-                </mxCell>
                 <mxCell id="YW8SRH_bthJT2Bs3ChGq-3" style="edgeStyle=none;html=1;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WiwW6T4yUcQlJP7RKSxs-1" source="YW8SRH_bthJT2Bs3ChGq-0" target="WiwW6T4yUcQlJP7RKSxs-3" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="YW8SRH_bthJT2Bs3ChGq-4" style="edgeStyle=none;html=1;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WiwW6T4yUcQlJP7RKSxs-1" source="YW8SRH_bthJT2Bs3ChGq-0" target="WiwW6T4yUcQlJP7RKSxs-7" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="YW8SRH_bthJT2Bs3ChGq-5" style="edgeStyle=none;html=1;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WiwW6T4yUcQlJP7RKSxs-1" source="YW8SRH_bthJT2Bs3ChGq-0" target="WiwW6T4yUcQlJP7RKSxs-5" edge="1">
