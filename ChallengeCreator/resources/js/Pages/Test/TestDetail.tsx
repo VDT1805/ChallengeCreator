@@ -190,7 +190,7 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                         <DialogTrigger asChild>
                                             <Button variant="outline">Export PDF</Button>
                                         </DialogTrigger>
-                                        <DialogContent className="sm:max-w-[425px]">
+                                        <DialogContent className="sm:max-w-[1000px]">
                                             <DialogHeader>
                                                 <DialogTitle className="text-xl font-bold">Export Settings</DialogTitle>
                                                 <DialogDescription>
@@ -198,20 +198,20 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                                 </DialogDescription>
                                             </DialogHeader>
                                             <div className="grid gap-4 py-4">
-                                                <div className="grid grid-cols-4 items-center gap-4">
-                                                    <Label htmlFor="numcopies" className="text-right">
+                                                <div className="grid grid-cols-5 items-center gap-4">
+                                                    <Label htmlFor="numcopies" className="font-bold">
                                                         Number of copies
                                                     </Label>
-                                                    <Input id="numcopies" type="number" min="1" className="col-span-3" value={numCopies} onChange={handleNumCopiesChange} />
+                                                    <Input id="numcopies" type="number" min="1" className="col-span-4" value={numCopies} onChange={handleNumCopiesChange} />
                                                 </div>
                                                 {
                                                     numCopies > 1 &&
                                                     <div>
-                                                        <div className="grid grid-cols-4 items-center gap-4">
-                                                            <Label htmlFor="quesord" className="text-right">
+                                                        <div className="grid grid-cols-5 items-center gap-4">
+                                                            <Label htmlFor="quesord" className="font-bold">
                                                                 Mixing question order
                                                             </Label>
-                                                            <Checkbox id="quesord" className="col-span-3" checked={isQuesOrdMixed} onClick={handleQuesOrdChange} />
+                                                            <Checkbox id="quesord" className="col-span-4" checked={isQuesOrdMixed} onClick={handleQuesOrdChange} />
                                                         </div>
                                                         {/* <div className="grid grid-cols-4 items-center gap-4">
                                                             <Label htmlFor="choiceord" className="text-right">
@@ -221,61 +221,79 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                                         </div> */}
                                                     </div>
                                                 }
-                                                <div className="grid grid-cols-4 items-center gap-4">
-                                                    <Label htmlFor="name" className="font-bold">Test name</Label>
+                                                <div className="grid grid-cols-5 items-center gap-4">
+                                                    <Label htmlFor="name" className="font-bold">Test name & duration</Label>
                                                     <Input id="name"
-                                                        className="col-span-3"
+                                                        className="col-span-2"
                                                         value={data.testname}
                                                         onChange={(e) => setData('testname', e.target.value)}
                                                         placeholder="Name of your test" />
-                                                </div>
-
-                                                <div className="grid grid-cols-4 items-center gap-4">
-                                                    <Label htmlFor="time" className="font-bold">Duration of the test</Label>
                                                     <Input id="time"
-                                                        className="col-span-3"
+                                                        className="col-span-2"
                                                         type="number"
                                                         value={data.duration}
                                                         onChange={(e) => setData('duration', parseInt(e.target.value))}
                                                         placeholder="No. of minutes of your test" />
                                                 </div>
 
-                                                <div className="grid grid-cols-4 items-center gap-4">
-                                                    <Label htmlFor="teacher1" className="font-bold">Teacher</Label>
+                                                <div className="grid grid-cols-5 items-center gap-4">
+                                                    <Label htmlFor="teacher1" className="font-bold">Creation</Label>
                                                     <Input id="teacher1"
-                                                        className="col-span-3"
+                                                        className="col-span-2"
                                                         value={data.teacher1}
                                                         onChange={(e) => setData('teacher1', e.target.value)}
                                                         placeholder="Name of the teacher who made the test" />
-                                                </div>
 
-                                                <div className="grid grid-cols-4 items-center gap-4">
-                                                    <Label htmlFor="date1" className="font-bold">Created date</Label>
                                                     <Input id="date1"
                                                         type="date"
-                                                        className="col-span-3"
+                                                        className="col-span-2"
                                                         value={data.created_date}
                                                         onChange={(e) => setData('created_date', e.target.value)}
                                                         placeholder="Date when the test was made" />
                                                 </div>
 
-                                                <div className="grid grid-cols-4 items-center gap-4">
-                                                    <Label htmlFor="teacher2" className="font-bold">Approval teacher</Label>
+                                                <div className="grid grid-cols-5 items-center gap-4">
+                                                    <Label htmlFor="teacher2" className="font-bold">Approval</Label>
                                                     <Input id="teacher2"
-                                                        className="col-span-3"
+                                                        className="col-span-2"
                                                         value={data.teacher2}
                                                         onChange={(e) => setData('teacher2', e.target.value)}
                                                         placeholder="Name of the teacher who approved the test" />
-                                                </div>
 
-                                                <div className="grid grid-cols-4 items-center gap-4">
-                                                    <Label htmlFor="date2" className="font-bold">Approval date</Label>
                                                     <Input id="date2"
-                                                    type="date"
-                                                        className="col-span-3"
+                                                        type="date"
+                                                        className="col-span-2"
                                                         value={data.approval_date}
                                                         onChange={(e) => setData('approval_date', e.target.value)}
                                                         placeholder="Date when the test was approved" />
+                                                </div>
+
+                                                <div className="grid grid-cols-5 items-center gap-4">
+                                                    <Label htmlFor="termyear" className="font-bold">School term & School year</Label>
+                                                    <Input id="term"
+                                                        className="col-span-2"
+                                                        // value={data.name}
+                                                        // onChange={(e) => setData('name', e.target.value)}
+                                                        placeholder="School term" />
+                                                    <Input id="year"
+                                                        className="col-span-2"
+                                                        // value={data.name}
+                                                        // onChange={(e) => setData('name', e.target.value)}
+                                                        placeholder="School year" />
+                                                </div>
+
+                                                <div className="grid grid-cols-5 items-center gap-4">
+                                                    <Label htmlFor="subject" className="font-bold">Subject & Course ID</Label>
+                                                    <Input id="subject"
+                                                        className="col-span-2"
+                                                        // value={data.name}
+                                                        // onChange={(e) => setData('name', e.target.value)}
+                                                        placeholder="Subject" />
+                                                    <Input id="courseid"
+                                                        className="col-span-2"
+                                                        // value={data.name}
+                                                        // onChange={(e) => setData('name', e.target.value)}
+                                                        placeholder="Course ID" />
                                                 </div>
 
                                             </div>
