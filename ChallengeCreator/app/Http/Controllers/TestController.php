@@ -237,7 +237,8 @@ class TestController extends Controller
         $questions = $this->qService->find(["question_test"=>$testID]);
         $data = [
             "test" => $test,
-            "questions" => $questions
+            "questions" => $questions,
+            "answerChoices" => array("A", "B", "C", "D"),
         ];
         // dd($questions);
         $pdf = LaravelMpdf::loadView('exampdf',$data);

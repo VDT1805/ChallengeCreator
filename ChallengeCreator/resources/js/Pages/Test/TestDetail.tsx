@@ -268,7 +268,7 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
 
                                             </div>
                                             <DialogFooter>
-                                                <Button onClick={dl}>Export</Button>
+                                                <Button onClick={view}>Export</Button>
                                             </DialogFooter>
                                         </DialogContent>`
                                     </Dialog>
