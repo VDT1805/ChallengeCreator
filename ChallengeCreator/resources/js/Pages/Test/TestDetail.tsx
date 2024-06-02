@@ -59,12 +59,17 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
     };
 
     const { data, setData, post, processing, errors, reset } = useForm({
+        subject: '',
+        courseID: '',
         testname: '',
-        duration: 1,
+        duration: 60,
+        test_date: '',
         teacher1: '',
         created_date: '',
         teacher2: '',
         approval_date: '',
+        term: '',
+        year: ''
     });
     // console.log(questions)
     const handleDownloadPDF = async () => {
@@ -222,21 +227,6 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                                     </div>
                                                 }
                                                 <div className="grid grid-cols-5 items-center gap-4">
-                                                    <Label htmlFor="name" className="font-bold">Test name & duration</Label>
-                                                    <Input id="name"
-                                                        className="col-span-2"
-                                                        value={data.testname}
-                                                        onChange={(e) => setData('testname', e.target.value)}
-                                                        placeholder="Name of your test" />
-                                                    <Input id="time"
-                                                        className="col-span-2"
-                                                        type="number"
-                                                        value={data.duration}
-                                                        onChange={(e) => setData('duration', parseInt(e.target.value))}
-                                                        placeholder="No. of minutes of your test" />
-                                                </div>
-
-                                                <div className="grid grid-cols-5 items-center gap-4">
                                                     <Label htmlFor="teacher1" className="font-bold">Creation</Label>
                                                     <Input id="teacher1"
                                                         className="col-span-2"
@@ -272,27 +262,52 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                                     <Label htmlFor="termyear" className="font-bold">School term & School year</Label>
                                                     <Input id="term"
                                                         className="col-span-2"
-                                                        // value={data.name}
-                                                        // onChange={(e) => setData('name', e.target.value)}
+                                                        value={data.term}
+                                                        onChange={(e) => setData('term', e.target.value)}
                                                         placeholder="School term" />
                                                     <Input id="year"
                                                         className="col-span-2"
-                                                        // value={data.name}
-                                                        // onChange={(e) => setData('name', e.target.value)}
+                                                        value={data.year}
+                                                        onChange={(e) => setData('year', e.target.value)}
                                                         placeholder="School year" />
+                                                </div>
+
+                                                <div className="grid grid-cols-5 items-center gap-4">
+                                                    <Label htmlFor="name" className="font-bold">Test name & duration</Label>
+                                                    <Input id="name"
+                                                        className="col-span-2"
+                                                        value={data.testname}
+                                                        onChange={(e) => setData('testname', e.target.value)}
+                                                        placeholder="Name of your test" />
+                                                    <Input id="time"
+                                                        className="col-span-2"
+                                                        type="number"
+                                                        value={data.duration}
+                                                        onChange={(e) => setData('duration', parseInt(e.target.value))}
+                                                        placeholder="No. of minutes of your test" />
+                                                </div>
+
+                                                <div className="grid grid-cols-5 items-center gap-4">
+                                                    <Label htmlFor="test_date" className="font-bold">Test Date</Label>
+                                                    <Input id="test_date"
+                                                        type="date"
+                                                        className="col-span-2"
+                                                        value={data.test_date}
+                                                        onChange={(e) => setData('test_date', e.target.value)}
+                                                        placeholder="Date when the test will happen" />
                                                 </div>
 
                                                 <div className="grid grid-cols-5 items-center gap-4">
                                                     <Label htmlFor="subject" className="font-bold">Subject & Course ID</Label>
                                                     <Input id="subject"
                                                         className="col-span-2"
-                                                        // value={data.name}
-                                                        // onChange={(e) => setData('name', e.target.value)}
+                                                        value={data.subject}
+                                                        onChange={(e) => setData('subject', e.target.value)}
                                                         placeholder="Subject" />
                                                     <Input id="courseid"
                                                         className="col-span-2"
-                                                        // value={data.name}
-                                                        // onChange={(e) => setData('name', e.target.value)}
+                                                        value={data.courseID}
+                                                        onChange={(e) => setData('courseID', e.target.value)}
                                                         placeholder="Course ID" />
                                                 </div>
 

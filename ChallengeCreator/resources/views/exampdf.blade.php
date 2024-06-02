@@ -270,8 +270,6 @@
         {{$settings["duration"]}}
     </div> --}}
     
-    
-
         @foreach($questions_bag as $questions)
         <div class="table-1">
             <table class="tg1">
@@ -280,7 +278,7 @@
                         <td class="tg-53v8">Giảng viên ra đề:</td>
                         <td class="tg-iucd"><span style="font-style:italic">{{$settings["created_date"]}}</span></td>
                         <td class="tg-53v8">Người phê duyệt:</td>
-                        <td class="tg-76x8">{{$settings["approval_date"]}}</td>
+                        <td class="tg-76x8"><span style="font-style:italic">{{$settings["approval_date"]}}</span></td>
                     </tr>
                     <tr>
                         <td class="tg-9wq8" colspan="2">{{$settings["teacher1"]}}</td>
@@ -302,20 +300,20 @@
                             </td>
                             <td class="tg-g7sd" rowspan="2">THI CUỐI KỲ</td>
                             <td class="tg-0pky">HK/NH</td>
-                            <td class="tg-0pky">3</td>
-                            <td class="tg-0pky">2022-2023</td>
+                            <td class="tg-0pky">{{$settings["term"]}}</td>
+                            <td class="tg-0pky">{{$settings["year"]}}</td>
                         </tr>
                         <tr>
                             <td class="tg-0pky">Ngày thi</td>
-                            <td class="tg-dvpl" colspan="2">26/08/2022</td>
+                            <td class="tg-dvpl" colspan="2">{{$settings["test_date"]}}</td>
                         </tr>
                         <tr>
                             <td class="tg-0pky">Môn học</td>
-                            <td class="tg-0pky" colspan="3">Mô hình hóa Toán học</td>
+                            <td class="tg-0pky" colspan="3">{{$settings["subject"]}}</td>
                         </tr>
                         <tr>
                             <td class="tg-0pky">Course ID</td>
-                            <td class="tg-0pky" colspan="3">CO2011</td>
+                            <td class="tg-0pky" colspan="3">{{$settings["courseID"]}}</td>
                         </tr>
                         <tr>
                             <td class="tg-0pky">Thời lượng</td>
@@ -377,9 +375,6 @@
         </div>
         <div class="pagebreak"></div>
         @endforeach
-  
-
-
 </body>
 
 </html>

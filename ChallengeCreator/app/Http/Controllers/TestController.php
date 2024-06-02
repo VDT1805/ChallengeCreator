@@ -238,7 +238,6 @@ class TestController extends Controller
         $data = [
             "test" => $test,
             "questions" => $questions,
-            "answerChoices" => array("A", "B", "C", "D"),
         ];
         // dd($questions);
         $pdf = LaravelMpdf::loadView('exampdf',$data);
