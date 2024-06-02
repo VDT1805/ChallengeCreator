@@ -47,7 +47,11 @@
         </mxGraphModel>
     </diagram>
     <diagram name="GV cộng tác" id="t8Teq_oMgi5YN7fvB1jG">
+<<<<<<< HEAD
         <mxGraphModel dx="840" dy="346" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+=======
+        <mxGraphModel dx="939" dy="355" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+>>>>>>> dec6cb05688a3f2c0c8e3907f6604e3cb300780c
             <root>
                 <mxCell id="WiwW6T4yUcQlJP7RKSxs-0"/>
                 <mxCell id="WiwW6T4yUcQlJP7RKSxs-1" parent="WiwW6T4yUcQlJP7RKSxs-0"/>
