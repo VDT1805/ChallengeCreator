@@ -172,6 +172,11 @@ export const columns: ColumnDef<Question>[] = [
                         <p className="text-lg font-bold underline text-indianred">Delete from test</p>
                         </Link>
               </DropdownMenuItem>
+              <DropdownMenuItem className="text-red-500 font-bold">
+              <Link href={route('questions.edit', [question.question_bank_id, question.id])} method="get">
+                        <p className="text-lg font-bold underline text-yellow">Edit question</p>
+                        </Link>
+              </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
