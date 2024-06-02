@@ -298,7 +298,7 @@
                                     alt="Image" width="99" height="100"><br>TRƯỜNG ĐẠI HỌC BÁCH KHOA - ĐHQG-HCM<br>KHOA
                                 KH&amp;KT MÁY TÍNH
                             </td>
-                            <td class="tg-g7sd" rowspan="2">THI CUỐI KỲ</td>
+                            <td class="tg-g7sd" rowspan="2">{{$settings["testname"]}}</td>
                             <td class="tg-0pky">HK/NH</td>
                             <td class="tg-0pky">{{$settings["term"]}}</td>
                             <td class="tg-0pky">{{$settings["year"]}}</td>
