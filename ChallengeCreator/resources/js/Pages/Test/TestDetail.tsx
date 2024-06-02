@@ -32,11 +32,12 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-  } from "@/shadcn/ui/dialog";
+} from "@/shadcn/ui/dialog";
 import { useState } from "react";
 import axios from "axios";
 import { Label } from "@/shadcn/ui/label";
 import { Checkbox } from "@/shadcn/ui/checkbox";
+// import { Textarea } from "@/shadcn/ui/textarea";
 
 export default function TestTable({ auth, QBank, test, questions }: PageProps<{ QBank: QB, test: Test, questions: Array<Question> }>) {
     // console.log(JSON.stringify(questions));
@@ -56,25 +57,25 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
     const handleChoiceOrdChange = (event: any) => {
         setIsChoiceOrdMixed(!isChoiceOrdMixed);
     };
-    console.log(questions)
+    // console.log(questions)
     const handleDownloadPDF = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(route("tests.pdfGen",{qbID: QBank.id, testID: test.id}));
-            console.log(response);
-                // Extract the file name from the response headers
-        const contentDisposition = response.headers['content-disposition'];
-        const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
-        const fileName = fileNameMatch ? fileNameMatch[1] : 'sample.pdf';
+            const response = await axios.get(route("tests.pdfGen", { qbID: QBank.id, testID: test.id }));
+            // console.log(response);
+            // Extract the file name from the response headers
+            const contentDisposition = response.headers['content-disposition'];
+            const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
+            const fileName = fileNameMatch ? fileNameMatch[1] : 'test.pdf';
 
-        // Handle the PDF download
-        const blob = new Blob([response.data], { type: 'application/pdf' });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = fileName;
-        a.click();
-        window.URL.revokeObjectURL(url);
+            // Handle the PDF download
+            const blob = new Blob([response.data], { type: 'application/pdf' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            window.URL.revokeObjectURL(url);
         } catch (error) {
             // Handle error
             console.log(error);
@@ -111,7 +112,7 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
         setLoading(true);
         axios({
             url: route("tests.pdfGen", { qbID: QBank.id, testID: test.id }),
-            params: {quesmix: isQuesOrdMixed, choicemix: isChoiceOrdMixed, numcopies: numCopies},
+            params: { quesmix: isQuesOrdMixed, choicemix: isChoiceOrdMixed, numcopies: numCopies },
             method: 'GET',
             responseType: 'blob', // important
         }).then((response) => {
@@ -134,7 +135,7 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
             method: 'GET',
             responseType: 'blob', // important
         }).then((response) => {
-            const url = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
+            const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
             const link = document.createElement('a');
             link.href = url;
             document.body.appendChild(link);
@@ -199,30 +200,30 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                         </DropdownMenuItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu> */}
-                                <Dialog>
-                                    <DialogTrigger asChild>
-                                        <Button variant="outline">Export PDF</Button>
-                                    </DialogTrigger>
-                                    <DialogContent className="sm:max-w-[425px]">
-                                        <DialogHeader>
-                                        <DialogTitle>Export Settings</DialogTitle>
-                                        <DialogDescription>
-                                            Choose settings to export your PDF.
-                                        </DialogDescription>
-                                        </DialogHeader>
-                                        <div className="grid gap-4 py-4">
-                                            <div className="grid grid-cols-4 items-center gap-4">
-                                                <Label htmlFor="numcopies" className="text-right">
-                                                Number of copies
-                                                </Label>
-                                                <Input id="numcopies" type="number" min="1" className="col-span-3" value={numCopies} onChange={handleNumCopiesChange} />
-                                            </div>
-                                            {
-                                                numCopies > 1 &&
-                                                <div>
+                                    <Dialog>
+                                        <DialogTrigger asChild>
+                                            <Button variant="outline">Export PDF</Button>
+                                        </DialogTrigger>
+                                        <DialogContent className="sm:max-w-[425px]">
+                                            <DialogHeader>
+                                                <DialogTitle className="text-xl font-bold">Export Settings</DialogTitle>
+                                                <DialogDescription>
+                                                    Choose settings to export your PDF.
+                                                </DialogDescription>
+                                            </DialogHeader>
+                                            <div className="grid gap-4 py-4">
+                                                <div className="grid grid-cols-4 items-center gap-4">
+                                                    <Label htmlFor="numcopies" className="text-right">
+                                                        Number of copies
+                                                    </Label>
+                                                    <Input id="numcopies" type="number" min="1" className="col-span-3" value={numCopies} onChange={handleNumCopiesChange} />
+                                                </div>
+                                                {
+                                                    numCopies > 1 &&
+                                                    <div>
                                                         <div className="grid grid-cols-4 items-center gap-4">
                                                             <Label htmlFor="quesord" className="text-right">
-                                                            Mixing question order
+                                                                Mixing question order
                                                             </Label>
                                                             <Checkbox id="quesord" className="col-span-3" checked={isQuesOrdMixed} onClick={handleQuesOrdChange} />
                                                         </div>
@@ -232,15 +233,45 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                                             </Label>
                                                             <Checkbox id="choiceord" className="col-span-3" checked={isChoiceOrdMixed} onClick={handleChoiceOrdChange} />
                                                         </div> */}
-                                                </div>
-                                            }
+                                                    </div>
+                                                }
+                                                {/* <Label htmlFor="name" className="font-bold">Test name</Label>
+                                                <Input id="name"
+                                                    // value={data.name}
+                                                    // onChange={(e) => setData('name', e.target.value)}
+                                                    placeholder="Name of your test" />
+                                                <Label htmlFor="time" className="font-bold">Duration of the test</Label>
+                                                <Input id="time"
+                                                    // value={data.name}
+                                                    // onChange={(e) => setData('name', e.target.value)}
+                                                    placeholder="Duration of the test (number of minutes ONLY)" />
+                                                <Label htmlFor="teacher1" className="font-bold">Teacher</Label>
+                                                <Input id="teacher1"
+                                                    // value={data.name}
+                                                    // onChange={(e) => setData('name', e.target.value)}
+                                                    placeholder="Name of the teacher of the course" />
+                                                <Label htmlFor="date1" className="font-bold">Date set</Label>
+                                                <Input id="date1"
+                                                    // value={data.name}
+                                                    // onChange={(e) => setData('name', e.target.value)}
+                                                    placeholder="The date when the exam was set" />
+                                                <Label htmlFor="teacher1" className="font-bold">Teacher</Label>
+                                                <Input id="teacher1"
+                                                    // value={data.name}
+                                                    // onChange={(e) => setData('name', e.target.value)}
+                                                    placeholder="Name of the teacher of the course" />
+                                                <Label htmlFor="date1" className="font-bold">Date set</Label>
+                                                <Input id="date1"
+                                                    // value={data.name}
+                                                    // onChange={(e) => setData('name', e.target.value)}
+                                                    placeholder="The date when the exam was set" /> */}
 
-                                        </div>
-                                        <DialogFooter>
-                                        <Button onClick={dl}>Export</Button>
-                                        </DialogFooter>
-                                    </DialogContent>`
-                                </Dialog>
+                                            </div>
+                                            <DialogFooter>
+                                                <Button onClick={dl}>Export</Button>
+                                            </DialogFooter>
+                                        </DialogContent>`
+                                    </Dialog>
                                     {/* <Button className="bg-indianred flex gap-3 hover:bg-indianred-dark" onClick={view} disabled={loading}>
                                         {loading ? 'Generating PDF...' : 'View PDF'}
                                     </Button>
@@ -265,7 +296,7 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                     <DropdownMenuContent>
                                         <DropdownMenuItem>
                                             <PlusIcon className="mr-2" />
-                                            <Link href={route('questions.create', [QBank.id])} data={{"testid": test.id}} >Add a new question</Link>
+                                            <Link href={route('questions.create', [QBank.id])} data={{ "testid": test.id }} >Add a new question</Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem>
                                             <UpdateIcon className="mr-2" />
@@ -329,7 +360,7 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                     </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu> */}
-                    <TestDetailTable columns={columns} data={questions} QBank={QBank} test = {test} />
+                    <TestDetailTable columns={columns} data={questions} QBank={QBank} test={test} />
                 </div>
             </div>
         </QBLayout>

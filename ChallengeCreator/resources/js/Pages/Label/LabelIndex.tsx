@@ -77,8 +77,10 @@ export default function LabelIndex({ auth, QBank, labels }: PageProps<{ QBank: Q
                                 <div className="flex gap-2 items-center"><FileIcon />{label.name as string}</div>
                             </AccordionTrigger>
                             <AccordionContent className="bg-white px-3 rounded">
-                                <Link className='text-red-500 underline text-center font-bold rounded-t px-4 py-2' method = "delete" href={""} >
+                                <Link href={""}>
+                                    <Button className='bg-red-500 text-white font-bold rounded-t px-4 py-2'>
                                         Delete label
+                                    </Button>
                                 </Link>
                                 <Separator className="mb-2 mt-2" />
                                 <Accordion type="single" collapsible className="w-full bg-white rounded">
@@ -91,8 +93,10 @@ export default function LabelIndex({ auth, QBank, labels }: PageProps<{ QBank: Q
                                                 <AccordionContent>
                                                     {/* {sublabel.name as string} */}
                                                     <div className="flex gap-4">
-                                                        <Link className='text-red-500 underline text-center font-bold rounded-t px-4 py-2' method = "delete" href={""} >
+                                                        <Link href={""}>
+                                                            <Button className='bg-red-500 text-white font-bold rounded-t px-4 py-2'>
                                                                 Delete sublabel
+                                                            </Button>
                                                         </Link>
                                                     </div>
                                                 </AccordionContent>
@@ -101,7 +105,7 @@ export default function LabelIndex({ auth, QBank, labels }: PageProps<{ QBank: Q
                                     })}
                                 </Accordion>
 
-                                
+
                             </AccordionContent>
                         </AccordionItem>
                     )

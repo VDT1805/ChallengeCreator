@@ -416,22 +416,22 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                                     <div className="grid w-full items-center gap-4">
                                         <div className="flex flex-col space-y-1.5">
                                             <Label className="text-xl font-bold">Instructions</Label>
-                                            <div className="flex justify-start gap-5 content-center space-y-1.5 mb-5">
+                                            <div className="space-y-1.5 mb-5">
                                                 How to upload new questions?
-                                                <Collapsible>
+                                                {/* <Collapsible>
                                                     <CollapsibleTrigger className="text-orange-600 flex content-center justify-center">Show <ChevronDownIcon></ChevronDownIcon></CollapsibleTrigger>
-                                                    <CollapsibleContent>
-                                                        <ol className='list-decimal'>
-                                                            <li>Export to .CSV format, your existing Question/s you want to override (from your Question Bank or Edit Test page) (Important: Check the option to 'Include Question ID')</li>
-                                                            <li>Remove extra Questions that may exist in the template</li>
-                                                            <li>Edit your Questions in the .CSV export file as required</li>
-                                                            <li>Do not change the Question Type</li>
-                                                            <li>Do not change the Question ID</li>
-                                                            <li>Upload your Question template in Step 2: Upload Questions</li>
-                                                            <li>Maximum of 50 Questions updated 'at a time'.</li>
-                                                        </ol>
-                                                    </CollapsibleContent>
-                                                </Collapsible>
+                                                    <CollapsibleContent> */}
+                                                <ol className='list-decimal ml-4'>
+                                                    <li>Download CSV template</li>
+                                                    <li>For each row in the template, fill in at least 1 question, 1 answer & 1 correct answer</li>
+                                                    <li>Move to step 2 to import the edited CSV file</li>
+                                                    <li>After uploading, click the right arrow icon to see the valid & invalid questions</li>
+                                                    <li>Go back and make adjustments to the file if neccessary</li>
+                                                    <li>After finishing adjustments, click the right arrow icon to complete the upload</li>
+                                                    <li>Go to Questions to see the newly added questions</li>
+                                                </ol>
+                                                {/* </CollapsibleContent> */}
+                                                {/* </Collapsible> */}
                                             </div>
                                         </div>
                                     </div>
@@ -474,12 +474,12 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                                 )}
                             />
                             {formData.getAll("csv").length > 0 && <Button onClick={removeFile} style={{
-        backgroundColor: 'transparent',
-        color: 'red',
-        position: 'absolute',
-        left: '50%',
-        transform: 'translateX(-50%)'
-    }} >Remove uploaded file</Button>}
+                                backgroundColor: 'transparent',
+                                color: 'red',
+                                position: 'absolute',
+                                left: '50%',
+                                transform: 'translateX(-50%)'
+                            }} >Remove uploaded file</Button>}
                         </motion.div>
                     )}
 
@@ -594,12 +594,14 @@ export default function ImportPage({ auth, QBank, rows, violators, template_url 
                             animate={{ x: 0, opacity: 1 }}
                             transition={{ duration: 0.3, ease: 'easeInOut' }}
                         >
-                            <h2 className='text-base font-semibold leading-7 text-gray-900'>
-                                Complete
-                            </h2>
-                            <p className='mt-1 text-sm leading-6 text-gray-600'>
-                                 <Link href={route("questions.index",[QBank.id])}>Go back to Question Page.</Link>
-                            </p>
+                            <h1 className='text-base font-semibold leading-7 text-gray-900'>
+                                Finished uploading CSV file
+                            </h1>
+                            <Button asChild>
+                                {/* <p className='mt-1 text-sm leading-6 text-gray-600'> */}
+                                <Link href={route("questions.index", [QBank.id])}>Go to Questions</Link>
+                                {/* </p> */}
+                            </Button>
                         </motion.div>
                     )}
                 </form>
