@@ -63,11 +63,11 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
         courseID: 'CO2020',
         testname: 'Bài kiểm tra cuối kỳ',
         duration: 60,
-        test_date: '',
+        test_date: '2024-06-03',
         teacher1: "Nguyễn Văn A",
-        created_date: '',
+        created_date: '2024-06-03',
         teacher2: 'Nguyễn Văn B',
-        approval_date: '',
+        approval_date: '2024-06-03',
         term: 'HK241',
         year: '2024'
     });
@@ -122,8 +122,10 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
 
     const view = () => {
         axios({
-            url: route("tests.pdfSettings", { qbID: QBank.id, testID: test.id }),
-            method: 'GET',
+            url: route("tests.pdfGen", { qbID: QBank.id, testID: test.id }),
+            data: data,
+            params: { quesmix: isQuesOrdMixed, choicemix: isChoiceOrdMixed, numcopies: numCopies },
+            method: 'POST',
             responseType: 'blob', // important
         }).then((response) => {
             const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
@@ -293,7 +295,9 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                                         type="date"
                                                         className="col-span-2"
                                                         value={data.test_date}
-                                                        onChange={(e) => setData('test_date', e.target.value)}
+                                                        onChange={(e) => {setData('test_date', e.target.value)
+                                                            console.log(data.test_date)
+                                                        }}
                                                         placeholder="Date when the test will happen" />
                                                 </div>
 
