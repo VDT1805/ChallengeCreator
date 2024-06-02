@@ -59,14 +59,11 @@ import {
 } from "@/shadcn/ui/table"
 import { PaginationProp } from '../pagination';
 import { SparkleIcon, Sparkles } from 'lucide-react';
+import { formatTime } from './formatTime';
 
 function EventTable({ changeLog }: { changeLog: QuestionEvent[] }) {
     return (
         <Card>
-            {/* <CardHeader className="px-7">
-                <CardTitle>Orders</CardTitle>
-                <CardDescription>Recent orders from your store.</CardDescription>
-            </CardHeader> */}
             <CardContent>
                 <div className="overflow-auto">
                     <Table>
@@ -96,17 +93,13 @@ function EventTable({ changeLog }: { changeLog: QuestionEvent[] }) {
         </Card>
     )
 }
-function formatTime(time: string): string {
-    const date = new Date(time);
-    return date.toLocaleString();
-}
 function UpdateDialog(changeLog: QuestionEvent[]) {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <p className="text-start">
-                    Updated at: {changeLog[changeLog.length - 1].question.created_at}
-                </p>
+            <h4 className="text-start text-gray-500 underline self-end text-left">
+                    Updated at: {formatTime(changeLog[changeLog.length - 1].question.created_at)}
+                </h4>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
@@ -132,29 +125,29 @@ function UpdateDialog(changeLog: QuestionEvent[]) {
     )
 }
 
-export default function QuestionList({ auth, QBank, questions, labels, sublabels }: PageProps<{ QBank: QB, questions: QPage, labels: LabelType[], sublabels: LabelType[] }>) {
-    console.log(questions)
+export default function QuestionList({ auth, QBank, questions, labels, CanCreate }: PageProps<{ QBank: QB, questions: QPage, labels: LabelType[], sublabels: LabelType[], CanCreate: boolean }>) {
     const [query, setQuery] = useState<Record<string, string>>({});
     const [currentPage, setCurrentPage] = useState(questions.current_page);
     const [itemsPerPage, setItemsPerPage] = useState(questions.per_page);
     const lastItemIndex = currentPage * itemsPerPage;
     const firstItemIndex = lastItemIndex - itemsPerPage;
+    const [isFiltered, setIsFiltered] = useState(false);
+    const [sublabels, setSublabels] = useState<LabelType[]>([]);
     const filter: FormEventHandler = (e) => {
         e.preventDefault();
         router.get(route('questions.index', QBank.id), query, { preserveState: true, preserveScroll: true });
+        setIsFiltered(true);
     };
-    const [selectedValue, setSelectedValue] = useState(Array<LabelType>);
 
     const labelValueChange = (e: string) => {
         setQuery(prevQuery => ({
             ...prevQuery,
             ["labels"]: e
         }));
-        router.reload({ only: ['sublabels'], data: { labels: e } })
+        // router.reload({ only: ['sublabels'], data: { labels: e } })
     }
 
     const [changeLog, setChangeLog] = useState<QuestionEvent[]>([]);
-    var currentdate = new Date();
 
     useEffect(() => {
         const name = `qb.${QBank.id}.question`;
@@ -177,11 +170,16 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                         <div className="flex justify-end">
                             {
                                 changeLog.length > 0 &&
-                                UpdateDialog(changeLog)
+                                <div className="mr-4">
+                                {UpdateDialog(changeLog)}
+                                <Button onClick={() => {
+                                        router.reload({ only: ['questions'] });
+                                    }} variant="destructive">Reload the list</Button>
+                                </div>
                             }
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                    <Button><PlusIcon className="mr-3" />Add question</Button>
+                                    <Button disabled={!CanCreate}><PlusIcon className="mr-3" />Add question</Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent>
                                     <DropdownMenuItem>
@@ -214,17 +212,12 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                                 }))}
                                 placeholder="Search for a question..."
                                 className="border-2 border-blue-500 border-solid" />
-                            {/* <Select>
-                                <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="Sort by" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="Oldest">Alphabetical</SelectItem>
-                                    <SelectItem value="Newest">Last Updated</SelectItem>
-                                </SelectContent>
-                            </Select> */}
 
-                            <Select onValueChange={(e) => labelValueChange(e)}>
+                                <Select onValueChange={(e) => {
+                                const labelId = parseInt(e); // Convert e to a number
+                                labelValueChange(labelId.toString()); // Convert labelId back to a string
+                                setSublabels(labels.find((label) => label.id === labelId)?.sublabels || []);
+                                }}>                                
                                 <SelectTrigger className="w-[180px]" >
                                     <SelectValue placeholder="Labels" />
                                 </SelectTrigger >
@@ -238,7 +231,7 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                             </Select>
 
                             {
-                                sublabels && (
+                                sublabels.length > 0 && (
                                     <Select onValueChange={(e) => setQuery(prevQuery => ({
                                         ...prevQuery,
                                         ["sublabels"]: e
@@ -256,8 +249,15 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                                     </Select>
                                 )
                             }
-                            <Button>Filter</Button>
-                            <Button variant={"destructive"}>Clear filters</Button>
+                            <Button onClick={filter}>Filter</Button>
+                            {
+                                isFiltered &&
+                                <Button variant={"destructive"} onClick={() => {
+                                    router.get(route('questions.index', QBank.id))
+                                setIsFiltered(false);
+                                }}>Clear filters</Button>
+                            }
+                        
                         </div>
                     </CardContent>
                 </Card>
@@ -282,8 +282,8 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                                             </div>
                                         </AccordionTrigger>
                                         <AccordionContent className="bg-white px-3">
-                                            <p>Created at: {question.created_at}</p>
-                                            <p>Updated at: {question.updated_at}</p>
+                                            <p>Created at: {formatTime(question.created_at)}</p>
+                                            <p>Updated at: {formatTime(question.updated_at)}</p>
                                             <Separator className="mb-2 mt-2" />
                                             {
                                                 answers && answers.map((ans, idx) => {
@@ -299,13 +299,13 @@ export default function QuestionList({ auth, QBank, questions, labels, sublabels
                                             }
                                             <Separator className="mb-2 mt-2" />
                                             <div className="flex gap-4">
-                                                <Link href={route('questions.edit', [question.question_bank_id, question.id])} method="get" as="button">
-                                                    <Button className='bg-bluegreen text-white font-bold rounded-t px-4 py-2'>
+                                                <Link disabled = {!CanCreate} href={route('questions.edit', [question.question_bank_id, question.id])} method="get" as="button">
+                                                    <Button disabled = {!CanCreate} className='bg-bluegreen text-white font-bold rounded-t px-4 py-2'>
                                                         Edit question
                                                     </Button>
                                                 </Link>
-                                                <Link href={route('questions.destroy', [question.question_bank_id])} method='delete' data={{ qID: question.id }} as="button">
-                                                    <Button className='bg-red-500 text-white font-bold rounded-t px-4 py-2'>
+                                                <Link disabled = {!CanCreate} href={route('questions.destroy', [question.question_bank_id])} method='delete' data={{ qID: question.id }} as="button">
+                                                    <Button disabled = {!CanCreate} className='bg-red-500 text-white font-bold rounded-t px-4 py-2'>
                                                         Delete question
                                                     </Button>
                                                 </Link>

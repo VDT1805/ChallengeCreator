@@ -39,15 +39,22 @@ import {
   CollapsibleTrigger,
 } from "@/shadcn/ui/collapsible"
 import { FilePlusIcon, PlusIcon, ShuffleIcon, UpdateIcon } from "@radix-ui/react-icons"
+import { QB } from "@/Pages/QuestionBank/QuestionBankType"
+import { Test } from "./TestType"
+import { MathJax, MathJaxContext } from "better-react-mathjax"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  data: TData[],
+  QBank: QB,
+  test: Test
 }
 
 export function TestDetailTable<TData, TValue>({
   columns,
   data,
+  QBank,
+  test
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -66,6 +73,10 @@ export function TestDetailTable<TData, TValue>({
     state: {
       sorting,
       columnFilters,
+    },
+    meta: {
+      QBank: QBank,
+      test: test
     }
   })
 
@@ -126,7 +137,10 @@ export function TestDetailTable<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      <MathJaxContext>
+                        <MathJax>{flexRender(cell.column.columnDef.cell, cell.getContext())}</MathJax>
+                      </MathJaxContext>
+                      
                     </TableCell>
                   ))}
                 </TableRow>
@@ -134,7 +148,7 @@ export function TestDetailTable<TData, TValue>({
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+                  No data.
                 </TableCell>
               </TableRow>
             )}

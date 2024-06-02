@@ -110,7 +110,8 @@ class LabelService implements BaseCrudServiceInterface
         $label = new Label();
         $label->name = $data["name"];
         $label->description = $data["description"];
-        $label->label_id = $data["label_id"]; #parent ID here
+        $label->question_bank_id = $data["question_bank_id"];
+        $label->label_id = isset($data["label_id"]) ? $data["label_id"] : null; #parent ID here
         $saved = $label->save();
         return $saved;
     }
@@ -165,10 +166,13 @@ class LabelService implements BaseCrudServiceInterface
      */
     public function update($keyOrModel, array $data): ?Model
     {
-        $qb = Label::find($keyOrModel);
-        $qb -> Label = $data["Label"];
-        $qb -> save();
-        return $qb;
+        $label = Label::find($keyOrModel);
+        $label->name = $data["name"];
+        $label->question_bank_id = $data["question_bank_id"];
+        $label->description = $data["description"];
+        $label->label_id = isset($data["label_id"]) ? $data["label_id"] : null; #parent ID here
+        $label -> save();
+        return $label;
     }
 
     /**

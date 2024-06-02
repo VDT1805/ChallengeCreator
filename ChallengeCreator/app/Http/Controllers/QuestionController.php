@@ -41,14 +41,15 @@ class QuestionController extends Controller
     {
         $parentid = $request["labels"];
         $QB = $this->qbService->findOrFail($qbID,"id");
-        $questions = $this->qService->getAllPaginated($request->all()+["questionbanks" => $qbID]);
+        // $questions = $this->qService->getAllPaginated($request->all()+["questionbanks" => $qbID]);
         // dd($questions);
         $labels = $this->lService->getAll(["questionbanks" => $qbID]);
         return Inertia::render("Questions/QuestionListPage", [
             "QBank" => $QB,
-            "questions" => $questions,
+            "questions" => fn() => $this->qService->getAllPaginated($request->all()+["questionbanks" => $qbID]),
             "labels" => $labels,
-            "sublabels" => fn() => $parentid ? $this->lService->getAll(["parent" => $parentid]) : []
+            "sublabels" => fn() => $parentid ? $this->lService->getAll(["parent" => $parentid]) : [],
+            "CanCreate" => Auth::user()->hasPermission('question-create',$qbID)
         ]);
 
     }
@@ -203,13 +204,15 @@ class QuestionController extends Controller
         //         "label_id" => $label['id']
         //     ]);
         // }
+        // dd($request->all());
         $rq = [
                 "answers" => (collect($request["answers"]))->map(function($answer) {
-                    return $answer["text"];
+                    return [$answer["text"],$answer["start"],$answer["end"]];
                 }) ,
                 "context" => $request["context"],
                 "num_of_q" => $request["numberofquestions"]
             ];
+        // dd($rq);
         $questions = $this->qService->AIgenerate($rq,$qbID,$label['id']);
         return Inertia::render("Questions/AddAIQuestion",
         ["QBank" => $QB,

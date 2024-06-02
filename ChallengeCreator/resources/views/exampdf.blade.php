@@ -133,10 +133,10 @@
 						<table>
 							<tr>
 								<td class="title">
-									<img
+									{{-- <img
 										src="ChallengeCreator\resources\js\Pages\logo.png"
 										style="width: 100%; max-width: 300px"
-									/>
+									/> --}}
 								</td>
 								<td>
                                     Exam Date: {{ date('d/m/Y') }}<br />

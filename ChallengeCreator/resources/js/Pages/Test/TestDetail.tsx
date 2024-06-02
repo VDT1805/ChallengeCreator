@@ -158,11 +158,11 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                         <CardContent>
                             <div className="flex justify-between">
                                 <div className="flex flex-row">
-                                    <Button variant="ghost" className="flex gap-3">
+                                    {/* <Button variant="ghost" className="flex gap-3">
                                         <CopyIcon className="ml-2 h-4 w-4 mt-1" />
                                         Duplicate
                                     </Button>
-                                    <Separator orientation="vertical" className="border-2 border-bluegreen" />
+                                    <Separator orientation="vertical" className="border-2 border-bluegreen" /> */}
                                     {/* <Button variant="ghost" className="flex gap-3">
                                         <PrinterIcon className="ml-2 h-4 w-4 mt-1" />
                                         Print
@@ -241,12 +241,12 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                         </DialogFooter>
                                     </DialogContent>`
                                 </Dialog>
-                                    <Button className="bg-indianred flex gap-3 hover:bg-indianred-dark" onClick={view} disabled={loading}>
+                                    {/* <Button className="bg-indianred flex gap-3 hover:bg-indianred-dark" onClick={view} disabled={loading}>
                                         {loading ? 'Generating PDF...' : 'View PDF'}
                                     </Button>
                                     <Button className="bg-bluegreen flex gap-3 hover:bg-bluegreen-dark" onClick={dl} disabled={loading}>
                                         {loading ? 'Generating PDF...' : 'Download PDF'}
-                                    </Button>
+                                    </Button> */}
                                 </div>
                             </div>
                         </CardContent>
@@ -275,7 +275,7 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                 </DropdownMenu>
                             </div>
                             <Separator className="mb-3 mt-2" />
-                            <div className="flex items-center gap-2">
+                            {/* <div className="flex items-center gap-2">
                                 <Input
                                     placeholder="Search for a question..."
                                     className="border-2 border-blue-500 border-solid" />
@@ -304,7 +304,7 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                 <Button>
                                     Filter
                                 </Button>
-                            </div>
+                            </div> */}
                         </CardContent>
                     </Card>
                     {/* <DropdownMenu>
@@ -329,7 +329,7 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                     </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu> */}
-                    <TestDetailTable columns={columns} data={questions} />
+                    <TestDetailTable columns={columns} data={questions} QBank={QBank} test = {test} />
                 </div>
             </div>
         </QBLayout>

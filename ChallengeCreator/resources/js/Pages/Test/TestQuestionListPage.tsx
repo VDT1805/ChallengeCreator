@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import { Button } from "@/shadcn/ui/button";
 import { QB } from "../QuestionBank/QuestionBankType";
@@ -28,9 +28,31 @@ import {
 import { Input } from "@/shadcn/ui/input";
 import { CheckCircledIcon, ChevronLeftIcon, FileIcon, PlusIcon } from "@radix-ui/react-icons";
 import { Test } from "./TestTable/TestType";
+import { FormEventHandler, useState } from 'react';
+import { LabelType } from '../Label/LabelTable/LabelType';
+import { MathJax, MathJaxContext } from 'better-react-mathjax';
+import { formatTime } from '../Questions/formatTime';
 
-export default function QuestionList({ auth, QBank, questions, test }: PageProps<{ QBank: QB, questions: QPage, test: Test }>) {
-  // console.log(JSON.stringify(questions.data[2].inTest));
+export default function QuestionList({ auth, QBank, questions, test, labels }: PageProps<{ QBank: QB, questions: QPage, test: Test, labels: LabelType[] }>) {
+  const [query, setQuery] = useState<Record<string, string>>({});
+    const [currentPage, setCurrentPage] = useState(questions.current_page);
+    const [itemsPerPage, setItemsPerPage] = useState(questions.per_page);
+    const lastItemIndex = currentPage * itemsPerPage;
+    const firstItemIndex = lastItemIndex - itemsPerPage;
+    const [isFiltered, setIsFiltered] = useState(false);
+    const [sublabels, setSublabels] = useState<LabelType[]>([]);
+    const filter: FormEventHandler = (e) => {
+        e.preventDefault();
+        router.get(route('tests.indexQuestion', [QBank.id,test.id]), query, { preserveState: true, preserveScroll: true });
+        setIsFiltered(true);
+    };
+
+    const labelValueChange = (e: string) => {
+      setQuery(prevQuery => ({
+          ...prevQuery,
+          ["labels"]: e
+      }));
+  }
   return (
     <QBLayout
       user={auth.user}
@@ -53,41 +75,71 @@ export default function QuestionList({ auth, QBank, questions, test }: PageProps
                 <Input
                   placeholder="Search for a question..."
                   className="border-2 border-blue-500 border-solid" />
-                <Select>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Sort by" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Alphabetical">Alphabetical</SelectItem>
-                    <SelectItem value="Last Updated">Last Updated</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Categories" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All</SelectItem>
-                    <SelectItem value="l01">L.0.1</SelectItem>
-                    <SelectItem value="l02">L.0.2</SelectItem>
-                    <SelectItem value="l03">L.0.3</SelectItem>
-                    <SelectItem value="l04">L.0.4</SelectItem>
-                    <SelectItem value="l05">L.0.5</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Button>
+                {
+                  labels &&
+                    <Select onValueChange={(e) => {
+                      const labelId = parseInt(e); // Convert e to a number
+                      labelValueChange(labelId.toString()); // Convert labelId back to a string
+                      setSublabels(labels.find((label) => label.id === labelId)?.sublabels || []);
+                    }}>
+                    <SelectTrigger className="w-[180px]" >
+                      <SelectValue placeholder="Labels" />
+                    </SelectTrigger >
+                    <SelectContent>
+                      {labels.map((label) => (
+                        <SelectItem key={label.id} value={label.id.toString()}>
+                          {label.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                }
+                
+
+                            {
+                                sublabels.length > 0 && (
+                                    <Select onValueChange={(e) => setQuery(prevQuery => ({
+                                        ...prevQuery,
+                                        ["sublabels"]: e
+                                    }))}>
+                                        <SelectTrigger className="w-[180px]" >
+                                            <SelectValue placeholder="Sublabels" />
+                                        </SelectTrigger >
+                                        <SelectContent>
+                                            {sublabels.map((sublabels) => (
+                                                <SelectItem key={sublabels.id} value={sublabels.id.toString()}>
+                                                    {sublabels.name}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                )
+                            }
+                <Button onClick={filter}>
                   Filter
                 </Button>
               </div>
             </CardContent>
           </Card>
+          
           <Accordion type="single" collapsible className="w-full shadow-2xl bg-white">
-            {questions.data.map((question: Question) => (
-              <AccordionItem value={question.id as unknown as string}>
+            {questions.data.map((question: Question) => 
+            {
+              const answers = [
+                question.ans1,
+                question.ans2,
+                question.ans3,
+                question.ans4,
+                question.ans5,
+                question.ans6
+            ];
+              return (
+              <MathJaxContext>
+                <AccordionItem value={question.id as unknown as string}>
                 {question.inTest == true ?
                   <AccordionTrigger className="flex hover:bg-blue-100 bg-green-300 px-3">
                     <div className="flex gap-2 items-center"><FileIcon />
-                      {question.question as string}
+                    <MathJax>{question.question as string}</MathJax>
                     </div>
                   </AccordionTrigger>
                   :
@@ -97,16 +149,22 @@ export default function QuestionList({ auth, QBank, questions, test }: PageProps
                   </AccordionTrigger>
                 }
                 <AccordionContent className="bg-white px-3">
-                  <p>Created at: {question.created_at}</p>
-                  <p>Updated at: {question.updated_at}</p>
-                  <Separator className="mb-2 mt-2" />
-                  <p>Answer 1: {question.ans1}</p>
-                  <p>Answer 2: {question.ans2}</p>
-                  <p>Answer 3: {question.ans3}</p>
-                  <p className="flex gap-2 font-bold items-center text-green-500">Answer 4: {question.ans4} <CheckCircledIcon /> </p>
-                  <p>Answer 5: {question.ans5}</p>
-                  <p>Answer 6: {question.ans6}</p>
-                  <Separator className="mb-2 mt-2" />
+                <p>Created at: {formatTime(question.created_at)}</p>
+                                            <p>Updated at: {formatTime(question.updated_at)}</p>
+                                            <Separator className="mb-2 mt-2" />
+                                            {
+                                                answers && answers.map((ans, idx) => {
+                                                    var correct = question.correct;
+                                                    if (idx + 1 == correct) {
+                                                        return <MathJax><p key={idx} className="flex gap-2 font-bold items-center text-green-500">Answer {idx + 1}: {ans}<CheckCircledIcon /> </p></MathJax>
+                                                        // return <p key={correct} className="flex gap-2 font-bold items-center text-green-500">Answer {idx + 1}: {ans}<CheckCircledIcon /> </p>
+                                                    }
+                                                    else {
+                                                        return <MathJax><p key={idx} className="flex gap-2">Answer {idx + 1}: {ans}</p></MathJax>
+                                                    }
+                                                })
+                                            }
+                                            <Separator className="mb-2 mt-2" />
                   <div className="flex gap-4">
                     {question.inTest == true ?
                       <Link href={route('tests.detachQuestion', [QBank.id, test.id])} method="put" data={{qID: question.id}}>
@@ -122,8 +180,11 @@ export default function QuestionList({ auth, QBank, questions, test }: PageProps
                   </div>
                 </AccordionContent>
               </AccordionItem>
-            )
+              </MathJaxContext>
+              
             )}
+            )
+          }
             <Pagination className="bg-white mt-2">
               <PaginationContent>
                 <PaginationItem>

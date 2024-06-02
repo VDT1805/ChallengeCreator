@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Requests\LabelFormRequest;
 use App\Http\Services\QuestionBankService;
 use App\Http\Services\LabelService;
 use App\Models\Label;
@@ -24,10 +26,10 @@ class LabelController extends Controller
     {
         //
         $QB = $this->qbService->findOrFail($qbID,"id");
-        $label = $this->lService->getAllPaginated(["questionbanks" => $qbID]);
+        $labels = $this->lService->getAllPaginated(["questionbanks" => $qbID]);
         return Inertia::render("Label/LabelIndex", [
             "QBank" => $QB,
-            "labels" => $label
+            "labels" => $labels
         ]);
     }
 
@@ -48,7 +50,7 @@ class LabelController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($qbID,Request $request)
+    public function store($qbID,LabelFormRequest $request)
     {
         //
         $inserted = $this->lService->create($request->all()+["question_bank_id" => $qbID]);
@@ -110,7 +112,7 @@ class LabelController extends Controller
             if($deleted) {
                 $QB = $this->qbService->findOrFail($qbID,"id");
                 $labels = $this->lService->getAllPaginated(["questionbanks" => $qbID]);
-            return Inertia::render("Questions/QuestionListPage", [
+            return Inertia::render("Label/LabelIndex", [
                 "QBank" => $QB,
                 "labels" => $labels
             ]);

@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import { Button } from "@/shadcn/ui/button";
 import { QB } from "../QuestionBank/QuestionBankType"
@@ -10,6 +10,7 @@ import { Input } from '@/shadcn/ui/input';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/shadcn/ui/accordion';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/shadcn/ui/pagination';
 import { LabelPage, LabelType } from './LabelTable/LabelType';
+import InputError from '@/Components/InputError';
 
 export default function LabelIndex({ auth, QBank, labels }: PageProps<{ QBank: QB, labels: LabelPage }>) {
     return (
@@ -56,7 +57,7 @@ export default function LabelIndex({ auth, QBank, labels }: PageProps<{ QBank: Q
                             </Link>
                         </div>
                         <Separator className="mb-3 mt-2" />
-                        <div className="flex items-center gap-2">
+                        {/* <div className="flex items-center gap-2">
                             <Input
                                 // onChange={(e) => setQuery(prevQuery => ({
                                 //     ...prevQuery,
@@ -66,7 +67,7 @@ export default function LabelIndex({ auth, QBank, labels }: PageProps<{ QBank: Q
                                 className="border-2 border-blue-500 border-solid" />
                             <Button>Search</Button>
                             <Button variant={"destructive"}>Clear search</Button>
-                        </div>
+                        </div> */}
                     </CardContent>
                 </Card>
                 <Accordion type="single" collapsible className="w-full bg-white rounded">
@@ -76,8 +77,31 @@ export default function LabelIndex({ auth, QBank, labels }: PageProps<{ QBank: Q
                                 <div className="flex gap-2 items-center"><FileIcon />{label.name as string}</div>
                             </AccordionTrigger>
                             <AccordionContent className="bg-white px-3 rounded">
-                                {/* <Separator className="mb-2 mt-2" /> */}
-                                {label.description}
+                                <Link className='text-red-500 underline text-center font-bold rounded-t px-4 py-2' method = "delete" href={""} >
+                                        Delete label
+                                </Link>
+                                <Separator className="mb-2 mt-2" />
+                                <Accordion type="single" collapsible className="w-full bg-white rounded">
+                                    {label.sublabels?.map((sublabel: LabelType) => {
+                                        return (
+                                            <AccordionItem value={sublabel.id as unknown as string}>
+                                                <AccordionTrigger className="hover:bg-blue-100 bg-white px-3 rounded">
+                                                    <div className="flex gap-2 items-center"><FileIcon />{sublabel.name as string}</div>
+                                                </AccordionTrigger>
+                                                <AccordionContent>
+                                                    {/* {sublabel.name as string} */}
+                                                    <div className="flex gap-4">
+                                                        <Link className='text-red-500 underline text-center font-bold rounded-t px-4 py-2' method = "delete" href={""} >
+                                                                Delete sublabel
+                                                        </Link>
+                                                    </div>
+                                                </AccordionContent>
+                                            </AccordionItem>
+                                        )
+                                    })}
+                                </Accordion>
+
+                                
                             </AccordionContent>
                         </AccordionItem>
                     )

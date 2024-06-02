@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import {
     Card,
@@ -11,7 +11,7 @@ import {
 } from "@/shadcn/ui/card"
 import { Button } from '@/shadcn/ui/button';
 import { Input } from '@/shadcn/ui/input';
-import React, { useEffect, useState } from 'react';
+import React, { FormEventHandler, useEffect, useState } from 'react';
 import { QBPage } from './QuestionBank/QuestionBankType';
 import {
     Pagination,
@@ -26,28 +26,55 @@ import { DotFilledIcon, PlusIcon } from '@radix-ui/react-icons';
 import { Separator } from '@radix-ui/react-menubar';
 
 export default function Dashboard({ auth, QBS }: PageProps<{ QBS: QBPage }>) {
+    const [query, setQuery] = useState<Record<string, string>>({});
+    const [isFiltered, setIsFiltered] = useState(false);
+    const filter: FormEventHandler = (e) => {
+        e.preventDefault();
+        router.get(route('questionbanks.index'), query, { preserveState: true, preserveScroll: true });
+        setIsFiltered(true);
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}>
             <Head title="Dashboard" />
-            <div className="py-12">
-                <div className="grid md:grid-cols-5 md:grid-rows-none px-8 mx-auto max-w-7xl grid-rows-3 grid-flow-col">
-                    <Input
-                        placeholder="Search for a question bank..."
-                        className="border-2 border-blue-500 border-solid row-span-1 md:col-span-2" />
-                    <div className="flex items-center row-span-1 md:col-span-2">
-                    </div>
-                    <div className="md:col-start-10 col-span-1">
+                <div className='py-12 container mx-auto'>
+                    <div className="flex justify-end">
+                    
                         <Link href={route('questionbanks.create')}>
                             <Button>
                                 <PlusIcon className="mr-2" /> Add question bank
                             </Button>
                         </Link>
                     </div>
-                </div>
+                    <Separator className="mb-3 mt-2" />
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-5 max-w-7xl mx-auto px-8">
+                <div className="flex space-x-4">
+                <Input
+                        onChange={(e) => setQuery(prevQuery => ({
+                                    ...prevQuery,
+                                    ["namequery"]: e.target.value
+                        }))}
+                        placeholder="Search for a question bank..."
+                        className="border-2 border-blue-500 border-solid" />
+                    <div className="flex justify-end">
+                    <Button onClick={filter}>Filter</Button>
+                            {
+                                isFiltered &&
+                                <Button variant={"destructive"} onClick={() => {
+                                    router.get(route('questionbanks.index'))
+                                setIsFiltered(false);
+                                }}>Clear filters</Button>
+                            }
+                    </div>
+                    </div>
+                    
+                    
+                </div>
+                    
+
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto px-8">
                     {QBS.data.map(item => (
                         <Link href={route('questionbanks.show', item.id)}>
                             <Card>
@@ -75,7 +102,6 @@ export default function Dashboard({ auth, QBS }: PageProps<{ QBS: QBPage }>) {
                         </PaginationItem>
                     </PaginationContent>
                 </Pagination>
-            </div>
         </AuthenticatedLayout>
     );
 }

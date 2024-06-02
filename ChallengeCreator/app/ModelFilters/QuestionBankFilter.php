@@ -22,6 +22,11 @@ class QuestionBankFilter extends ModelFilter
     // {
     //     return $this->related('questions', "question_id", "=", $id);
     // }
+    
+    public function namequery($name)
+    {
+        return $this->where('name', 'LIKE', '%'.$name.'%');
+    }
 
     public function id($id)
     {

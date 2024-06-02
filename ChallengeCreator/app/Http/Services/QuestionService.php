@@ -45,18 +45,18 @@ class QuestionService implements BaseCrudServiceInterface
         $data =  $response->getData();
 
         if (!$response->isSuccessful()) {
-            abort(403,"Failed to reach API");
+            abort(403,"Failed to reach API" . env('AI_CLIENT_URL'));
         }
         $questions = new Collection();
         foreach ($data as $question) {
             $questions[] = new Question([
                 "question" => $question["question"],
                 "ans1" => $question["ans1"],
-                "ans2" => "",
-                "ans3" => "",
-                "ans4" => "",
-                "ans5" => "",
-                "ans6" => "",
+                "ans2" => $question["ans2"],
+                "ans3" => $question["ans3"],
+                "ans4" => $question["ans4"],
+                "ans5" => $question["ans5"],
+                "ans6" => $question["ans6"],
                 "question_bank_id" => $qbID,
                 "correct" => 1,
                 "label_id" => $label_id

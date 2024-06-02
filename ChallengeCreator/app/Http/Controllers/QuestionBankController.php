@@ -27,7 +27,7 @@ class QuestionBankController extends Controller
     public function index(Request $filterRequest)
     {
         //
-        $QBS =  $this->qbService->getAllPaginated();
+        $QBS =  $this->qbService->getAllPaginated($filterRequest->all());
         // dd($QBS);
         return Inertia::render(
             "Dashboard",
@@ -54,7 +54,9 @@ class QuestionBankController extends Controller
         //
         $inserted = $this->qbService->create($request->all());
         if ($inserted) {
-            return Inertia::render("QuestionBank/QuestionBankPage", ["QBank" => $inserted]);
+            // return Inertia::render("QuestionBank/QuestionBankPage", ["QBank" => $inserted]);
+            return redirect()->route("questionbanks.show", ["qbID" => $inserted->id]);
+            // return to_route("questionbanks.index");
         }
     }
 

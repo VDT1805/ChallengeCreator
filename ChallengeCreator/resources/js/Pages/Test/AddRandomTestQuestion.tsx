@@ -29,7 +29,7 @@ import { LabelType } from '../Label/LabelTable/LabelType';
 import InputError from '@/Components/InputError';
 
 export default function AddRandomTestQuestion({ auth, QBank, labels }: PageProps<{ QBank: QB, labels: LabelType[] }>) {
-  console.log(labels[0].sublabels);
+  // console.log(labels[0].sublabels);
   const [position, setPosition] = React.useState("bottom")
   const { data, setData, post, processing, errors, reset, transform } = useForm({
     name: ""
@@ -58,7 +58,10 @@ export default function AddRandomTestQuestion({ auth, QBank, labels }: PageProps
                                         type="name"
                                         name="name"
                                         value={data.name}
-                                        onChange={(e) => setData('name', e.target.value)}
+                                        onChange={(e) => { setData('name', e.target.value)
+                                          console.log(data)
+                                        }
+                                        }
                                         placeholder="Name of your test"
                                         className="mb-5" />
                                     {errors.name && <InputError message={errors.name}></InputError>}
@@ -71,6 +74,7 @@ export default function AddRandomTestQuestion({ auth, QBank, labels }: PageProps
                             <div className="flex items-center space-x-2">
                             <Label htmlFor="name" className="text-xl font-bold">{label.name} &gt; {sublabel.name}</Label>
                             <Input
+                              id="num"
                                 type='number'
                                 max={sublabel.questions_count}
                                 min={0}
@@ -80,13 +84,19 @@ export default function AddRandomTestQuestion({ auth, QBank, labels }: PageProps
                                     if (value > Number(sublabel.questions_count)) {
                                         e.target.value = sublabel.questions_count!.toString();
                                     }
-                                    if (value != 0) {
-                                        console.log("FDSK");
-                                        transform((data) => ({
-                                            ...data,
-                                            [sublabel.id]: e.target.value
-                                        }))
-                                    }
+                                    setData((prevData: { [x: string]: any; }) => {
+                                      if (value !== 0) {
+                                        return {
+                                          ...prevData,
+                                          [sublabel.id]: value
+                                        };
+                                      } else {
+                                        const { [sublabel.id]: _, ...newData } = prevData;
+                                        return newData;
+                                      }
+                                    });
+                                      // console.log("EK")
+                                      // console.log(data)
                                 }}
                                 placeholder="Number of questions"
                             />

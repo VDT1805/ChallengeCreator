@@ -38,6 +38,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/shadcn/ui/collapsible"
+import { MathJaxContext } from "better-react-mathjax"
 
 
 
@@ -136,7 +137,10 @@ export function DataTable<TData, TValue>({
                   } */}
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
+                      <MathJaxContext>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </MathJaxContext>
+                      
                     </TableCell>
                   ))}
                 </TableRow>
