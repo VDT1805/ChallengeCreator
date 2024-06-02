@@ -156,7 +156,7 @@ Route::post('/qbs/{qbID}/tests/{testID}/addques', [TestController::class,'attach
 Route::put('/qbs/{qbID}/tests/{testID}/addques', [TestController::class,'detachQuestion'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor'])->name('tests.detachQuestion');
 
-Route::get('/qbs/{qbID}/tests/{testID}/pdf', [TestController::class,'pdfGenerate'])
+Route::post('/qbs/{qbID}/tests/{testID}/pdf', [TestController::class,'pdfGenerate'])
 ->middleware(['auth', 'verified','dynamicrole:owner|editor|viewer'])->name('tests.pdfGen');
 
 Route::get('/qbs/{qbID}/tests/{testID}/pdfSettings', [TestController::class,'pdfSettings'])

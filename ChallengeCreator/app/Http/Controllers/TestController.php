@@ -189,7 +189,7 @@ class TestController extends Controller
 
     public function pdfGenerate($qbID, $testID, Request $request) {
         // dd($request,env('GOTENBERG_API_URL'));
-        // return response(403)->json(env('GOTENBERG_API_URL'));
+        // return response(403)->json($request,env('GOTENBERG_API_URL'));
         $QB = $this->qbService->findOrFail($qbID,"id");
         $test = $this->tService->find(["questionbanks" => $qbID, "id" => $testID])->first();
         if(!$test) {

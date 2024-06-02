@@ -244,70 +244,78 @@
 </head>
 
 <body>
-    <table class="tg1">
-        <tbody>
-            <tr>
-                <td class="tg-53v8">Giảng viên ra đề:</td>
-                <td class="tg-iucd"><span style="font-style:italic">25/08/2021</span></td>
-                <td class="tg-53v8">Người phản biện:</td>
-                <td class="tg-76x8">25/08/2022</td>
-            </tr>
-            <tr>
-                <td class="tg-9wq8" colspan="2">Nguyễn An Khương<br>Nguyễn Tiến Thịnh</td>
-                <td class="tg-9wq8" colspan="2">BM KHMT/Khoa KH&amp;KT Máy tính</td>
-            </tr>
-        </tbody>
-    </table>
+    {{-- <div class="test-header">
+        {{$settings["duration"]}}
+    </div> --}}
+    
+    
 
-    <br>
-
-    <div class="tg-wrap">
-        <table class="tg">
-            <tbody>
-                <tr>
-                    <td class="tg-uzvj" rowspan="5"><img
-                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HCMUT_official_logo.png/891px-HCMUT_official_logo.png"
-                            alt="Image" width="99" height="100"><br>TRƯỜNG ĐẠI HỌC BÁCH KHOA - ĐHQG-HCM<br>KHOA
-                        KH&amp;KT MÁY TÍNH
-                    </td>
-                    <td class="tg-g7sd" rowspan="2">THI CUỐI KỲ</td>
-                    <td class="tg-0pky">HK/NH</td>
-                    <td class="tg-0pky">3</td>
-                    <td class="tg-0pky">2022-2023</td>
-                </tr>
-                <tr>
-                    <td class="tg-0pky">Ngày thi</td>
-                    <td class="tg-dvpl" colspan="2">26/08/2022</td>
-                </tr>
-                <tr>
-                    <td class="tg-0pky">Môn học</td>
-                    <td class="tg-0pky" colspan="3">Mô hình hóa Toán học</td>
-                </tr>
-                <tr>
-                    <td class="tg-0pky">Course ID</td>
-                    <td class="tg-0pky" colspan="3">CO2011</td>
-                </tr>
-                <tr>
-                    <td class="tg-0pky">Thời lượng</td>
-                    <td class="tg-0pky">80 phút</td>
-                    <td class="tg-0pky">Mã đề</td>
-                    <td class="tg-dvpl">2681</td>
-                </tr>
-                <tr>
-                    <td class="tg-0pky" colspan="5">Ghi chú: 
-                    <div>
-                      <div>- Sinh viên được phép sử dụng 01 tờ giấy A4 viết tay có chứa ghi chép cần thiết.</div>
-                      <div>- SV phải ghi MSSV, họ và tên vào cuối trang này và nộp lại đề thi cùng với bài làm.</div>
-                      <div>- Chọn phương án đúng nhất (chỉ chọn 1) cho mỗi câu hỏi.</div>
-                    </div>
-
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- <div class="test-body">
+        @foreach($questions_bag as $questions)
+        <div class="table-1">
+            <table class="tg1">
+                <tbody>
+                    <tr>
+                        <td class="tg-53v8">Giảng viên ra đề:</td>
+                        <td class="tg-iucd"><span style="font-style:italic">{{$settings["created_date"]}}</span></td>
+                        <td class="tg-53v8">Người phê duyệt:</td>
+                        <td class="tg-76x8">{{$settings["approval_date"]}}</td>
+                    </tr>
+                    <tr>
+                        <td class="tg-9wq8" colspan="2">{{$settings["teacher1"]}}</td>
+                        <td class="tg-9wq8" colspan="2">{{$settings["teacher2"]}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <br>
+        
+            <div class="tg-wrap">
+                <table class="tg">
+                    <tbody>
+                        <tr>
+                            <td class="tg-uzvj" rowspan="5"><img
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HCMUT_official_logo.png/891px-HCMUT_official_logo.png"
+                                    alt="Image" width="99" height="100"><br>TRƯỜNG ĐẠI HỌC BÁCH KHOA - ĐHQG-HCM<br>KHOA
+                                KH&amp;KT MÁY TÍNH
+                            </td>
+                            <td class="tg-g7sd" rowspan="2">THI CUỐI KỲ</td>
+                            <td class="tg-0pky">HK/NH</td>
+                            <td class="tg-0pky">3</td>
+                            <td class="tg-0pky">2022-2023</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-0pky">Ngày thi</td>
+                            <td class="tg-dvpl" colspan="2">26/08/2022</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-0pky">Môn học</td>
+                            <td class="tg-0pky" colspan="3">Mô hình hóa Toán học</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-0pky">Course ID</td>
+                            <td class="tg-0pky" colspan="3">CO2011</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-0pky">Thời lượng</td>
+                            <td class="tg-0pky"> {{$settings["duration"]}} phút</td>
+                            <td class="tg-0pky">Mã đề</td>
+                            <td class="tg-dvpl">{{$code = rand(1000,9999)}}</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-0pky" colspan="5">Ghi chú: 
+                            <div>
+                              <div>- Sinh viên được phép sử dụng 01 tờ giấy A4 viết tay có chứa ghi chép cần thiết.</div>
+                              <div>- SV phải ghi MSSV, họ và tên vào cuối trang này và nộp lại đề thi cùng với bài làm.</div>
+                              <div>- Chọn phương án đúng nhất (chỉ chọn 1) cho mỗi câu hỏi.</div>
+                            </div>
+        
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="test-body">
                 @foreach ($questions as $index => $mcq)
                     <div class="mcq-item">
                         <p>{{ $index + 1 }}. {{ $mcq->question }}</p>
@@ -323,7 +331,7 @@
         </div>
         <div class="pagebreak"></div>
         <div class="key">
-            <h2>Answer Key</h2>
+            <h2>Answer Key {{$code}}</h2>
             @foreach ($questions as $index => $mcq)
                 <div class="key">
                     <p>{{ $index + 1 }}. {{ $mcq->correct }}</p>
@@ -331,7 +339,7 @@
             @endforeach
         </div>
         <div class="pagebreak"></div>
-        @endforeach -->
+        @endforeach
 
 <style>
 .leaders {

@@ -1,6 +1,6 @@
 import { Test, columns } from "./TestTable/TestColumn"
 import { TestDetailTable } from "./TestTable/TestDetailTable"
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import { Button } from "@/shadcn/ui/button";
 import {
@@ -57,6 +57,15 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
     const handleChoiceOrdChange = (event: any) => {
         setIsChoiceOrdMixed(!isChoiceOrdMixed);
     };
+
+    const { data, setData, post, processing, errors, reset } = useForm({
+        testname: '',
+        duration: 1,
+        teacher1: '',
+        created_date: '',
+        teacher2: '',
+        approval_date: '',
+    });
     // console.log(questions)
     const handleDownloadPDF = async () => {
         setLoading(true);
@@ -83,37 +92,14 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
         setLoading(false);
     };
 
-    //     const invoice = async() => {
-    //         axios({
-    //             method: 'post',
-    //         url: '/api/download',
-    //         data: { qbID: QBank.id, testID: test.id },
-    //         responseType: 'arraybuffer',
-    //         onDownloadProgress: (progressEvent) => {
-    //             let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-    //             setPercentage(percentCompleted);
-    //             if (percentCompleted === 100) {
-    //             setPercentage(0);
-    //             setIsDownloading(false);
-    //             }
-    //         },
-    //     })
-    //   .then((response) => {
-    //     const blob = new Blob([response.data], { type: 'application/octet-stream' });
-    //     const url = window.URL.createObjectURL(blob);
-    //     const a = document.createElement('a');
-    //     a.href = url;
-    //     a.download = 'video.mp4';
-    //     a.click();
-    //   });
-
-    //     }
-    const dl = () => {
+    const dl = (event: { preventDefault: () => void; }) => {
+        event.preventDefault();
         setLoading(true);
         axios({
             url: route("tests.pdfGen", { qbID: QBank.id, testID: test.id }),
+            data: data,
             params: { quesmix: isQuesOrdMixed, choicemix: isChoiceOrdMixed, numcopies: numCopies },
-            method: 'GET',
+            method: 'POST',
             responseType: 'blob', // important
         }).then((response) => {
             console.log("kfsd")
@@ -239,8 +225,8 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                                     <Label htmlFor="name" className="font-bold">Test name</Label>
                                                     <Input id="name"
                                                         className="col-span-3"
-                                                        // value={data.name}
-                                                        // onChange={(e) => setData('name', e.target.value)}
+                                                        value={data.testname}
+                                                        onChange={(e) => setData('testname', e.target.value)}
                                                         placeholder="Name of your test" />
                                                 </div>
 
@@ -248,8 +234,9 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                                     <Label htmlFor="time" className="font-bold">Duration of the test</Label>
                                                     <Input id="time"
                                                         className="col-span-3"
-                                                        // value={data.name}
-                                                        // onChange={(e) => setData('name', e.target.value)}
+                                                        type="number"
+                                                        value={data.duration}
+                                                        onChange={(e) => setData('duration', parseInt(e.target.value))}
                                                         placeholder="No. of minutes of your test" />
                                                 </div>
 
@@ -257,17 +244,18 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                                     <Label htmlFor="teacher1" className="font-bold">Teacher</Label>
                                                     <Input id="teacher1"
                                                         className="col-span-3"
-                                                        // value={data.name}
-                                                        // onChange={(e) => setData('name', e.target.value)}
+                                                        value={data.teacher1}
+                                                        onChange={(e) => setData('teacher1', e.target.value)}
                                                         placeholder="Name of the teacher who made the test" />
                                                 </div>
 
                                                 <div className="grid grid-cols-4 items-center gap-4">
                                                     <Label htmlFor="date1" className="font-bold">Created date</Label>
                                                     <Input id="date1"
+                                                        type="date"
                                                         className="col-span-3"
-                                                        // value={data.name}
-                                                        // onChange={(e) => setData('name', e.target.value)}
+                                                        value={data.created_date}
+                                                        onChange={(e) => setData('created_date', e.target.value)}
                                                         placeholder="Date when the test was made" />
                                                 </div>
 
@@ -275,17 +263,18 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                                     <Label htmlFor="teacher2" className="font-bold">Approval teacher</Label>
                                                     <Input id="teacher2"
                                                         className="col-span-3"
-                                                        // value={data.name}
-                                                        // onChange={(e) => setData('name', e.target.value)}
+                                                        value={data.teacher2}
+                                                        onChange={(e) => setData('teacher2', e.target.value)}
                                                         placeholder="Name of the teacher who approved the test" />
                                                 </div>
 
                                                 <div className="grid grid-cols-4 items-center gap-4">
                                                     <Label htmlFor="date2" className="font-bold">Approval date</Label>
                                                     <Input id="date2"
+                                                    type="date"
                                                         className="col-span-3"
-                                                        // value={data.name}
-                                                        // onChange={(e) => setData('name', e.target.value)}
+                                                        value={data.approval_date}
+                                                        onChange={(e) => setData('approval_date', e.target.value)}
                                                         placeholder="Date when the test was approved" />
                                                 </div>
 
