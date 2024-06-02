@@ -121,6 +121,7 @@
 
         .test-body {
             font-family: 'DejaVu Serif', 'serif';
+            
         }
     </style>
 
@@ -240,6 +241,27 @@
             text-align: right;
             vertical-align: top
         }
+
+        .leaders {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        }
+
+        .leaders div {
+        width: 100%;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        grid-gap: 5px;
+        justify-items: start;
+        align-items: center;
+        justify-content: start;
+        }
+
+        .footer {
+        position: fixed;
+        bottom: 0;
+    }
     </style>
 </head>
 
@@ -326,8 +348,23 @@
                                 @endif
                             @endfor
                         </ol>
+                        
                     </div>
+                    
                 @endforeach
+                {{-- <div class="footer">
+                    <div class="leaders">
+                        <div>
+                            <p>MSSV</p>
+                            <p>...................................</p>
+                            <p>Họ & tên</span>
+                            <p>...................................</p>
+                            <p>Mã đề: {{$code}}</p>
+                            <p>Trang </p>
+                            <p>... / ...</p>
+                        </div>
+                    </div>
+                </div> --}}
         </div>
         <div class="pagebreak"></div>
         <div class="key">
@@ -340,37 +377,8 @@
         </div>
         <div class="pagebreak"></div>
         @endforeach
-
-<style>
-.leaders {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.leaders div {
-  width: 100%;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  grid-gap: 5px;
-  justify-items: start;
-  align-items: center;
-  justify-content: start;
-}
-  </style>
   
-  <div class="leaders">
-  <div>
-    <span>MSSV</span>
-    <span>.............................................</span>
-    <span>Họ & tên</span>
-    <span>.............................................</span>
-    <span>Mã đề: 1821</span>
-    <!-- <span>..............................</span> -->
-    <span>Trang </span>
-    <span>... / ...</span>
-  </div>
-</div>
+
 
 </body>
 
