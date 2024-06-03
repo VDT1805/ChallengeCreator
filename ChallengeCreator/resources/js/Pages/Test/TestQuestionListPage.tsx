@@ -135,7 +135,7 @@ export default function QuestionList({ auth, QBank, questions, test, labels }: P
             ];
               return (
               <MathJaxContext>
-                <AccordionItem value={question.id as unknown as string}>
+                <AccordionItem  value={question.id as unknown as string}>
                 {question.inTest == true ?
                   <AccordionTrigger className="flex hover:bg-blue-100 bg-green-300 px-3">
                     <div className="flex gap-2 items-center"><FileIcon />
