@@ -104,7 +104,7 @@ export default function AddAIQuestion({ auth, QBank, questions }: PageProps<{ QB
                     <Label
                       htmlFor="ans6"
                       className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                      Only generate questions
+                      Without Answer Candidates
                     </Label>
                   </div>
                 </div>
@@ -138,6 +138,10 @@ export default function AddAIQuestion({ auth, QBank, questions }: PageProps<{ QB
                       />
                     </div>
                 }
+                           {/* <pre style={{ fontSize: 12, lineHeight: 1.2 }}>
+               
+                {JSON.stringify(data, null, 2)}
+            </pre> */}
 
                 <Button type='submit'>
                   Generate question

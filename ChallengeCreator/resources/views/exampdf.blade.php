@@ -325,7 +325,7 @@
                             <td class="tg-0pky" colspan="5">Ghi chú: 
                             <div>
                               <div>- Sinh viên được phép sử dụng 01 tờ giấy A4 viết tay có chứa ghi chép cần thiết.</div>
-                              <div>- SV phải ghi MSSV, họ và tên vào cuối trang này và nộp lại đề thi cùng với bài làm.</div>
+                              {{-- <div>- SV phải ghi MSSV, họ và tên vào cuối trang này và nộp lại đề thi cùng với bài làm.</div> --}}
                               <div>- Chọn phương án đúng nhất (chỉ chọn 1) cho mỗi câu hỏi.</div>
                             </div>
         
@@ -366,10 +366,13 @@
         </div>
         <div class="pagebreak"></div>
         <div class="key">
-            <h2>Answer Key {{$code}}</h2>
+            <h2>Answer Key CODE {{$code}}</h2>
+            @php
+                $mapping = ['1' => 'A', '2' => 'B', '3' => 'C', '4' => 'D', '5' => 'E', '6' => 'F'];
+            @endphp
             @foreach ($questions as $index => $mcq)
                 <div class="key">
-                    <p>{{ $index + 1 }}. {{ $mcq->correct }}</p>
+                    <p>{{ $index + 1 }}. {{ $mapping[$mcq->correct] }}</p>
                 </div>
             @endforeach
         </div>

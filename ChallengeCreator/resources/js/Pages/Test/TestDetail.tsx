@@ -59,46 +59,46 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
     };
 
     const { data, setData, post, processing, errors, reset } = useForm({
-        subject: '',
-        courseID: '',
-        testname: '',
+        subject: 'Giải Tích',
+        courseID: 'CO2020',
+        testname: 'Bài kiểm tra cuối kỳ',
         duration: 60,
-        test_date: '',
-        teacher1: '',
-        created_date: '',
-        teacher2: '',
-        approval_date: '',
-        term: '',
-        year: ''
+        test_date: '2024-06-03',
+        teacher1: "Nguyễn Văn A",
+        created_date: '2024-06-03',
+        teacher2: 'Nguyễn Văn B',
+        approval_date: '2024-06-03',
+        term: 'HK241',
+        year: '2024'
     });
     // console.log(questions)
-    const handleDownloadPDF = async () => {
-        setLoading(true);
-        try {
-            const response = await axios.get(route("tests.pdfGen", { qbID: QBank.id, testID: test.id }));
-            // console.log(response);
-            // Extract the file name from the response headers
-            const contentDisposition = response.headers['content-disposition'];
-            const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
-            const fileName = fileNameMatch ? fileNameMatch[1] : 'test.pdf';
+    // const handleDownloadPDF = async () => {
+    //     setLoading(true);
+    //     try {
+    //         const response = await axios.get(route("tests.pdfGen", { qbID: QBank.id, testID: test.id }));
+    //         // console.log(response);
+    //         // Extract the file name from the response headers
+    //         const contentDisposition = response.headers['content-disposition'];
+    //         const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
+    //         const fileName = fileNameMatch ? fileNameMatch[1] : 'test.pdf';
 
-            // Handle the PDF download
-            const blob = new Blob([response.data], { type: 'application/pdf' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = fileName;
-            a.click();
-            window.URL.revokeObjectURL(url);
-        } catch (error) {
-            // Handle error
-            console.log(error);
-        }
-        setLoading(false);
-    };
+    //         // Handle the PDF download
+    //         const blob = new Blob([response.data], { type: 'application/pdf' });
+    //         const url = window.URL.createObjectURL(blob);
+    //         const a = document.createElement('a');
+    //         a.href = url;
+    //         a.download = fileName;
+    //         a.click();
+    //         window.URL.revokeObjectURL(url);
+    //     } catch (error) {
+    //         // Handle error
+    //         console.log(error);
+    //     }
+    //     setLoading(false);
+    // };
 
-    const dl = (event: { preventDefault: () => void; }) => {
-        event.preventDefault();
+    const dl = () => {
+
         setLoading(true);
         axios({
             url: route("tests.pdfGen", { qbID: QBank.id, testID: test.id }),
@@ -122,8 +122,10 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
 
     const view = () => {
         axios({
-            url: route("tests.pdfSettings", { qbID: QBank.id, testID: test.id }),
-            method: 'GET',
+            url: route("tests.pdfGen", { qbID: QBank.id, testID: test.id }),
+            data: data,
+            params: { quesmix: isQuesOrdMixed, choicemix: isChoiceOrdMixed, numcopies: numCopies },
+            method: 'POST',
             responseType: 'blob', // important
         }).then((response) => {
             const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
@@ -293,7 +295,9 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
                                                         type="date"
                                                         className="col-span-2"
                                                         value={data.test_date}
-                                                        onChange={(e) => setData('test_date', e.target.value)}
+                                                        onChange={(e) => {setData('test_date', e.target.value)
+                                                            console.log(data.test_date)
+                                                        }}
                                                         placeholder="Date when the test will happen" />
                                                 </div>
 
@@ -313,7 +317,7 @@ export default function TestTable({ auth, QBank, test, questions }: PageProps<{ 
 
                                             </div>
                                             <DialogFooter>
-                                                <Button onClick={dl}>Export PDF</Button>
+                                                <Button onClick={(e)=> {dl(); e.preventDefault()}}>Export PDF</Button>
                                                 <Button onClick={view}>View PDF</Button>
                                             </DialogFooter>
                                         </DialogContent>`
