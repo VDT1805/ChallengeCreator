@@ -1,3 +1,3 @@
-# dacn-cnpm
+# Images
 
-Đây là thư mục chứa các hình trong báo cáo đồ án chuyên ngành & báo cáo đồ án tốt nghiệp
+Images related to system, database design
